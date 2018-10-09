@@ -172,14 +172,14 @@ router.post('/', async (req, res, next) => {
     newContract.addUsers([req.body.devId, req.body.advertiserId])
 
     const advertiser = await User.findById(req.body.advertiserId)
-    console.log('advertiser', advertiser.budget)
+    console.log('advertiser', advertiser.balance)
 
-    if (newContract.balance > advertiser.budget) {
-      advertiser.update({ isActive: false })
-    } else {
+    // if (newContract.balance > advertiser.budget) {
+    //   advertiser.update({ isActive: false })
+    // } else {
       // update budget
-      const updatedBudget = advertiser.budget - newContract.balance
-      if (updatedBudget < newContract.balance) {
+      const updatedBalance = advertiser.balance - newContract.balance
+      if (updatedBalance < newContract.balance) {
         sendEmail(advertiser.firstName, advertiser.email, {
           from: advertiser.firstName,
           to: advertiser.email,
@@ -187,8 +187,9 @@ router.post('/', async (req, res, next) => {
           text: `Invitation to renew your campaign...`
         })
         //send email to advertiser
-      }
-      advertiser.update({ budget: updatedBudget })
+      //}
+      advertiser.update({ balance: updatedBalance })
+      await advertiser.save()
     }
     res.json(newContract)
   } catch (err) {
