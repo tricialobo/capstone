@@ -265,8 +265,6 @@ async function seed() {
     isActive: true,
     advertiserId: 6
   })
-  await campaign3.addBundle(bundle2)
-  await campaign3.addBundle(bundle1)
   await campaign3.addCategory(category3)
   await campaign3.addCategory(category2)
   await campaign3.addDemographic(demographic1)

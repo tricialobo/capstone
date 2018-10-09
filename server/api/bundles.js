@@ -1,25 +1,26 @@
 const router = require('express').Router()
 var nodemailer = require('nodemailer')
-const { Bundle, User, Campaign } = require('../db/models')
+const { Bundle, User, Campaign, Contract } = require('../db/models')
 
 router.put('/remove', async (req, res, next) => {
   console.log('bundleId & campaignId', req.body.bundleId, req.body.campaignId)
   const bundleId = req.body.bundleId
   try {
-  const bundle = await Bundle.findById(bundleId)
-  const updateBundle = await bundle.removeCampaign(req.body.campaignId)
-  const updatedBun = await Bundle.findAll({
-    where: {
-      id: bundleId
-    }, include: [{model: Campaign}]
-  })
-  res.json(updatedBun[0].campaigns)
-  }catch (err) {
+    const bundle = await Bundle.findById(bundleId)
+    const updateBundle = await bundle.removeCampaign(req.body.campaignId)
+    const updatedBun = await Bundle.findAll({
+      where: {
+        id: bundleId
+      },
+      include: [{ model: Campaign }]
+    })
+    res.json(updatedBun[0].campaigns)
+  } catch (err) {
     next(err)
   }
 })
 
-router.put('/:bundleId', async (req, res, next) => {
+router.put('/addcampaign/:bundleId', async (req, res, next) => {
   try {
     const bundleId = req.params.bundleId
     const bundle = await Bundle.findById(bundleId)
@@ -37,8 +38,8 @@ router.put('/:bundleId', async (req, res, next) => {
 
 router.post('/newbundle/:userId', async (req, res, next) => {
   console.log('hello??')
-    const userId = req.params.userId
-    try{
+  const userId = req.params.userId
+  try {
     const newBun = await Bundle.create({
       developerId: userId,
       projectName: req.body.projectName
@@ -49,7 +50,6 @@ router.post('/newbundle/:userId', async (req, res, next) => {
     next(err)
   }
 })
-
 
 router.post('/email', function create(req, res, next) {
   var transporter = nodemailer.createTransport({
@@ -76,9 +76,6 @@ router.post('/email', function create(req, res, next) {
   res.send(201, req.params)
 })
 
-
-
-
 // get all bundles belonging to a dev user
 router.get('/user/:userId', async (req, res, next) => {
   const userId = req.params.userId
@@ -86,7 +83,8 @@ router.get('/user/:userId', async (req, res, next) => {
     const bundles = await Bundle.findAll({
       where: {
         developerId: userId
-      }, include: [{model: Campaign}]
+      },
+      include: [{ model: Campaign }]
     })
     res.json(bundles)
   } catch (err) {
@@ -114,4 +112,19 @@ router.get('/:bundleId', async (req, res, next) => {
   }
 })
 
+router.get('/previous/:userid', async (req, res, next) => {
+  const userId = req.params.userid
+  try {
+    console.log('in api request for previous contracts')
+    const project = await Bundle.findAll({
+      where: {
+        developerId: userId
+      },
+      include: [{ model: Contract, where: { status: 'FALSE' } }]
+    })
+    res.send(project)
+  } catch (error) {
+    console.error(error)
+  }
+})
 module.exports = router
