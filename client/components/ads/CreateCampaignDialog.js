@@ -16,7 +16,7 @@ import {
   RadioGroup,
   FormControlLabel
 } from '@material-ui/core'
-import CampaignForm from './CampaignForm'
+import CampaignForm from './CreateCampaignForm'
 import { postCampaign } from '../../store/campaigns'
 
 const styles = theme => ({
@@ -44,12 +44,15 @@ class CreateCampaignDialog extends React.Component {
         checked: false
       })
     }
+    console.log('checked demographics', demographicsArray)
     this.state = {
       demographics: demographicsArray,
       name: '',
       price: 0,
       value: props.value
     }
+    this.handleCancel = this.handleCancel.bind(this)
+    this.handleOk = this.handleOk.bind(this)
   }
 
   componentDidUpdate(prevProps) {
@@ -100,16 +103,15 @@ class CreateCampaignDialog extends React.Component {
               />
             </DialogContent>
           </Grid>
-          <Grid item xs={12}>
-            <DialogActions className={classes.dialogButtons}>
-              <Button onClick={this.handleCancel} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={this.handleOk} color="primary">
-                Ok
-              </Button>
-            </DialogActions>
-          </Grid>
+
+          <DialogActions>
+            <Button onClick={this.handleCancel} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.handleOk} color="primary">
+              Ok
+            </Button>
+          </DialogActions>
         </Grid>
       </Dialog>
     )
@@ -123,17 +125,9 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    createNewCampaign: campaign => dispatch(postCampaign(campaign))
-  }
-}
+// CreateCampaignDialog.propTypes = {
+//   onClose: PropTypes.func,
+//   value: PropTypes.string
+// }
 
-CreateCampaignDialog.propTypes = {
-  onClose: PropTypes.func,
-  value: PropTypes.string
-}
-
-export default withStyles(styles)(
-  connect(mapState, mapDispatch)(CreateCampaignDialog)
-)
+export default withStyles(styles)(connect(mapState)(CreateCampaignDialog))

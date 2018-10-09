@@ -14,7 +14,7 @@ import {
   TextField,
   MenuItem
 } from '@material-ui/core'
-import DemographicsList from './DemographicsList'
+import DemographicsList from '../campaigns/DemographicsList'
 import { postCampaign } from '../../store'
 
 const styles = theme => ({
@@ -65,7 +65,7 @@ class CreateCampaignForm extends Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, allDemographics } = this.props
     const campaign = this.state
     const demographics = this.state.demographics
     console.log(demographics)
@@ -75,7 +75,7 @@ class CreateCampaignForm extends Component {
         className={classes.container}
         noValidate
         autoComplete="off"
-        onSubmit={this.props.handleSubmit}
+        onSubmit={this.handleSubmit}
       >
         <Grid container direction="row" justify="center" spacing={40}>
           <Grid item xs={4} className={classes.accountDetails}>
@@ -114,7 +114,7 @@ class CreateCampaignForm extends Component {
 }
 const mapState = state => {
   return {
-    demographics: state.demographics.allDemographics,
+    allDemographics: state.demographics.allDemographics,
     currentUser: state.user.currentUser
   }
 }
