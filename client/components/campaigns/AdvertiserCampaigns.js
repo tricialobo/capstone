@@ -74,6 +74,10 @@ class AdvertiserCampaignsModal extends Component {
     this.setState({ open: false })
   }
 
+  componentDidMount () {
+    this.props.fetchCampaign(this.props.allCampaigns[0])
+  }
+
   handleListItemClick = (event, index, campaign) => {
     this.setState({ selectedIndex: index })
     this.props.loadSingleCampaign(campaign.id)
@@ -99,7 +103,7 @@ class AdvertiserCampaignsModal extends Component {
                   />
                 </Grid>
                 <Grid item xs={9}>
-                  <h1>selected campaign placeholder</h1>
+                  <h1>SelectedCampaign: {this.props.selectedCampaign.name}</h1>
                 </Grid>
               </Grid>
               <Button onClick={this.handleOpen}>Create a campaign</Button>
@@ -119,7 +123,7 @@ const mapState = state => {
   return {
     allAds: state.ads.allAds,
     allCampaigns: state.campaigns.allUserCampaigns,
-    selectedCampaign: state.campaigns.allUserCampaigns[0]
+    selectedCampaign: state.campaigns.singleCampaign
   }
 }
 
@@ -133,7 +137,10 @@ const mapDispatch = dispatch => {
     },
     fetchCampaign: campaign => {
       dispatch(setCampaign(campaign))
-    }
+    },
+    // setCampaign: campaign => {
+    //   dispatch(setCampaign(campaign))
+    // }
   }
 }
 const AdvertiserCampaigns = withStyles(styles)(AdvertiserCampaignsModal)
