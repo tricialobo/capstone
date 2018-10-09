@@ -1,5 +1,11 @@
 const router = require('express').Router()
-const { Contract, User, Campaign, PartiesToContract } = require('../db/models')
+const {
+  Contract,
+  User,
+  Campaign,
+  PartiesToContract,
+  Bundle
+} = require('../db/models')
 const { getUser, sendEmail } = require('./helpers')
 const factory = require('../../ethereum/factory')
 const { getDeployedBlocks } = require('../../client/components/controller')
@@ -9,6 +15,26 @@ const axios = require('axios')
 
 module.exports = router
 
+//for getting previous contracts for dev view
+router.get('/closed/:userid', async (req, res, next) => {
+  try {
+    const contracts = await PartiesToContract.findAll({
+      where: {
+        userId: req.params.userid
+      },
+      include: [
+        {
+          model: Contract,
+          where: { status: 'FALSE', paid: 'TRUE' },
+          include: [{ model: Bundle, include: { model: Campaign } }]
+        }
+      ]
+    })
+    res.json(contracts)
+  } catch (error) {
+    console.error(error)
+  }
+})
 //get open contracts by user id; for payment portal
 router.get('/:userid/user', async (req, res, next) => {
   try {
@@ -162,11 +188,13 @@ router.put('/paid', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const { campaignId, bundleId, contractHash, balance } = req.body
+    console.log('req.body', req.body)
     const newContract = await Contract.create({
-      campaignId: campaignId,
-      bundleId: bundleId,
       contractHash: contractHash,
-      balance: balance
+      balance: balance,
+
+      bundleId: bundleId,
+      campaignId: campaignId
     })
 
     newContract.addUsers([req.body.devId, req.body.advertiserId])

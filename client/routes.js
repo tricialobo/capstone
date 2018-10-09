@@ -11,7 +11,7 @@ import {
   AllAds,
   BundleCheckout,
   ScriptTag,
-  Payment,
+  //Payment,
   SingleContractPayment,
   AllCampaigns,
   AllBundles,
@@ -20,11 +20,13 @@ import {
   AdvertiserCampaigns,
   SingleCampaign,
   EditCampaign,
+  PreviousProjects,
   AdForm
 } from './components'
 import Ethereum from './components/ethereum'
 import {
   me,
+  getPreviousProjects,
   getAllCampaigns,
   fetchAllDemographics,
   fetchUserAds,
@@ -60,7 +62,35 @@ class Routes extends Component {
         <Route path="/allcampaigns" component={AllCampaigns} />
         <Route path="/allbundles" component={AllBundles} />
         <Route path="/payment/:contractId" component={SingleContractPayment} />
-        <Route exact path="/payment" component={Payment} />
+        {/* <Route exact path="/payment" component={Payment} /> */}
+        <Route path="/previousprojects" component={PreviousProjects} />
+        {isLoggedIn && (
+          <Switch>
+            {/* Routes placed here are only available after logging in */}
+            <Route path="/home" component={Home} />
+            <Route
+              path="/advertiser-dashboard"
+              component={AdvertiserDashboard}
+            />
+            <Route path="/account" component={AccountMenu} />
+            <Route exact path="/ads" component={AllAds} />
+            <Route
+              exact
+              path="/campaigns/user/:userId"
+              component={AdvertiserCampaigns}
+            />
+            <Route
+              exact
+              path="/campaigns/campaign/:campaignId"
+              component={SingleCampaign}
+            />
+            <Route
+              exact
+              path="/campaign/campaign/:campaignId/edit"
+              component={EditCampaign}
+            />
+          </Switch>
+        )}
 
         {isLoggedIn &&
           currentUser.isAdvertiser && (
