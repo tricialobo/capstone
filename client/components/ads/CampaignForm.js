@@ -1,134 +1,126 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import classNames from 'classnames'
-import { updateUserOnServer } from '../../store/user'
+import PropTypes from 'prop-types'
+import history from '../../history'
 import {
-  Select,
-  FormControl,
-  Grid,
-  Button,
+  withStyles,
+  FormLabel,
   Typography,
-  TextField,
-  MenuItem
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  Input,
+  InputLabel,
+  Card,
+  Radio,
+  RadioGroup,
+  MenuItem,
+  FormHelperText,
+  Select,
+  Grid
 } from '@material-ui/core'
-import DemographicsList from './DemographicsList'
-import { postCampaign } from '../../store'
+import { postAd } from '../../store/ads'
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%'
+  root: {
+    flexGrow: 1,
+    backgroundColor: 'white',
+    boxShadow: 'none',
+    marginBottom: 60
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
+  grow: {
+    flexGrow: 1
   },
-  dense: {
-    marginTop: 19
+  card: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    /* bring your own prefixes */
+    transform: 'translate(-50%, -50%)',
+    border: '2px #000000 solid',
+    borderRadius: '0px',
+    padding: '30px',
+    boxShadow: '0px'
   },
-  formTitle: {
-    fontSize: '18px',
-    fontWeight: 600
+  formControl: {
+    marginTop: 16
+  },
+  group: {
+    margin: '0px',
+    flexDirection: 'row'
+  },
+  title: {
+    fontWeight: '600px',
+    paddingBottom: '10px'
   }
 })
 
-class CreateCampaignForm extends Component {
+class CampaignForm extends Component {
   constructor(props) {
-    super(props)
-    this.state = {
-      advertiserId: props.currentUser.id,
-      name: props.name,
-      price: props.price,
-      demographics: props.demographics
-    }
+    super()
+    this.state = props.currentUser
     console.log(this.state)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
-
-  handleSubmit(event) {
-    event.preventDefault()
-    this.props.createCampaign(this.state)
-
-    console.log(this.state)
+    this.setState({ [event.target.name]: event.target.value })
   }
 
   render() {
-    const { classes } = this.props
-    const campaign = this.state
-    const demographics = this.state.demographics
-    console.log(demographics)
+    console.log(this.props.currentUser)
+    const { error, classes } = this.props
 
     return (
-      <form
-        className={classes.container}
-        noValidate
-        autoComplete="off"
-        onSubmit={this.props.handleSubmit}
-      >
-        <Grid container direction="row" justify="center" spacing={40}>
-          <Grid item xs={4} className={classes.accountDetails}>
-            <Typography className={classes.formTitle} variant="title">
-              Details
-            </Typography>
-            <TextField
-              id="standard-name"
-              label="Campaign Name"
-              name="name"
-              className={classes.textField}
-              value={campaign.name}
-              onChange={this.handleChange}
-              margin="normal"
-            />
-            <TextField
-              id="standard-name"
-              label="Price"
-              name="price"
-              className={classes.textField}
-              value={campaign.price}
-              onChange={this.handleChange}
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={8}>
-            <Typography className={classes.formTitle} variant="title">
-              Demographics
-            </Typography>
-            <DemographicsList demographics={demographics} />
-          </Grid>
-        </Grid>
-      </form>
+      <Card className={classes.card} style={{ width: '40%' }}>
+        <div className={classes.formHeader}>
+          <Typography className={classes.title} variant="title" color="inherit">
+            New advertisement
+          </Typography>
+        </div>
+        <form onSubmit={this.handleSubmit}>
+          <FormGroup style={{ marginTop: '30px' }}>
+            <Grid container direction="row">
+              <Grid item xs={6}>
+                <FormControl>
+                  <InputLabel>Advertisement name</InputLabel>
+                  <Input name="name" type="text" />
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl>
+                  <InputLabel>Image url</InputLabel>
+                  <Input name="image" type="text" />
+                </FormControl>
+              </Grid>
+            </Grid>
+            <FormControl>
+              <InputLabel>Click-through URL</InputLabel>
+              <Input name="url" type="text" />
+            </FormControl>
+            <br />
+            <Button type="submit">Create advertisement</Button>
+            {error && error.response && <div> {error.response.data} </div>}
+          </FormGroup>
+        </form>
+      </Card>
     )
   }
 }
+
 const mapState = state => {
   return {
-    demographics: state.demographics.allDemographics,
-    currentUser: state.user.currentUser
+    error: state.user.error
   }
 }
+/**
+ * PROP TYPES
+ */
+// AdForm.propTypes = {
+//   handleSubmit: PropTypes.func.isRequired,
+//   error: PropTypes.object
+// }
 
-const mapDispatch = dispatch => {
-  return {
-    createCampaign: campaign => dispatch(postCampaign(campaign))
-  }
-}
-
-CreateCampaignForm.propTypes = {
-  classes: PropTypes.object.isRequired
-}
-
-export default withStyles(styles)(
-  connect(mapState, mapDispatch)(CreateCampaignForm)
-)
+export default withStyles(styles)(CampaignForm)

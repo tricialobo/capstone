@@ -21,7 +21,8 @@ class DemographicsList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      demographics: props.demographics
+      demographics: props.demographics,
+      selected: []
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -32,10 +33,10 @@ class DemographicsList extends Component {
     for (let i = 0; i < options.length; i++) {
       if (options[i].name === event.target.value) {
         options[i].checked = !options[i].checked
-        console.log(options[i])
       }
     }
     this.setState({ demographics: options })
+    console.log('demo list', this.state)
   }
 
   render() {

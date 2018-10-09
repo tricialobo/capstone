@@ -2,23 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import {
-  Typography,
-  Button,
-  Grid,
-  GridList,
-  GridListTile
-} from '@material-ui/core'
-import AdsGridList from '../ads/AdsGridList'
-import CampaignsAccordion from '../ads/CampaignsAccordion'
-import LoadingScreen from '../LoadingScreen'
+import { Typography, Button, Grid } from '@material-ui/core'
 import CampaignsList from './CampaignsList'
 import CreateCampaignDialog from '../ads/CreateCampaignDialog'
 import SingleCampaign from './SingleCampaign'
 import {
   fetchSingleCampaign,
   setCampaign,
-  fetchAllUserCampaigns
+  fetchAllUserCampaigns,
+  postCampaign,
+  editCampaign,
+  removeCampaign
 } from '../../store'
 import history from '../../history'
 
@@ -81,9 +75,14 @@ class AdvertiserCampaignsModal extends Component {
   }
 
   render() {
-    const { classes, allCampaigns, allAds, loadSingleCampaign } = this.props
+    const {
+      classes,
+      allCampaigns,
+      createNewCampaign,
+      currentUser,
+      loadSingleCampaign
+    } = this.props
     const selectedCampaign = this.state.selectedCampaign
-    console.log(this.state.selectedCampaign)
     return (
       <div className="container">
         {allCampaigns &&
@@ -107,6 +106,8 @@ class AdvertiserCampaignsModal extends Component {
                 open={this.state.open}
                 onClose={this.handleClose}
                 campaigns={allCampaigns}
+                createNewCampaign={createNewCampaign}
+                currentUser={currentUser}
               />
             </div>
           )}
@@ -117,9 +118,9 @@ class AdvertiserCampaignsModal extends Component {
 
 const mapState = state => {
   return {
-    allAds: state.ads.allAds,
     allCampaigns: state.campaigns.allUserCampaigns,
-    selectedCampaign: state.campaigns.allUserCampaigns[0]
+    selectedCampaign: state.campaigns.allUserCampaigns[0],
+    currentUser: state.user.currentUser
   }
 }
 
@@ -133,10 +134,13 @@ const mapDispatch = dispatch => {
     },
     fetchCampaign: campaign => {
       dispatch(setCampaign(campaign))
-    }
+    },
+    createCampaign: campaign => dispatch(postCampaign(campaign)),
+    editCampaign: campaignId => dispatch(editCampaign(campaignId))
   }
 }
 const AdvertiserCampaigns = withStyles(styles)(AdvertiserCampaignsModal)
+
 export default withStyles(styles)(
   connect(mapState, mapDispatch)(AdvertiserCampaigns)
 )
