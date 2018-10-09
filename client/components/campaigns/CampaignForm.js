@@ -41,7 +41,7 @@ const styles = theme => ({
     transform: 'translate(-50%, -50%)',
     border: '2px #000000 solid',
     borderRadius: '0px',
-    padding: '10px',
+    padding: '20px',
     boxShadow: '0px'
   },
   formControl: {
@@ -58,6 +58,10 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 200
+  },
+  button: {
+    maxWidth: 250,
+    padding: 20
   }
 })
 
@@ -66,6 +70,7 @@ class CampaignForm extends Component {
     super()
     this.state = {
       price: 0,
+      open: props.open,
       demographics: props.selectedDemographics
     }
     this.handleCreate = this.handleCreate.bind(this)
@@ -92,6 +97,7 @@ class CampaignForm extends Component {
     }
     console.log('HANDLE CREATE CAMPAIGN', newCampaign)
     this.props.createCampaign(newCampaign)
+    this.props.handleClose()
   }
 
   render() {
@@ -142,9 +148,19 @@ class CampaignForm extends Component {
                 <DemographicsList selectedDemographics={selectedDemographics} />
               </Grid>
             </Grid>
+            <Button classNames={classes.button} type="submit">
+              Create campaign
+            </Button>
+
+            <Button
+              classNames={classes.button}
+              onClick={this.props.handleClose}
+            >
+              Cancel
+            </Button>
 
             <br />
-            <Button type="submit">Create campaign</Button>
+
             {error && error.response && <div> {error.response.data} </div>}
           </FormGroup>
         </form>

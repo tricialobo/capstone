@@ -109,9 +109,7 @@ class AdvertiserCampaigns extends Component {
   }
 
   handleListItemClick = (event, index, campaign) => {
-    this.setState({ selectedIndex: index })
-    this.props.loadSingleCampaign(campaign.id)
-    history.push(`/campaigns/campaign/${campaign.id}`)
+    this.props.selectCampaign(campaign)
   }
 
   render() {
@@ -137,12 +135,9 @@ class AdvertiserCampaigns extends Component {
                   />
                 </Grid>
                 <Grid item xs={9}>
-                  <h1>SelectedCampaign: {selectedCampaign.name}</h1>
-                  {/* <CampaignForm
-                    price={price}
-                    selectedDemographics={selectedDemographics}
-                    onSubmit={this.handleCreate}
-                  /> */}
+                  {selectedCampaign && (
+                    <SingleCampaign selectedCampaign={selectedCampaign} />
+                  )}
                 </Grid>
               </Grid>
               <Button onClick={this.handleOpen}>Create a campaign</Button>
@@ -158,9 +153,10 @@ class AdvertiserCampaigns extends Component {
                       Name your new ad campaign, its price, and which categories
                       it can be associated with.
                     </DialogContentText>
-
                     <CampaignForm
                       price={price}
+                      open={open}
+                      handleClose={this.handleClose}
                       selectedDemographics={selectedDemographics}
                       onSubmit={this.handleCreate}
                     />
@@ -169,6 +165,14 @@ class AdvertiserCampaigns extends Component {
               </Dialog>
             </div>
           )}
+        <div>
+          <Route
+            path="/campaigns/campaign/:campaignId"
+            render={() => (
+              <SingleCampaign selectedCampaign={selectedCampaign} />
+            )}
+          />
+        </div>
       </div>
     )
   }
@@ -194,6 +198,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
+    selectCampaign: campaign => {
+      dispatch(setCampaign(campaign))
+    },
     loadAllUserCampaigns: userId => {
       dispatch(fetchAllUserCampaigns(userId))
     },

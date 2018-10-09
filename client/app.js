@@ -65,9 +65,9 @@ const theme = createMuiTheme({
       }
     },
     MuiList: {
-      root: {
-        border: 'solid 2px #000'
-      }
+      // root: {
+      //   border: 'solid 2px #000'
+      // }
     },
     MuiIconButton: {
       root: {

@@ -103,16 +103,15 @@ class CreateCampaignDialog extends React.Component {
               />
             </DialogContent>
           </Grid>
-          <Grid item xs={12}>
-            <DialogActions className={classes.dialogButtons}>
-              <Button onClick={this.handleCancel} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={this.handleOk} color="primary">
-                Ok
-              </Button>
-            </DialogActions>
-          </Grid>
+
+          <DialogActions>
+            <Button onClick={this.handleCancel} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.handleOk} color="primary">
+              Ok
+            </Button>
+          </DialogActions>
         </Grid>
       </Dialog>
     )

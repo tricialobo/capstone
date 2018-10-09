@@ -47,7 +47,9 @@ class DemographicsList extends Component {
     return (
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">Target Demographics</FormLabel>
+          <FormLabel component="label">
+            <b>Target Demographics</b>
+          </FormLabel>
           <FormGroup>
             {demographics.map(demographic => (
               <FormControlLabel

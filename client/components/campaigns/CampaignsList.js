@@ -12,6 +12,7 @@ import { fetchSingleCampaign } from '../../store'
 
 const styles = theme => ({
   root: {
+    borders: 'none',
     width: '100%',
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper
@@ -30,7 +31,6 @@ class CampaignsList extends Component {
 
     return (
       <div className={classes.root}>
-        <Divider />
         <List
           component="nav"
           subheader={<ListSubheader component="div">Campaigns</ListSubheader>}
