@@ -11,6 +11,8 @@ const GOT_ALL_BUNDLES = 'GOT_ALL_BUNDLES'
 const SET_BUNDLE = 'SET_BUNDLE'
 const REMOVED_CAMPAIGN_FROM_BUNDLE = 'REMOVED_CAMPAIGN_FROM_BUNDLE'
 const ADDED_BUNDLE = 'ADDED_BUNDLE'
+const OPEN_ADD_NEW = 'OPEN_ADD_NEW'
+
 const GOT_PREVIOUS_BUNDLES = 'GOT_PREVIOUS_BUNDLES'
 /**
  * INITIAL STATE
@@ -19,8 +21,9 @@ const initialState = {
   advertisements: [],
   campaignsInBundle: [],
   allBundles: [],
+  bundle: {},
+  addNewBool: false,
   previousBundles: [],
-  bundle: {}
 }
 
 /**
@@ -39,6 +42,10 @@ export const addedToBundle = campaign => ({ type: ADDED_TO_BUNDLE, campaign })
 export const gotCampaignsInBundle = campaigns => ({
   type: GOT_CAMPAIGNS_IN_BUNDLE,
   campaigns
+})
+
+export const addNew = () => ({
+  type: OPEN_ADD_NEW
 })
 
 export const gotAllBundles = bundles => ({
@@ -146,7 +153,9 @@ export default function(state = initialState, action) {
     case SET_BUNDLE:
       return { ...state, bundle: action.bundle }
     case ADDED_BUNDLE:
-      return { ...state, allBundles: [...state.allBundles, action.bundle] }
+      return {...state, allBundles: [...state.allBundles, action.bundle]}
+    case OPEN_ADD_NEW:
+      return {...state, addNewBool: (!state.addNewBool)}
     default:
       return state
   }

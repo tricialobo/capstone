@@ -710,9 +710,10 @@ class BundleCheckout extends Component {
     const campaigns = this.props.campaigns
     return (
       <div>
-        <h1>Campaigns in Your Bundle</h1>
+        <h1>{this.props.bundle.projectName} Detail</h1>
         {campaigns && campaigns.length ? (
           <div>
+            <h2>Campaigns In Project</h2>
             <ul>
               {campaigns.map(campaign => {
                 return <li key={campaign.id}>{campaign.name}</li>
@@ -737,7 +738,9 @@ const mapState = state => {
 
     devId: state.user.currentUser.id,
 
-    bundleId: state.bundles.bundle.id
+    bundleId: state.bundles.bundle.id,
+
+    bundle: state.bundles.bundle
   }
 }
 

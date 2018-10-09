@@ -31,7 +31,6 @@ class AllCampaigns extends Component {
     await this.props.getAllCampaigns()
   }
 
-  //refactorable?
   async handleClick(evt, campaign) {
     if (this.props.campaignsInBundle.length) {
       const ids = this.props.campaignsInBundle.map(camp => camp.id)
@@ -54,6 +53,7 @@ class AllCampaigns extends Component {
   render() {
     const { classes } = this.props
     const campaigns = this.props.campaigns
+    const filtCamps = campaigns.filter(camp => (camp.advertiser.balance > 0))
     return (
       <Grid container direction="row">
         <Grid item xs={4}>
@@ -64,7 +64,7 @@ class AllCampaigns extends Component {
             Available Campaigns
           </Typography>
           <List>
-            {campaigns.map(campaign => (
+            {filtCamps.map(campaign => (
               <ListItem key={campaign.id}>
                 <Grid container direction="column">
                   <Grid container direction="row">

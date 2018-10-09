@@ -6,7 +6,8 @@ import {
   setBundle,
   me,
   getCampaignsInBundle,
-  removeCampaignFromBundle
+  removeCampaignFromBundle,
+  addNew
 } from '../store'
 import NewBundle from './newBundle'
 import { withStyles } from '@material-ui/core/styles'
@@ -30,7 +31,7 @@ const styles = theme => ({
 class Bundles extends Component {
   state = {
     selectedIndex: 0,
-    open: false
+    open: false,
   }
 
   handleListItemClick = (event, index, bundle) => {
@@ -42,6 +43,11 @@ class Bundles extends Component {
 
   removeClick = async info => {
     await this.props.removeCampaignFromBundle(info)
+  }
+
+  newBunClick = () => {
+    console.log('helloooo')
+    this.props.addNew()
   }
 
   async componentDidMount() {
@@ -121,13 +127,11 @@ class Bundles extends Component {
               </div>
             )
           })}
-          <NavLink to="/notsureyet">
-            <ListItem className={classes.nested} button>
+            <ListItem className={classes.nested} button onClick = {() => this.newBunClick()}>
               <ListItemText inset primary="Create New Project" />
             </ListItem>
-          </NavLink>
         </List>
-        <NewBundle />
+        {this.props.addNewBool ? <NewBundle /> : null} 
       </div>
       
     ) : null
@@ -139,7 +143,8 @@ const mapState = state => {
     user: state.user.currentUser,
     bundles: state.bundles.allBundles,
     selectedBundle: state.bundles.bundle,
-    campaignsInBundle: state.bundles.campaignsInBundle
+    campaignsInBundle: state.bundles.campaignsInBundle,
+    addNewBool: state.bundles.addNewBool
   }
 }
 
@@ -150,7 +155,8 @@ const mapDispatch = dispatch => {
     me: () => dispatch(me()),
     getCampaignsInBundle: bundleId =>
       dispatch(getCampaignsInBundle(bundleId)),
-    removeCampaignFromBundle: info => dispatch(removeCampaignFromBundle(info))
+    removeCampaignFromBundle: info => dispatch(removeCampaignFromBundle(info)),
+    addNew: () => dispatch(addNew())
   }
 }
 

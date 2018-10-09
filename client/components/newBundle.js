@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import React, {Component} from 'react'
-import {addBundle} from '../store'
+import {addBundle, addNew} from '../store'
 
 class AddBundle extends Component {
     constructor() {
@@ -15,13 +15,13 @@ class AddBundle extends Component {
   
     handleChange = event => {
       this.setState({projectName: event.target.value})
-      console.log(this.state.projectName)
     }
   
     handleSubmit = async event => {
       event.preventDefault()
       await this.props.addBundle({userId: this.props.user.id, projectName: this.state.projectName})
       this.setState({projectName: ''})
+      this.props.addNew()
     }
   
     render() {
@@ -45,7 +45,8 @@ class AddBundle extends Component {
   
   const mapDispatch = dispatch => {
     return {
-      addBundle: obj => dispatch(addBundle(obj))
+      addBundle: obj => dispatch(addBundle(obj)),
+      addNew: () => dispatch(addNew())
     }
   }
   
