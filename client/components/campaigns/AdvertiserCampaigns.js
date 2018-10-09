@@ -110,6 +110,7 @@ class AdvertiserCampaigns extends Component {
 
   handleListItemClick = (event, index, campaign) => {
     this.props.selectCampaign(campaign)
+    this.setState({ selectedIndex: index })
   }
 
   render() {

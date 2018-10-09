@@ -24,7 +24,7 @@ const styles = {
     flexGrow: 1
   },
   card: {
-    minWidth: 275
+    minWidth: '100%'
   },
   content: {
     paddingTop: 45
@@ -75,8 +75,13 @@ const CampaignCard = props => {
             </Grid>
           </Grid>
           <Grid item xs={10}>
-            {advertisements &&
-              advertisements.length && <AdsGridList ads={advertisements} />}
+            {advertisements && advertisements.length ? (
+              <AdsGridList ads={advertisements} />
+            ) : (
+              <Typography variant="subheading">
+                There are currently no advertisements in this campaign
+              </Typography>
+            )}
           </Grid>
         </Grid>
       </CardContent>
