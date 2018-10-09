@@ -5,9 +5,10 @@ import {
   getAllBundles,
   setBundle,
   me,
-  gotCampaignsInBundle,
+  getCampaignsInBundle,
   removeCampaignFromBundle
 } from '../store'
+import NewBundle from './newBundle'
 import { withStyles } from '@material-ui/core/styles'
 import { List, ListItem, ListItemText, ListSubheader } from '@material-ui/core'
 import PropTypes from 'prop-types'
@@ -36,7 +37,7 @@ class Bundles extends Component {
     this.setState({ selectedIndex: index })
     this.setState(state => ({ open: !state.open }))
     this.props.setBundle(bundle)
-    this.props.gotCampaignsInBundle(bundle.campaigns)
+    this.props.getCampaignsInBundle(bundle.id)
   }
 
   removeClick = async info => {
@@ -47,13 +48,14 @@ class Bundles extends Component {
     await this.props.me()
     await this.props.getAllBundles(this.props.user.id)
     await this.props.setBundle(this.props.bundles[0])
-    await this.props.gotCampaignsInBundle(this.props.bundles[0].campaigns)
+    await this.props.getCampaignsInBundle(this.props.bundles[0].id)
   }
 
   render() {
     const { classes, bundles } = this.props
+    const filtBuns = bundles.filter(bundle => (bundle.deployed ===false))
     let index = 0
-    return this.props.bundles && this.props.bundles.length ? (
+    return filtBuns && filtBuns.length ? (
       <div className={classes.root}>
         <List
           component="nav"
@@ -61,7 +63,7 @@ class Bundles extends Component {
             <ListSubheader component="div">Active Projects</ListSubheader>
           }
         >
-          {this.props.bundles.map(bundle => {
+          {filtBuns.map(bundle => {
             const indexValue = index
             index++
             return (
@@ -70,17 +72,19 @@ class Bundles extends Component {
                   key={bundle.id}
                   button
                   selected={this.state.selectedIndex === indexValue}
+                  open = {this.state.open === indexValue}
                   onClick={event =>
                     this.handleListItemClick(event, indexValue, bundle)
                   }
+                  
                 >
                   <ListItemText primary={bundle.projectName} />
-                  {this.state.open ? <ExpandLess /> : <ExpandMore />}
+                  {this.state.open ?  <ExpandLess /> : <ExpandMore /> }
                 </ListItem>
-                <Collapse in={this.state.open} timeout="auto">
+                <Collapse in={indexValue === this.state.selectedIndex && this.state.open} timeout="auto">
                   <List component="div" key={bundle.id}>
                     {this.props.campaignsInBundle &&
-                      this.props.campaignsInBundle.length &&
+                      this.props.campaignsInBundle.length > 0 ?
                       this.props.campaignsInBundle.map(campaign => {
                         return (
                           <ListItem
@@ -101,7 +105,7 @@ class Bundles extends Component {
                             />
                           </ListItem>
                         )
-                      })}
+                      }) : <ListItem> <ListItemText inset primary = 'No Campaigns In Project' /> </ListItem>}
                     <NavLink
                       to={{
                         pathname: '/checkout',
@@ -123,7 +127,9 @@ class Bundles extends Component {
             </ListItem>
           </NavLink>
         </List>
+        <NewBundle />
       </div>
+      
     ) : null
   }
 }
@@ -142,8 +148,8 @@ const mapDispatch = dispatch => {
     getAllBundles: userId => dispatch(getAllBundles(userId)),
     setBundle: bundle => dispatch(setBundle(bundle)),
     me: () => dispatch(me()),
-    gotCampaignsInBundle: campaigns =>
-      dispatch(gotCampaignsInBundle(campaigns)),
+    getCampaignsInBundle: bundleId =>
+      dispatch(getCampaignsInBundle(bundleId)),
     removeCampaignFromBundle: info => dispatch(removeCampaignFromBundle(info))
   }
 }

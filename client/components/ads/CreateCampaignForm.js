@@ -14,7 +14,7 @@ import {
   TextField,
   MenuItem
 } from '@material-ui/core'
-import DemographicsList from './DemographicsList'
+import DemographicsList from '../campaigns/DemographicsList'
 import { postCampaign } from '../../store'
 
 const styles = theme => ({

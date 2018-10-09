@@ -2,8 +2,19 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import { Typography, Button, Grid } from '@material-ui/core'
+import {
+  Typography,
+  Button,
+  Grid,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Card
+} from '@material-ui/core'
 import CampaignsList from './CampaignsList'
+import CampaignForm from './CampaignForm'
 import CreateCampaignDialog from '../ads/CreateCampaignDialog'
 import SingleCampaign from './SingleCampaign'
 import {
@@ -44,20 +55,27 @@ const styles = theme => ({
   heading: {
     padding: theme.spacing.unit * 2,
     textAlign: 'center'
+  },
+  dialog: {
+    height: 700
   }
 })
 
-class AdvertiserCampaignsModal extends Component {
+class AdvertiserCampaigns extends Component {
   constructor(props) {
     super(props)
     this.state = {
       open: false,
+      price: 0,
       selectedIndex: 0,
-      selectedCampaign: props.allCampaigns[0] || {}
+      selectedDemographics: props.allDemographics
     }
     this.handleListItemClick = this.handleListItemClick.bind(this)
+    this.handleCreate = this.handleCreate.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+
+    console.log('ADCAMP STATE', this.state)
   }
 
   handleOpen = () => {
@@ -66,6 +84,28 @@ class AdvertiserCampaignsModal extends Component {
 
   handleClose = () => {
     this.setState({ open: false })
+  }
+
+  handleCreate(evt) {
+    evt.preventDefault()
+    const name = evt.target.name.value
+    const advertiserId = this.props.currentUser.id
+    const price = this.props.price
+    const demographics = this.state.selectedDemographics.filter(
+      demographic => demographic.checked
+    )
+    const newCampaign = {
+      advertiserId: advertiserId,
+      name: name,
+      price: price,
+      demographics: demographics
+    }
+    console.log('HANDLE CREATE CAMPAIGN', newCampaign)
+    this.props.createCampaign(newCampaign)
+  }
+
+  componentDidMount() {
+    this.props.fetchCampaign(this.props.allCampaigns[0])
   }
 
   handleListItemClick = (event, index, campaign) => {
@@ -78,11 +118,11 @@ class AdvertiserCampaignsModal extends Component {
     const {
       classes,
       allCampaigns,
-      createNewCampaign,
       currentUser,
-      loadSingleCampaign
+      selectedCampaign,
+      createCampaign
     } = this.props
-    const selectedCampaign = this.state.selectedCampaign
+    const { selectedDemographics, price } = this.state
     return (
       <div className="container">
         {allCampaigns &&
@@ -92,23 +132,41 @@ class AdvertiserCampaignsModal extends Component {
                 <Grid item xs={3}>
                   <CampaignsList
                     campaigns={allCampaigns}
-                    loadSingleCampaign={loadSingleCampaign}
                     handleListItemClick={this.handleListItemClick}
                     selectedIndex={this.state.selectedIndex}
                   />
                 </Grid>
                 <Grid item xs={9}>
-                  <h1>selected campaign placeholder</h1>
+                  <h1>SelectedCampaign: {selectedCampaign.name}</h1>
+                  {/* <CampaignForm
+                    price={price}
+                    selectedDemographics={selectedDemographics}
+                    onSubmit={this.handleCreate}
+                  /> */}
                 </Grid>
               </Grid>
               <Button onClick={this.handleOpen}>Create a campaign</Button>
-              <CreateCampaignDialog
+              <Dialog
+                fullScreen={true}
                 open={this.state.open}
                 onClose={this.handleClose}
-                campaigns={allCampaigns}
-                createNewCampaign={createNewCampaign}
-                currentUser={currentUser}
-              />
+              >
+                <Grid container direction="column" alignItems="center">
+                  <DialogTitle>New campaign</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Name your new ad campaign, its price, and which categories
+                      it can be associated with.
+                    </DialogContentText>
+
+                    <CampaignForm
+                      price={price}
+                      selectedDemographics={selectedDemographics}
+                      onSubmit={this.handleCreate}
+                    />
+                  </DialogContent>
+                </Grid>
+              </Dialog>
             </div>
           )}
       </div>
@@ -117,9 +175,19 @@ class AdvertiserCampaignsModal extends Component {
 }
 
 const mapState = state => {
+  const demographics = state.demographics.allDemographics
+  let demographicsArray = []
+  for (let i = 0; i < demographics.length; i++) {
+    demographicsArray.push({
+      id: demographics[i].id,
+      name: demographics[i].name,
+      checked: false
+    })
+  }
   return {
     allCampaigns: state.campaigns.allUserCampaigns,
-    selectedCampaign: state.campaigns.allUserCampaigns[0],
+    selectedCampaign: state.campaigns.singleCampaign,
+    allDemographics: demographicsArray,
     currentUser: state.user.currentUser
   }
 }
@@ -136,10 +204,10 @@ const mapDispatch = dispatch => {
       dispatch(setCampaign(campaign))
     },
     createCampaign: campaign => dispatch(postCampaign(campaign)),
-    editCampaign: campaignId => dispatch(editCampaign(campaignId))
+    editCampaign: campaignId => dispatch(editCampaign(campaignId)),
+    deleteCampaign: campaignId => dispatch(removeCampaign(campaignId))
   }
 }
-const AdvertiserCampaigns = withStyles(styles)(AdvertiserCampaignsModal)
 
 export default withStyles(styles)(
   connect(mapState, mapDispatch)(AdvertiserCampaigns)

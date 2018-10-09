@@ -1,11 +1,17 @@
 const router = require('express').Router()
-const { Campaign, Advertisement, Demographic, User } = require('../db/models')
+const {
+  Campaign,
+  Advertisement,
+  Demographic,
+  User,
+  campaignDemographic
+} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
     const campaigns = await Campaign.findAll({
-      include: [{ model: Advertisement }]
+      include: [{ all: true }]
     })
     res.json(campaigns)
   } catch (err) {
@@ -40,17 +46,26 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-router.post('/', (req, res, next) => {
-  const { demographics, advertiserId } = req.body
-  Campaign.create(req.body)
-    .then(campaign => {
-      campaign.addDemographics([demographics])
-      res.json(campaign)
-    })
-    .catch(next)
+router.post('/', async (req, res, next) => {
+  try {
+    const { demographics } = req.body
+    const campaign = await Campaign.create(req.body)
+    // demographics.forEach(async demographic => {
+    //   console.log('ids', campaign.id, demographic.id)
+    //   await campaignDemographic.create({
+    //     campaignId: campaign.id,
+    //     demographicId: demographic.id
+    //   })
+    // })
+    demographics.forEach(demographic => campaign.addDemographic(demographic.id))
+    res.json(campaign)
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.put('/campaign/:campaignId', (req, res, next) => {
+  const { demographics } = req.body
   Campaign.findById(req.params.campaignId, {
     include: [{ model: Advertisement }, { model: Demographic }]
   })

@@ -31,8 +31,10 @@ class AllCampaigns extends Component {
     await this.props.getAllCampaigns()
   }
 
+  //refactorable?
   async handleClick(evt, campaign) {
-    const ids = this.props.bundle.campaigns.map(camp => camp.id)
+    if (this.props.campaignsInBundle.length) {
+    const ids = this.props.campaignsInBundle.map(camp => camp.id)
     if (ids.includes(campaign.id)) {
       alert(
         `${campaign.name} campaign is already in ${
@@ -43,6 +45,10 @@ class AllCampaigns extends Component {
       await this.props.addToBundle(campaign, this.props.bundle.id)
       alert(`${campaign.name} added to ${this.props.bundle.projectName}`)
     }
+  } else {
+    await this.props.addToBundle(campaign, this.props.bundle.id)
+      alert(`${campaign.name} added to ${this.props.bundle.projectName}`)
+  }
   }
 
   render() {
@@ -94,7 +100,8 @@ class AllCampaigns extends Component {
 const mapState = state => {
   return {
     campaigns: state.campaigns.allCampaigns,
-    bundle: state.bundles.bundle
+    bundle: state.bundles.bundle,
+    campaignsInBundle: state.bundles.campaignsInBundle
   }
 }
 

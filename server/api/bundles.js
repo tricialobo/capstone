@@ -6,16 +6,15 @@ router.put('/remove', async (req, res, next) => {
   console.log('bundleId & campaignId', req.body.bundleId, req.body.campaignId)
   const bundleId = req.body.bundleId
   try {
-    const bundle = await Bundle.findById(bundleId)
-    const updateBundle = await bundle.removeCampaign(req.body.campaignId)
-    const updatedBun = await Bundle.findAll({
-      where: {
-        id: bundleId
-      },
-      include: [{ model: Campaign }]
-    })
-    res.json(updatedBun[0].campaigns)
-  } catch (err) {
+  const bundle = await Bundle.findById(bundleId)
+  const updateBundle = await bundle.removeCampaign(req.body.campaignId)
+  const updatedBun = await Bundle.findAll({
+    where: {
+      id: bundleId
+    }, include: [{model: Campaign}]
+  })
+  res.json(updatedBun[0].campaigns)
+  }catch (err) {
     next(err)
   }
 })
@@ -36,7 +35,22 @@ router.put('/:bundleId', async (req, res, next) => {
   }
 })
 
-// get all bundles belonging to a dev user
+router.post('/newbundle/:userId', async (req, res, next) => {
+  console.log('hello??')
+    const userId = req.params.userId
+    try{
+    const newBun = await Bundle.create({
+      developerId: userId,
+      projectName: req.body.projectName
+    })
+    newBun.campaigns = []
+    res.json(newBun)
+  } catch (err) {
+    next(err)
+  }
+})
+
+
 router.post('/email', function create(req, res, next) {
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -62,6 +76,9 @@ router.post('/email', function create(req, res, next) {
   res.send(201, req.params)
 })
 
+
+
+
 // get all bundles belonging to a dev user
 router.get('/user/:userId', async (req, res, next) => {
   const userId = req.params.userId
@@ -69,8 +86,7 @@ router.get('/user/:userId', async (req, res, next) => {
     const bundles = await Bundle.findAll({
       where: {
         developerId: userId
-      },
-      include: [{ model: Campaign }]
+      }, include: [{model: Campaign}]
     })
     res.json(bundles)
   } catch (err) {
@@ -97,31 +113,5 @@ router.get('/:bundleId', async (req, res, next) => {
     next(err)
   }
 })
-
-// router.post('/send', (req, res, next) => {
-//   var name = req.body.name
-//   var email = req.body.email
-//   var message = req.body.message
-//   var content = `name: ${name} \n email: ${email} \n message: ${content} `
-
-//   var mail = {
-//     from: name,
-//     to: 'RECEIVING_EMAIL_ADDRESS_GOES_HERE', //Change to email address that you want to receive messages on
-//     subject: 'New Message from Contact Form',
-//     text: content
-//   }
-
-//   transporter.sendMail(mail, (err, data) => {
-//     if (err) {
-//       res.json({
-//         msg: 'fail'
-//       })
-//     } else {
-//       res.json({
-//         msg: 'success'
-//       })
-//     }
-//   })
-// })
 
 module.exports = router

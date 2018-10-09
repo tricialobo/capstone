@@ -19,10 +19,6 @@ const styles = theme => ({
 })
 
 class CampaignsList extends Component {
-  async componentDidMount() {
-    await this.props.loadSingleCampaign(this.props.campaigns[0].id)
-  }
-
   render() {
     const {
       classes,
@@ -31,6 +27,7 @@ class CampaignsList extends Component {
       handleListItemClick
     } = this.props
     let panelIndex = 0
+
     return (
       <div className={classes.root}>
         <Divider />

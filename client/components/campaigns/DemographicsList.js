@@ -21,7 +21,7 @@ class DemographicsList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      demographics: props.demographics,
+      demographics: props.selectedDemographics,
       selected: []
     }
 
@@ -36,7 +36,7 @@ class DemographicsList extends Component {
       }
     }
     this.setState({ demographics: options })
-    console.log('demo list', this.state)
+    console.log('demo list', this.state.demographics)
   }
 
   render() {
