@@ -11,7 +11,9 @@ const GOT_ALL_BUNDLES = 'GOT_ALL_BUNDLES'
 const SET_BUNDLE = 'SET_BUNDLE'
 const REMOVED_CAMPAIGN_FROM_BUNDLE = 'REMOVED_CAMPAIGN_FROM_BUNDLE'
 const ADDED_BUNDLE = 'ADDED_BUNDLE'
+const OPEN_ADD_NEW = 'OPEN_ADD_NEW'
 
+const GOT_PREVIOUS_BUNDLES = 'GOT_PREVIOUS_BUNDLES'
 /**
  * INITIAL STATE
  */
@@ -19,13 +21,19 @@ const initialState = {
   advertisements: [],
   campaignsInBundle: [],
   allBundles: [],
-  bundle: {}
+  bundle: {},
+  addNewBool: false,
+  previousBundles: [],
 }
 
 /**
  * ACTION CREATORS
  */
 
+export const gotPreviousBundles = bundles => ({
+  type: GOT_PREVIOUS_BUNDLES,
+  bundles
+})
 export const gotAdvertisements = advertisements => ({
   type: GOT_ADVERTISEMENTS,
   advertisements
@@ -34,6 +42,10 @@ export const addedToBundle = campaign => ({ type: ADDED_TO_BUNDLE, campaign })
 export const gotCampaignsInBundle = campaigns => ({
   type: GOT_CAMPAIGNS_IN_BUNDLE,
   campaigns
+})
+
+export const addNew = () => ({
+  type: OPEN_ADD_NEW
 })
 
 export const gotAllBundles = bundles => ({
@@ -55,11 +67,21 @@ export const addedBundle = bundle => ({
  * THUNK CREATORS
  */
 
+export function getPreviousBundles(userid) {
+  return async dispatch => {
+    const previousBundles = await axios.get(`/api/bundles/previous/${userid}`)
+    const action = gotPreviousBundles(previousBundles)
+    dispatch(action)
+  }
+}
 export function addToBundle(campaign, bundleid) {
   return async dispatch => {
-    const bundleUpdated = await axios.put(`/api/bundles/${bundleid}`, {
-      campaign: campaign.id
-    })
+    const bundleUpdated = await axios.put(
+      `/api/bundles/addcampaign/${bundleid}`,
+      {
+        campaign: campaign.id
+      }
+    )
     console.log('bundleupdated', bundleUpdated)
     const action = addedToBundle(campaign)
     dispatch(action)
@@ -95,18 +117,27 @@ export function removeCampaignFromBundle(info) {
   }
 }
 
-export function addBundle (obj) {
+export function addBundle(obj) {
   console.log('in addbundle func')
   return async dispatch => {
     console.log('in async dispatch in addbundle func')
-    const {data} = await axios.post(`/api/bundles/newbundle/${obj.userId}`, obj)
+    const { data } = await axios.post(
+      `/api/bundles/newbundle/${obj.userId}`,
+      obj
+    )
     console.log('newBun', data)
     dispatch(addedBundle(data))
   }
-} 
+}
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case GOT_PREVIOUS_BUNDLES: {
+      return {
+        ...state,
+        previousBundles: action.bundles
+      }
+    }
     case ADDED_TO_BUNDLE: {
       return {
         ...state,
@@ -123,6 +154,8 @@ export default function(state = initialState, action) {
       return { ...state, bundle: action.bundle }
     case ADDED_BUNDLE:
       return {...state, allBundles: [...state.allBundles, action.bundle]}
+    case OPEN_ADD_NEW:
+      return {...state, addNewBool: (!state.addNewBool)}
     default:
       return state
   }

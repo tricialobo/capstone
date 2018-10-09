@@ -21,7 +21,7 @@ async function seed() {
       lastName: 'Gates',
       email: 'rolex@email.com',
       password: '123',
-      budget: 44.0,
+      budget: 100.0,
       isAdvertiser: true
     }),
     User.create({
@@ -61,7 +61,7 @@ async function seed() {
     email: 'gucci@email.com',
     password: '1234',
     isAdvertiser: true,
-    budget: 50.0,
+    budget: 80.0,
     salt: 'salt'
   })
 
@@ -71,7 +71,7 @@ async function seed() {
     email: 'mcdonalds@email.com',
     password: '1234',
     isAdvertiser: true,
-    budget: 60.0,
+    budget: 110.0,
     salt: 'salt'
   })
 
@@ -229,7 +229,7 @@ async function seed() {
     blockChainKey: 'abc',
     clicks: 8,
     name: 'Rolex',
-    price: '9000.0',
+    price: '20.0',
     isActive: true,
     advertiserId: 1
   })
@@ -245,7 +245,7 @@ async function seed() {
     blockChainKey: '',
     clicks: 3,
     name: 'Gucci',
-    price: '8000.0',
+    price: '18.0',
     isActive: true,
     advertiserId: 5
   })
@@ -261,12 +261,10 @@ async function seed() {
     blockChainKey: '',
     clicks: 6,
     name: 'Mcdonalds',
-    price: '1000.0',
+    price: '10.0',
     isActive: true,
     advertiserId: 6
   })
-  await campaign3.addBundle(bundle2)
-  await campaign3.addBundle(bundle1)
   await campaign3.addCategory(category3)
   await campaign3.addCategory(category2)
   await campaign3.addDemographic(demographic1)
