@@ -1,43 +1,25 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions'
-import Typography from '@material-ui/core/Typography'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import Chip from '@material-ui/core/Chip'
-import Button from '@material-ui/core/Button'
-import Divider from '@material-ui/core/Divider'
-import AdsGridList from '../ads/AdsGridList'
+import {
+  ExpansionPanelDetails,
+  ExpansionPanelActions,
+  ExpansionPanelSummary,
+  Button,
+  Divider,
+  Grid
+} from '@material-ui/core'
+import CheckoutCard from './CheckoutCard'
+import { removeCampaignFromBundle } from '../../store'
 
 const styles = theme => ({
   root: {
     width: '100%'
   },
-  heading: {
-    fontSize: theme.typography.pxToRem(15)
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary
-  },
-  icon: {
-    verticalAlign: 'bottom',
-    height: 20,
-    width: 20
-  },
   details: {
     alignItems: 'center'
-  },
-  column: {
-    flexBasis: '33.33%'
-  },
-  helper: {
-    borderLeft: `2px solid ${theme.palette.divider}`,
-    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
   },
   link: {
     color: theme.palette.primary.main,
@@ -45,29 +27,50 @@ const styles = theme => ({
     '&:hover': {
       textDecoration: 'underline'
     }
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
 })
 
-const CampaignExpansionPanel = props => {
-  const { classes, campaign } = props
+class CampaignExpansionPanel extends Component {
+  handleRemove = async info => {
+    await this.props.removeCampaign(info)
+  }
 
-  return (
-    <div className={classes.root}>
-      <ExpansionPanelDetails className={classes.details}>
-        <div>
-          <Typography variant="subheading">Ads in Campaign</Typography>
-          {/* <AdsGridList ads={campaign.advertisements} /> */}
-        </div>
-      </ExpansionPanelDetails>
-      <Divider />
-      <ExpansionPanelActions>
-        <Button size="small">Cancel</Button>
-        <Button size="small" color="primary">
-          Save
-        </Button>
-      </ExpansionPanelActions>
-    </div>
-  )
+  render() {
+    const { classes, campaign, bundle } = this.props
+
+    return (
+      <Grid container justify="center" className={classes.root}>
+        <ExpansionPanelDetails className={classes.details}>
+          <CheckoutCard campaign={campaign} />
+        </ExpansionPanelDetails>
+        <ExpansionPanelActions>
+          <Button
+            size="small"
+            onClick={() =>
+              this.handleRemove({
+                campaignId: campaign.id,
+                bundleId: bundle.id
+              })
+            }
+          >
+            Remove
+          </Button>
+        </ExpansionPanelActions>
+        <Divider />
+      </Grid>
+    )
+  }
 }
 
-export default withStyles(styles)(CampaignExpansionPanel)
+const mapDispatch = dispatch => {
+  return {
+    removeCampaign: info => dispatch(removeCampaignFromBundle(info))
+  }
+}
+
+export default withStyles(styles)(
+  connect(null, mapDispatch)(CampaignExpansionPanel)
+)

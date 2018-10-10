@@ -25,18 +25,12 @@ class SingleCampaign extends Component {
   render() {
     const { selectedCampaign, classes } = this.props
     console.log('state', this.state)
-    const demographics = selectedCampaign.demographics
-    const advertisements = selectedCampaign.advertisements
     console.log('selected campaign', selectedCampaign)
     console.log('demographics', selectedCampaign.demographics)
     return (
       selectedCampaign && (
         <div className={classes.root}>
-          <CampaignCard
-            selectedCampaign={selectedCampaign}
-            demographics={demographics}
-            advertisements={advertisements}
-          />
+          <CampaignCard selectedCampaign={selectedCampaign} />
         </div>
       )
     )
