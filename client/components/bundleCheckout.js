@@ -82,6 +82,7 @@ class BundleCheckout extends Component {
 
             campaign.advertiser.email,
             {
+              forceEmbeddedImages: true,
               from: campaign.advertiser.firstName,
               //to: campaign.advertiser.email,
               to: 'tricia.lobo@gmail.com',
@@ -101,6 +102,7 @@ class BundleCheckout extends Component {
             margin: 0;
             padding: 0;
           }
+         
           table {
             border-collapse: collapse;
             table-layout: fixed;
@@ -560,12 +562,11 @@ class BundleCheckout extends Component {
                   <div class="header" style="Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);" id="emb-email-header-container">
                   <!--[if (mso)|(IE)]><table align="center" class="header" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="width: 600px"><![endif]-->
                     <div class="logo"  emb-logo-margin-box" style="font-size: 26px;line-height: 32px;Margin-top: 6px;Margin-bottom: 20px;color: #c3ced9;font-family: Roboto,Tahoma,sans-serif;Margin-left: 20px;Margin-right: 20px;" align="center">
-                    <img src = 'http://localhost:8080/images/logo.png' style=”display:block;” />
-
+                   
                     <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 211px;" alt="" width="211" /></div>
+                    <p class="size-64" style="Margin-top: 0;Margin-bottom: 0;font-size: 44px;line-height: 50px;text-align: center;" lang="x-size-64"><span style="color:#000000"><strong>grace</strong></span></p>
+
                     </div>
-                  <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-                  </div>
                 </div>
                 <div role="section">
                 <div style="background-color: #000000;">
@@ -621,8 +622,8 @@ class BundleCheckout extends Component {
                       
                         <div style="Margin-left: 20px;Margin-right: 20px;">
                 <div class="btn btn--flat btn--large" style="Margin-bottom: 20px;text-align: center;">
-                  <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #e31212;font-family: Avenir, sans-serif;" href="http://localhost:8080/payment/${contractHash}">Pay now</a><![endif]>
-                <!--[if mso]><p style="line-height:0;margin:0;">&nbsp;</p><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="http://localhost:8080" style="width:92px" arcsize="9%" fillcolor="#E31212" stroke="f"><v:textbox style="mso-fit-shape-to-text:t" inset="0px,11px,0px,11px"><center style="font-size:14px;line-height:24px;color:#FFFFFF;font-family:Avenir,sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px">Button</center></v:textbox></v:roundrect><![endif]--></div>
+                  <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #86c7bf;font-family: Avenir, sans-serif;" href="http://localhost:8080/payment/${contractHash}">Pay now</a><![endif]>
+                <!--[if mso]><p style="line-height:0;margin:0;">&nbsp;</p><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="http://localhost:8080" style="width:92px" arcsize="9%" fillcolor="#E31212" stroke="f"><v:textbox style="mso-fit-shape-to-text:t" inset="0px,11px,0px,11px"><center style="font-size:14px;line-height:24px;color:#86c7bf;font-family:Avenir,sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px">Button</center></v:textbox></v:roundrect><![endif]--></div>
               </div>
                       
                         <div style="Margin-left: 20px;Margin-right: 20px;">
@@ -677,14 +678,7 @@ class BundleCheckout extends Component {
                 <div style="mso-line-height-rule: exactly;line-height: 40px;font-size: 40px;">&nbsp;</div>
               </div></td></tr></tbody></table>
             
-          </body></html>`,
-              attachments: [
-                {
-                  filename: 'logo.png',
-                  path: 'public/images' + '/logo.png',
-                  cid: 'cid:unique@kreata.ee'
-                }
-              ]
+          </body></html>`
             }
           )
         ])
