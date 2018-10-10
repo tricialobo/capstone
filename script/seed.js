@@ -271,6 +271,47 @@ async function seed() {
   await campaign3.addDemographic(demographic3)
   // await campaign3.addContract(contract2)
 
+  const campaign4 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: 'Gucci - Women',
+    price: '20.0',
+    isActive: true,
+    advertiserId: 3
+  })
+  await campaign4.addCategory(category1)
+  await campaign4.addCategory(category2)
+  await campaign4.addDemographic(demographic6)
+  await campaign4.addDemographic(demographic3)
+
+  const campaign5 = await Campaign.create({
+    blockChainKey: 'abc',
+    clicks: 8,
+    name: 'Rolex - Women',
+    price: '20.0',
+    isActive: true,
+    advertiserId: 1
+  })
+  await campaign5.addBundle(bundle1)
+  await campaign5.addBundle(bundle3)
+  await campaign5.addCategory(category2)
+  await campaign5.addCategory(category3)
+  await campaign5.addDemographic(demographic6)
+  await campaign5.addDemographic(demographic2)
+
+  const campaign6 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: 'Mcdonalds',
+    price: '10.0',
+    isActive: true,
+    advertiserId: 6
+  })
+  await campaign6.addCategory(category3)
+  await campaign6.addCategory(category2)
+  await campaign6.addDemographic(demographic1)
+  await campaign6.addDemographic(demographic3)
+
   const ad1 = await Advertisement.create({
     name: 'Rolex-Ad-1',
     image:
@@ -339,8 +380,100 @@ async function seed() {
   })
   await ad7.addCampaign(campaign3)
 
+  const ad8 = await Advertisement.create({
+    name: 'Rolex-Ad-4 -W',
+    image:
+      'https://i.pinimg.com/originals/3d/1c/71/3d1c7119f809873fe15d75da8151c770.jpg',
+    url: 'http://google.com',
+    adSpecs: 'format1',
+    advertiserId: 1
+  })
+  await ad8.addCampaign(campaign5)
+
+  const ad9 = await Advertisement.create({
+    name: 'Rolex-Ad-5-W',
+    image:
+      'https://i.pinimg.com/originals/3d/1c/71/3d1c7119f809873fe15d75da8151c770.jpg',
+    url: 'http://google.com',
+    adSpecs: 'format1',
+    advertiserId: 1
+  })
+  await ad9.addCampaign(campaign5)
+
+  const ad10 = await Advertisement.create({
+    name: 'Rolex-Ad-6-W',
+    image:
+      'https://i.pinimg.com/originals/3d/1c/71/3d1c7119f809873fe15d75da8151c770.jpg',
+    url: 'http://google.com',
+    adSpecs: 'format1',
+    advertiserId: 1
+  })
+  await ad10.addCampaign(campaign5)
+
+  const ad11 = await Advertisement.create({
+    name: 'Gucci-Ad-4-W',
+    image:
+      'http://cdn2-www.thefashionspot.com/assets/uploads/2014/07/ad-campaign-gucci-fall-2014-mert-and-marcus-article-two.jpg',
+    url: 'http://google.com',
+    adSpecs: 'format3',
+    advertiserId: 5
+  })
+  await ad11.addCampaign(campaign4)
+
+  const ad12 = await Advertisement.create({
+    name: 'Gucci-Ad-5-W',
+    image:
+      'http://cdn2-www.thefashionspot.com/assets/uploads/2014/07/ad-campaign-gucci-fall-2014-mert-and-marcus-article-two.jpg',
+    url: 'http://google.com',
+    adSpecs: 'format3',
+    advertiserId: 5
+  })
+  await ad12.addCampaign(campaign4)
+
+  const ad13 = await Advertisement.create({
+    name: 'Gucci-Ad-6-W',
+    image:
+      'http://cdn2-www.thefashionspot.com/assets/uploads/2014/07/ad-campaign-gucci-fall-2014-mert-and-marcus-article-two.jpg',
+    url: 'http://google.com',
+    adSpecs: 'format3',
+    advertiserId: 5
+  })
+  await ad13.addCampaign(campaign4)
+
+  const ad14 = await Advertisement.create({
+    name: 'Mcdonalds-Ad-3',
+    image:
+      'https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-9/42533407_10155863687227014_8105177112362614784_o.jpg?_nc_cat=100&oh=3fef04c3b2bbd169c4a05c9544becdf8&oe=5C6250B0',
+    url: 'http://google.com',
+    adSpecs: 'format3',
+    advertiserId: 6
+  })
+  await ad14.addCampaign(campaign6)
+
+  const ad15 = await Advertisement.create({
+    name: 'Mcdonalds-Ad-4',
+    image:
+      'https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-9/42533407_10155863687227014_8105177112362614784_o.jpg?_nc_cat=100&oh=3fef04c3b2bbd169c4a05c9544becdf8&oe=5C6250B0',
+    url: 'http://google.com',
+    adSpecs: 'format3',
+    advertiserId: 6
+  })
+  await ad15.addCampaign(campaign6)
+
+  const ad16 = await Advertisement.create({
+    name: 'Mcdonalds-Ad-5',
+    image:
+      'https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-9/42533407_10155863687227014_8105177112362614784_o.jpg?_nc_cat=100&oh=3fef04c3b2bbd169c4a05c9544becdf8&oe=5C6250B0',
+    url: 'http://google.com',
+    adSpecs: 'format3',
+    advertiserId: 6
+  })
+  await ad16.addCampaign(campaign6)
+
+
   console.log(`seeded successfully`)
 }
+
 
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.
