@@ -85,15 +85,4 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => {
-  return {
-    loadSingleCampaign: () => {
-      const campaignId = ownProps.match.params.campaignId
-      dispatch(fetchSingleCampaign(campaignId))
-    }
-  }
-}
-
-export default withStyles(styles)(
-  connect(mapState, mapDispatch)(SingleCampaign)
-)
+export default withStyles(styles)(connect(mapState)(SingleCampaign))

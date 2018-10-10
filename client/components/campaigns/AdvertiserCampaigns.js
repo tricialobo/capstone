@@ -78,6 +78,11 @@ class AdvertiserCampaigns extends Component {
     console.log('ADCAMP STATE', this.state)
   }
 
+  async componentDidMount() {
+    await this.props.me()
+    await this.props.loadAllUserCampaigns(this.props.currentUser.id)
+  }
+
   handleOpen = () => {
     this.setState({ open: true })
   }
@@ -134,6 +139,7 @@ class AdvertiserCampaigns extends Component {
                     handleListItemClick={this.handleListItemClick}
                     selectedIndex={this.state.selectedIndex}
                   />
+                  <Button onClick={this.handleOpen}>Create a campaign</Button>
                 </Grid>
                 <Grid item xs={9}>
                   {selectedCampaign && (
@@ -141,7 +147,7 @@ class AdvertiserCampaigns extends Component {
                   )}
                 </Grid>
               </Grid>
-              <Button onClick={this.handleOpen}>Create a campaign</Button>
+
               <Dialog
                 fullScreen={true}
                 open={this.state.open}

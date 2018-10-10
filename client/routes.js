@@ -74,11 +74,7 @@ class Routes extends Component {
             />
             <Route path="/account" component={AccountMenu} />
             <Route exact path="/ads" component={AllAds} />
-            <Route
-              exact
-              path="/campaigns/user/:userId"
-              component={AdvertiserCampaigns}
-            />
+            <Route exact path="/campaigns" component={AdvertiserCampaigns} />
             <Route
               exact
               path="/campaigns/campaign/:campaignId"

@@ -176,7 +176,7 @@ export default function(state = initialState, action) {
     case CREATE_CAMPAIGN:
       return {
         ...state,
-        allCampaigns: [...state.allCampaigns, action.campaign]
+        allUserCampaigns: [...state.allCampaigns, action.campaign]
       }
     case UPDATE_CAMPAIGN:
       return {
