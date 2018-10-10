@@ -90,9 +90,15 @@ const theme = createMuiTheme({
     },
     MuiListSubheader: {
       root: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 600,
         color: '#000'
+      }
+    },
+    MuiListItemText: {
+      primary: {
+        fontSize: 16,
+        fontWeight: 500
       }
     },
     MuiCardHeader: {

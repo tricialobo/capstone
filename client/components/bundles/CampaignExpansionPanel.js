@@ -11,7 +11,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Chip from '@material-ui/core/Chip'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import AdsGridList from './AdsGridList'
+import AdsGridList from '../ads/AdsGridList'
 
 const styles = theme => ({
   root: {
@@ -56,8 +56,7 @@ const CampaignExpansionPanel = props => {
       <ExpansionPanelDetails className={classes.details}>
         <div>
           <Typography variant="subheading">Ads in Campaign</Typography>
-
-          <AdsGridList ads={campaign.advertisements} />
+          {/* <AdsGridList ads={campaign.advertisements} /> */}
         </div>
       </ExpansionPanelDetails>
       <Divider />

@@ -71,7 +71,7 @@ class Navbar extends Component {
               {this.props.isAdvertiser ? (
                 <div>
                   <Button className="hvr-underline-from-center" color="inherit">
-                    <Link className={classes.navLinks} to={`/campaigns/user/${this.props.currentUser.id}`}>
+                    <Link className={classes.navLinks} to="/campaigns">
                       Campaigns
                     </Link>
                   </Button>
@@ -83,7 +83,7 @@ class Navbar extends Component {
                 </div>
               ) : (
                 <Button className="hvr-underline-from-center" color="inherit">
-                  <Link className={classes.navLinks} to="#">
+                  <Link className={classes.navLinks} to="/allcampaigns">
                     Projects
                   </Link>
                 </Button>
