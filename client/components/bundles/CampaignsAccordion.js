@@ -7,15 +7,14 @@ import {
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
+  ExpansionPanelActions,
   Grid,
   Typography,
   Divider,
   Button
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import LoadingScreen from '../LoadingScreen'
 import CampaignExpansionPanel from './CampaignExpansionPanel'
-import CreateCampaignDialog from './CreateCampaignDialog'
 
 const styles = theme => ({
   root: {
@@ -32,26 +31,10 @@ const styles = theme => ({
   }
 })
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10
-}
-
-function getModalStyle() {
-  const top = 50 + rand()
-  const left = 50 + rand()
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  }
-}
-
-class CampaignsAccordionModal extends Component {
+class CampaignsAccordion extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      open: false,
       expanded: null
     }
   }
@@ -62,27 +45,15 @@ class CampaignsAccordionModal extends Component {
     })
   }
 
-  handleOpen = () => {
-    this.setState({ open: true })
-  }
-
-  handleClose = value => {
-    this.setState({ value, open: false })
-  }
-
   render() {
-    const { classes } = this.props
+    const { classes, campaigns, bundle } = this.props
     const { expanded } = this.state
-    const campaigns = this.props.campaigns
     console.log('campaigns', campaigns)
     let panelIndex = 1
     return (
       campaigns && (
         <div className={classes.root}>
           <Grid container direction="column">
-            <Grid item xs={12}>
-              <Typography variant="title">Campaigns</Typography>
-            </Grid>
             <Grid item xs={12}>
               {campaigns &&
                 campaigns.length &&
@@ -101,30 +72,20 @@ class CampaignsAccordionModal extends Component {
                         </Typography>
                       </ExpansionPanelSummary>
                       <ExpansionPanelDetails>
-                        <CampaignExpansionPanel campaign={campaign} />
+                        <CampaignExpansionPanel
+                          campaign={campaign}
+                          bundle={bundle}
+                        />
                       </ExpansionPanelDetails>
                     </ExpansionPanel>
                   )
                 })}
             </Grid>
-            <Button onClick={this.handleOpen}>Create a campaign</Button>
-            <CreateCampaignDialog
-              open={this.state.open}
-              onClose={this.handleClose}
-              campaigns={campaigns}
-            />
           </Grid>
         </div>
       )
     )
   }
 }
-
-CampaignsAccordionModal.propTypes = {
-  classes: PropTypes.object.isRequired
-}
-
-// We need an intermediary variable for handling the recursive nesting.
-const CampaignsAccordion = withStyles(styles)(CampaignsAccordionModal)
 
 export default withStyles(styles)(CampaignsAccordion)

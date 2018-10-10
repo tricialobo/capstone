@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { getAllCampaigns, addToBundle } from '../store'
+import {
+  getAllCampaigns,
+  addToBundle,
+  getAllBundles,
+  setBundle
+} from '../store'
 import { withStyles } from '@material-ui/core/styles'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import DisplayManyCampaigns from './displayManyCampaigns'
-import CampaignGridList from './bundles/CampaignsGridList'
 import AllBundles from './allBundles'
-import CampaignsAccordion from './ads/CampaignsAccordion'
 import AdsGalleryGridList from './ads/AdsGalleryGridList'
 import { ListItem, List, Grid, Typography, Button } from '@material-ui/core'
 
@@ -29,6 +31,8 @@ class AllCampaigns extends Component {
 
   async componentDidMount() {
     await this.props.getAllCampaigns()
+    await this.props.getAllBundles(this.props.user.id)
+    await this.props.setBundle(this.props.bundles[0])
   }
 
   async handleClick(evt, campaign) {
@@ -54,46 +58,50 @@ class AllCampaigns extends Component {
     const { classes } = this.props
     const campaigns = this.props.campaigns
     const filtCamps = campaigns.filter(camp => camp.advertiser.balance > 0)
-    return (
-      <Grid container direction="row">
-        <Grid item xs={4}>
-          <AllBundles />
-        </Grid>
-        <Grid item xs={8}>
-          <Typography className={classes.titleText} variant="title">
-            Available Campaigns
-          </Typography>
-          <List>
-            {filtCamps.map(campaign => (
-              <ListItem key={campaign.id}>
-                <Grid container direction="column">
-                  <Grid container direction="row">
-                    <Grid item xs={10}>
-                      <Typography
-                        className={classes.campaignTitle}
-                        variant="subheading"
-                      >
-                        {campaign.name}
-                      </Typography>
+    if (this.props.bundle) {
+      return (
+        <Grid container direction="row">
+          <Grid item xs={4}>
+            <AllBundles />
+          </Grid>
+          <Grid item xs={8}>
+            <Typography className={classes.titleText} variant="title">
+              Available Campaigns
+            </Typography>
+            <List>
+              {campaigns &&
+                campaigns.length &&
+                filtCamps.map(campaign => (
+                  <ListItem key={campaign.id}>
+                    <Grid container direction="column">
+                      <Grid container direction="row">
+                        <Grid item xs={10}>
+                          <Typography
+                            className={classes.campaignTitle}
+                            variant="subheading"
+                          >
+                            {campaign.name}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={2}>
+                          <Button
+                            onClick={evt => this.handleClick({ evt }, campaign)}
+                          >
+                            add to {this.props.bundle.projectName}
+                          </Button>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <AdsGalleryGridList ads={campaign.advertisements} />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={2}>
-                      <Button
-                        onClick={evt => this.handleClick({ evt }, campaign)}
-                      >
-                        add to {this.props.bundle.projectName}
-                      </Button>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <AdsGalleryGridList ads={campaign.advertisements} />
-                  </Grid>
-                </Grid>
-              </ListItem>
-            ))}
-          </List>
+                  </ListItem>
+                ))}
+            </List>
+          </Grid>
         </Grid>
-      </Grid>
-    )
+      )
+    } else return null
   }
 }
 
@@ -101,7 +109,9 @@ const mapState = state => {
   return {
     campaigns: state.campaigns.allCampaigns,
     bundle: state.bundles.bundle,
-    campaignsInBundle: state.bundles.campaignsInBundle
+    bundles: state.bundles.allBundles,
+    campaignsInBundle: state.bundles.campaignsInBundle,
+    user: state.user.currentUser
   }
 }
 
@@ -109,7 +119,9 @@ const mapDispatch = dispatch => {
   return {
     getAllCampaigns: () => dispatch(getAllCampaigns()),
     addToBundle: (campaign, bundleId) =>
-      dispatch(addToBundle(campaign, bundleId))
+      dispatch(addToBundle(campaign, bundleId)),
+    getAllBundles: userId => dispatch(getAllBundles(userId)),
+    setBundle: bundle => dispatch(setBundle(bundle))
   }
 }
 

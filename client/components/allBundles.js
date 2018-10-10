@@ -31,7 +31,7 @@ const styles = theme => ({
 class Bundles extends Component {
   state = {
     selectedIndex: 0,
-    open: false,
+    open: false
   }
 
   handleListItemClick = (event, index, bundle) => {
@@ -52,14 +52,15 @@ class Bundles extends Component {
 
   async componentDidMount() {
     await this.props.me()
-    await this.props.getAllBundles(this.props.user.id)
-    await this.props.setBundle(this.props.bundles[0])
+    //await this.props.getAllBundles(this.props.user.id)
+    //await this.props.setBundle(this.props.bundles[0])
     await this.props.getCampaignsInBundle(this.props.bundles[0].id)
   }
 
   render() {
+    console.log('IT IS BEING RENDERED')
     const { classes, bundles } = this.props
-    const filtBuns = bundles.filter(bundle => (bundle.deployed ===false))
+    const filtBuns = bundles.filter(bundle => bundle.deployed === false)
     let index = 0
     return filtBuns && filtBuns.length ? (
       <div className={classes.root}>
@@ -78,19 +79,23 @@ class Bundles extends Component {
                   key={bundle.id}
                   button
                   selected={this.state.selectedIndex === indexValue}
-                  open = {this.state.open === indexValue}
+                  open={this.state.open === indexValue}
                   onClick={event =>
                     this.handleListItemClick(event, indexValue, bundle)
                   }
-                  
                 >
                   <ListItemText primary={bundle.projectName} />
-                  {this.state.open ?  <ExpandLess /> : <ExpandMore /> }
+                  {this.state.open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
-                <Collapse in={indexValue === this.state.selectedIndex && this.state.open} timeout="auto">
+                <Collapse
+                  in={
+                    indexValue === this.state.selectedIndex && this.state.open
+                  }
+                  timeout="auto"
+                >
                   <List component="div" key={bundle.id}>
                     {this.props.campaignsInBundle &&
-                      this.props.campaignsInBundle.length > 0 ?
+                    this.props.campaignsInBundle.length > 0 ? (
                       this.props.campaignsInBundle.map(campaign => {
                         return (
                           <ListItem
@@ -111,7 +116,16 @@ class Bundles extends Component {
                             />
                           </ListItem>
                         )
-                      }) : <ListItem> <ListItemText inset primary = 'No Campaigns In Project' /> </ListItem>}
+                      })
+                    ) : (
+                      <ListItem>
+                        {' '}
+                        <ListItemText
+                          inset
+                          primary="No Campaigns In Project"
+                        />{' '}
+                      </ListItem>
+                    )}
                     <NavLink
                       to={{
                         pathname: '/checkout',
@@ -127,13 +141,16 @@ class Bundles extends Component {
               </div>
             )
           })}
-            <ListItem className={classes.nested} button onClick = {() => this.newBunClick()}>
-              <ListItemText inset primary="Create New Project" />
-            </ListItem>
+          <ListItem
+            className={classes.nested}
+            button
+            onClick={() => this.newBunClick()}
+          >
+            <ListItemText inset primary="Create New Project" />
+          </ListItem>
         </List>
-        {this.props.addNewBool ? <NewBundle /> : null} 
+        {this.props.addNewBool ? <NewBundle /> : null}
       </div>
-      
     ) : null
   }
 }
@@ -153,8 +170,7 @@ const mapDispatch = dispatch => {
     getAllBundles: userId => dispatch(getAllBundles(userId)),
     setBundle: bundle => dispatch(setBundle(bundle)),
     me: () => dispatch(me()),
-    getCampaignsInBundle: bundleId =>
-      dispatch(getCampaignsInBundle(bundleId)),
+    getCampaignsInBundle: bundleId => dispatch(getCampaignsInBundle(bundleId)),
     removeCampaignFromBundle: info => dispatch(removeCampaignFromBundle(info)),
     addNew: () => dispatch(addNew())
   }

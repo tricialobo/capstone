@@ -4,15 +4,21 @@ import factory from '../../ethereum/factory'
 import fundsTransfer from '../../ethereum/fundsTransfer'
 import web3 from '../../ethereum/web3'
 import axios from 'axios'
+import { withStyles } from '@material-ui/core/styles'
 import {
   getCampaignsInBundle,
   getAdvertisements,
-  getAdScript
+  getAdScript,
+  updateBundle
 } from '../store/bundles'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import Grid from '@material-ui/core/Grid'
+import ProjectCheckout from './bundles/ProjectCheckout'
 class BundleCheckout extends Component {
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClick = this.handleClick.bind(this)
     //this.sendEmail = this.sendEmail.bind(this)
     this.state = {}
   }
@@ -21,8 +27,10 @@ class BundleCheckout extends Component {
     // await this.props.getAdvertisements(1)
     // await this.props.getCampaignsInBundle(1)
 
-    await this.props.getAdvertisements(this.props.bundleId)
-    await this.props.getCampaignsInBundle(this.props.bundleId)
+    await this.props.getAdvertisements(this.props.bundle.id)
+    await this.props.getCampaignsInBundle(this.props.bundle.id)
+
+    //this.handleSubmit = this.handleSubmit.bind(this)
   }
   sendEmail = (name, email, mail) => {
     axios({
@@ -41,7 +49,7 @@ class BundleCheckout extends Component {
       }
     })
   }
-  async handleSubmit() {
+  async handleClick() {
     let accounts = await web3.eth.getAccounts(console.log)
     let campaigns = this.props.campaigns
     console.log('campaigns', campaigns)
@@ -563,6 +571,7 @@ class BundleCheckout extends Component {
                   <!--[if (mso)|(IE)]><table align="center" class="header" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="width: 600px"><![endif]-->
                     <div class="logo"  emb-logo-margin-box" style="font-size: 26px;line-height: 32px;Margin-top: 6px;Margin-bottom: 20px;color: #c3ced9;font-family: Roboto,Tahoma,sans-serif;Margin-left: 20px;Margin-right: 20px;" align="center">
                    
+
                     <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 211px;" alt="" width="211" /></div>
                     <p class="size-64" style="Margin-top: 0;Margin-bottom: 0;font-size: 44px;line-height: 50px;text-align: center;" lang="x-size-64"><span style="color:#000000"><strong>grace</strong></span></p>
 
@@ -687,40 +696,42 @@ class BundleCheckout extends Component {
             //
           })
         )
-        .then(() =>
-          this.props.history.push({
-            pathname: '/scriptTag',
-            bundleId: 1
-          })
+        .then(
+          () =>
+            // this.props.history.push({
+            //   pathname: '/scriptTag',
+            //   bundleId: 1
+            // })
+            // this.props.updateBundle(this.props.bundleId)
+            this.props.bundle && this.props.updateBundle(this.props.bundle.id)
         )
     })
   }
 
   render() {
+    console.log('bundleid', this.props.bundleId)
     //const campaigns = this.state.campaigns
     console.log('state', this.state)
     const props = this.props
     console.log('props', props)
-    const campaigns = this.props.campaigns
+    const { campaigns, bundle, classes } = this.props
     return (
-      <div>
-        <h1>{this.props.bundle.projectName} Detail</h1>
+      <Grid container className={classes.contain} justifyContent="center">
         {campaigns && campaigns.length ? (
-          <div>
-            <h2>Campaigns In Project</h2>
-            <ul>
-              {campaigns.map(campaign => {
-                return <li key={campaign.id}>{campaign.name}</li>
-              })}
-            </ul>
-            <button type="submit" onClick={() => this.handleSubmit()}>
-              Deploy Bundle
-            </button>
-          </div>
+          <Grid>
+            <Typography variant="title">{bundle.projectName}</Typography>
+            <br />
+            <Divider />
+            <ProjectCheckout
+              bundle={bundle}
+              campaigns={campaigns}
+              handleClick={this.handleClick}
+            />
+          </Grid>
         ) : (
           <h2>No Campaigns In Your Bundle</h2>
         )}
-      </div>
+      </Grid>
     )
   }
 }
@@ -732,9 +743,17 @@ const mapState = state => {
 
     devId: state.user.currentUser.id,
 
-    bundleId: state.bundles.bundle.id,
+    // bundleId: state.bundles.bundle.id,
 
     bundle: state.bundles.bundle
+  }
+}
+
+const styles = {
+  contain: {
+    width: '75%',
+    flexGrow: 1,
+    margin: 'auto'
   }
 }
 
@@ -743,7 +762,10 @@ const mapDispatch = dispatch => {
     // getCampaigns: bundleId => dispatch(getCampaigns(bundleId)),
     getAdvertisements: id => dispatch(getAdvertisements(id)),
     getAdScript: id => dispatch(getAdScript(id)),
-    getCampaignsInBundle: bundleId => dispatch(getCampaignsInBundle(bundleId))
+    getCampaignsInBundle: bundleId => dispatch(getCampaignsInBundle(bundleId)),
+    updateBundle: bundleId => dispatch(updateBundle(bundleId))
   }
 }
-export default connect(mapState, mapDispatch)(BundleCheckout)
+export default withStyles(styles)(
+  connect(mapState, mapDispatch)(BundleCheckout)
+)

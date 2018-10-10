@@ -26,6 +26,9 @@ const styles = {
   card: {
     minWidth: '100%'
   },
+  details: {
+    minWidth: '100%'
+  },
   content: {
     paddingTop: 45
   },
@@ -39,7 +42,9 @@ const styles = {
 }
 
 const CampaignCard = props => {
-  const { selectedCampaign, advertisements, demographics, classes } = props
+  const { selectedCampaign, classes } = props
+  const demographics = selectedCampaign.demographics
+  const advertisements = selectedCampaign.advertisements
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -53,7 +58,7 @@ const CampaignCard = props => {
       />
       <Divider />
       <CardContent className={classes.content}>
-        <Grid container direction="row">
+        <Grid container direction="row" spacing={40}>
           <Grid item xs={2}>
             <Grid container direction="column">
               <Grid>
@@ -74,15 +79,17 @@ const CampaignCard = props => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={10}>
-            {advertisements && advertisements.length ? (
+          {advertisements && advertisements.length ? (
+            <Grid item xs={10}>
               <AdsGridList ads={advertisements} />
-            ) : (
+            </Grid>
+          ) : (
+            <Grid item container justify="center">
               <Typography variant="subheading">
-                There are currently no advertisements in this campaign
+                There are currently no advertisements in this campaign.
               </Typography>
-            )}
-          </Grid>
+            </Grid>
+          )}
         </Grid>
       </CardContent>
     </Card>
