@@ -616,14 +616,13 @@ class SingleContractPayment extends Component {
             </p></div>
           </div>
                   
-                    <div style="Margin-left: 20px;Margin-right: 20px;">
             <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
             <p class="size-50" style="Margin-top: 0;Margin-bottom: 0;font-size: 24px;line-height: 50px;text-align: center;" lang="x-size-64"><span style="color:#000000">Thank you for your payment</span></p>
 
             <img src = https://i.postimg.cc/13vQP3dx/logo-4.png style = "width:43px;height:43px;"class = "center" />
 
           <div class = "info" text-align: center;>
-              <p style="Margin-top: 0;Margin-bottom: 0;text-align: center; align=center">Contract# ${contractHash}<br />
+              <p class = "center" style="Margin-top: 0;Margin-bottom: 0;text-align: center; align=center">Contract# ${contractHash}<br />
               <p style="Margin-top: 0;Margin-bottom: 0;text-align: center;">Amount paid: ${
                 this.props.contract.data.balance
               } ETH <br />
