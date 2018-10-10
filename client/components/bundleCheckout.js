@@ -88,7 +88,7 @@ class BundleCheckout extends Component {
               //to: campaign.advertiser.email,
               to: 'tricia.lobo@gmail.com',
               subject: 'Please deposit payment for new contract',
-              text: `Please sign in at http://localhost:8080/payment/${contractHash} to complete payment`,
+              //text: `Please sign in at http://localhost:8080/payment/${contractHash} to complete payment`,
               html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!--[if IE]><html xmlns="http://www.w3.org/1999/xhtml" class="ie"><![endif]--><!--[if !IE]><!--><html style="margin: 0;padding: 0;" xmlns="http://www.w3.org/1999/xhtml"><!--<![endif]--><head>
               <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
               <title></title>
@@ -562,7 +562,8 @@ class BundleCheckout extends Component {
                   <div class="header" style="Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);" id="emb-email-header-container">
                   <!--[if (mso)|(IE)]><table align="center" class="header" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="width: 600px"><![endif]-->
                     <div class="logo"  emb-logo-margin-box" style="font-size: 26px;line-height: 32px;Margin-top: 6px;Margin-bottom: 20px;color: #c3ced9;font-family: Roboto,Tahoma,sans-serif;Margin-left: 20px;Margin-right: 20px;" align="center">
-                     <img src = "http://localhost:8080/images/logo.png" style=”display:block;” alt = ""/>
+                    <img src = 'http://localhost:8080/images/logo.png' style=”display:block;” />
+
                     <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 211px;" alt="" width="211" /></div>
                     </div>
                   <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
@@ -683,7 +684,7 @@ class BundleCheckout extends Component {
                 {
                   filename: 'logo.png',
                   path: 'public/images' + '/logo.png',
-                  cid: 'grace'
+                  cid: 'cid:unique@kreata.ee'
                 }
               ]
             }
