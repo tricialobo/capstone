@@ -26,5 +26,5 @@ export { default as EditCampaign } from './campaigns/EditCampaign'
 export { default as SingleContractPayment } from './singleContractPayment'
 export { default as PreviousProjects } from './previousProjects'
 export { default as AdForm } from './ads/AdForm'
-
+export { default as Receipt } from './receipt'
 // export { default as Payment } from './payment'

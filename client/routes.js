@@ -21,7 +21,8 @@ import {
   SingleCampaign,
   EditCampaign,
   PreviousProjects,
-  AdForm
+  AdForm,
+  Receipt
 } from './components'
 import Ethereum from './components/ethereum'
 import {
@@ -62,6 +63,7 @@ class Routes extends Component {
         <Route path="/allcampaigns" component={AllCampaigns} />
         {/* <Route path="/allbundles" component={AllBundles} /> */}
         <Route path="/payment/:contractId" component={SingleContractPayment} />
+        <Route path="/confirmpayment" component={Receipt} />
         {/* <Route exact path="/payment" component={Payment} /> */}
         <Route path="/previousprojects" component={PreviousProjects} />
         {isLoggedIn && (
