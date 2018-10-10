@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Typography, Grid, GridList, GridListTile } from '@material-ui/core'
 import CampaignCard from './CampaignCard'
 import history from '../../history'
+import {fetchUserAds} from '../../store'
 
 const styles = {
   root: {
@@ -34,8 +35,7 @@ class SingleCampaign extends Component {
         <div className={classes.root}>
           <CampaignCard
             selectedCampaign={selectedCampaign}
-            demographics={demographics}
-            advertisements={advertisements}
+            ads={this.props.allAds}
           />
         </div>
       )
@@ -45,8 +45,16 @@ class SingleCampaign extends Component {
 
 const mapState = state => {
   return {
-    selectedCampaign: state.campaigns.singleCampaign
+    selectedCampaign: state.campaigns.singleCampaign,
+    allAds: state.ads.allAds,
+    userId: state.user.currentUser.id
   }
 }
 
-export default withStyles(styles)(connect(mapState)(SingleCampaign))
+const mapDispatch = dispatch => {
+  return {
+    fetchAllAds: userId => dispatch(fetchUserAds(userId))
+  }
+}
+
+export default withStyles(styles)(connect(mapState, mapDispatch)(SingleCampaign))

@@ -77,6 +77,15 @@ export const setCampaignErrorStatus = status => {
 
 //thunks
 
+export const addAd = (campId, adId) => {
+  console.log('yo we in the thunk')
+  return async dispatch => {
+    const {data} = await axios.put(`/api/campaigns/add/${campId}/${adId}`)
+    console.log('DATA', data)
+    dispatch(setCampaign(data[0]))
+  }
+}
+
 export function getAllCampaigns() {
   return async dispatch => {
     try {

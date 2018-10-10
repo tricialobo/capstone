@@ -9,6 +9,8 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import AdsGridList from '../ads/AdsGridList'
+import AddAdvert from '../AddAdvert'
+import {fetchUserAds} from '../../store'
 
 const styles = {
   grow: {
@@ -42,8 +44,13 @@ const styles = {
 }
 
 const CampaignCard = props => {
-  const { selectedCampaign, advertisements, demographics, classes } = props
+  const { selectedCampaign, classes } = props
+  const demographics = selectedCampaign.demographics
+  const advertisements = selectedCampaign.advertisements
+
+  
   return (
+    <div>
     <Card className={classes.card}>
       <CardHeader
         action={
@@ -91,7 +98,11 @@ const CampaignCard = props => {
         </Grid>
       </CardContent>
     </Card>
+    <h1>JAN THIS IS JUST ALL ADS BEING RENDERED BELOW, WILL GO AWAY</h1>
+    <AddAdvert ads = {props.ads} alreadychosen = {advertisements} campId = {selectedCampaign.id}/>
+    </div>
   )
 }
+
 
 export default withStyles(styles)(CampaignCard)
