@@ -46,6 +46,7 @@ class BundleCheckout extends Component {
   async handleSubmit() {
     let accounts = await web3.eth.getAccounts(console.log)
     let campaigns = this.props.campaigns
+    console.log('campaigns', campaigns)
     campaigns.forEach(async campaign => {
       const newBlock = await factory.methods.createBlock().send({
         // const newBlock = await factory.methods.createBlock(campaign.price).send({

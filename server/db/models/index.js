@@ -25,8 +25,8 @@ const campaignDemographic = require('./campaignDemographic')
 // // User.hasMany(Advertisement)
 
 PartiesToContract.belongsTo(Contract)
-Advertisement.belongsToMany(Contract, { through: 'adsInContract' })
-Contract.belongsToMany(Advertisement, { through: 'adsInContract' })
+Advertisement.hasMany(Contract)
+Contract.belongsTo(Advertisement)
 Advertisement.belongsToMany(Campaign, { through: 'adsInCampaign' })
 Campaign.belongsToMany(Advertisement, { through: 'adsInCampaign' })
 

@@ -53,7 +53,7 @@ class AllCampaigns extends Component {
   render() {
     const { classes } = this.props
     const campaigns = this.props.campaigns
-    const filtCamps = campaigns.filter(camp => (camp.advertiser.balance > 0))
+    const filtCamps = campaigns.filter(camp => camp.advertiser.balance > 0)
     return (
       <Grid container direction="row">
         <Grid item xs={4}>
