@@ -61,25 +61,24 @@ class AdForm extends Component {
     super()
     this.state = props.currentUser
     console.log(this.state)
-    this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleSubmit(evt) {
-    evt.preventDefault()
-    const name = evt.target.name.value
-    const advertiserId = this.props.currentUser.id
-    const image = evt.target.image.value
-    const url = evt.target.url.value
-    const newAd = {
-      advertiserId: advertiserId,
-      name: name,
-      image: image,
-      url: url
-    }
-    console.log(newAd)
-    this.props.createAd(newAd)
-  }
+  // handleSubmit(evt) {
+  //   evt.preventDefault()
+  //   const name = evt.target.name.value
+  //   const advertiserId = this.props.currentUser.id
+  //   const image = evt.target.image.value
+  //   const url = evt.target.url.value
+  //   const newAd = {
+  //     advertiserId: advertiserId,
+  //     name: name,
+  //     image: image,
+  //     url: url
+  //   }
+  //   console.log(newAd)
+  //   this.props.createAd(newAd)
+  // }
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value })
@@ -87,16 +86,11 @@ class AdForm extends Component {
 
   render() {
     console.log(this.props.currentUser)
-    const { error, classes } = this.props
+    const { error, classes, formAction } = this.props
 
     return (
       <Card className={classes.card} style={{ width: '40%' }}>
-        <div className={classes.formHeader}>
-          <Typography className={classes.title} variant="title" color="inherit">
-            New advertisement
-          </Typography>
-        </div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={formAction}>
           <FormGroup style={{ marginTop: '30px' }}>
             <Grid container direction="row">
               <Grid item xs={6}>

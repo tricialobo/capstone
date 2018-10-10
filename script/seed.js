@@ -281,7 +281,7 @@ async function seed() {
   })
   await campaign4.addCategory(category1)
   await campaign4.addCategory(category2)
-  await campaign4.addDemographic(demographic6)
+  await campaign4.addDemographic(demographic1)
   await campaign4.addDemographic(demographic3)
 
   const campaign5 = await Campaign.create({
@@ -296,7 +296,7 @@ async function seed() {
   await campaign5.addBundle(bundle3)
   await campaign5.addCategory(category2)
   await campaign5.addCategory(category3)
-  await campaign5.addDemographic(demographic6)
+  await campaign5.addDemographic(demographic1)
   await campaign5.addDemographic(demographic2)
 
   const campaign6 = await Campaign.create({
@@ -470,10 +470,8 @@ async function seed() {
   })
   await ad16.addCampaign(campaign6)
 
-
   console.log(`seeded successfully`)
 }
-
 
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.

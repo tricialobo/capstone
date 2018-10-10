@@ -4,19 +4,14 @@ import PropTypes from 'prop-types'
 import history from '../../history'
 import {
   withStyles,
-  FormLabel,
   Typography,
   Button,
   FormControl,
-  FormControlLabel,
   FormGroup,
   Input,
   InputLabel,
   Card,
-  Radio,
-  RadioGroup,
   MenuItem,
-  FormHelperText,
   Select,
   Grid
 } from '@material-ui/core'
@@ -73,7 +68,6 @@ class CampaignForm extends Component {
       open: props.open,
       demographics: props.selectedDemographics
     }
-    this.handleCreate = this.handleCreate.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -81,31 +75,11 @@ class CampaignForm extends Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  handleCreate(evt) {
-    evt.preventDefault()
-    const name = evt.target.name.value
-    const advertiserId = this.props.currentUser.id
-    const price = this.state.price
-    const demographics = this.state.demographics.filter(
-      demographic => demographic.checked
-    )
-    const newCampaign = {
-      advertiserId: advertiserId,
-      name: name,
-      price: price,
-      demographics: demographics
-    }
-    console.log('HANDLE CREATE CAMPAIGN', newCampaign)
-    this.props.createCampaign(newCampaign)
-    this.props.handleClose()
-  }
-
   render() {
-    const { error, classes, selectedDemographics } = this.props
-    const { price } = this.state
+    const { error, classes, formAction, selectedDemographics } = this.props
     return (
       <Card className={classes.card} style={{ width: '40%' }}>
-        <form onSubmit={this.handleCreate}>
+        <form onSubmit={formAction}>
           <FormGroup>
             <Grid container direction="row">
               <Grid item xs={6}>

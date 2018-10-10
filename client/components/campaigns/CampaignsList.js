@@ -51,6 +51,9 @@ class CampaignsList extends Component {
                 </ListItem>
               )
             })}
+          <ListItem button onClick={this.props.handleOpen}>
+            <ListItemText primary="Create a campaign" />
+          </ListItem>
         </List>
       </div>
     )

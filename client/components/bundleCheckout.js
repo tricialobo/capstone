@@ -9,6 +9,9 @@ import {
   getAdvertisements,
   getAdScript
 } from '../store/bundles'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import ProjectCheckout from './bundles/ProjectCheckout'
 class BundleCheckout extends Component {
   constructor(props) {
     super(props)
@@ -562,7 +565,12 @@ class BundleCheckout extends Component {
                   <div class="header" style="Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);" id="emb-email-header-container">
                   <!--[if (mso)|(IE)]><table align="center" class="header" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="width: 600px"><![endif]-->
                     <div class="logo"  emb-logo-margin-box" style="font-size: 26px;line-height: 32px;Margin-top: 6px;Margin-bottom: 20px;color: #c3ced9;font-family: Roboto,Tahoma,sans-serif;Margin-left: 20px;Margin-right: 20px;" align="center">
+<<<<<<< HEAD
                    
+=======
+                    <img src ='http://localhost:8080/images/logo.png' style=”display:block;” />
+
+>>>>>>> 81ea6856bb4d75e55e104f5a7581aff8331658e5
                     <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 211px;" alt="" width="211" /></div>
                     <p class="size-64" style="Margin-top: 0;Margin-bottom: 0;font-size: 44px;line-height: 50px;text-align: center;" lang="x-size-64"><span style="color:#000000"><strong>grace</strong></span></p>
 
@@ -701,18 +709,15 @@ class BundleCheckout extends Component {
     console.log('state', this.state)
     const props = this.props
     console.log('props', props)
-    const campaigns = this.props.campaigns
+    const { campaigns, bundle } = this.props
     return (
       <div>
-        <h1>{this.props.bundle.projectName} Detail</h1>
+        <Typography variant="title">{bundle.projectName}</Typography>
+        <br />
+        <Divider />
         {campaigns && campaigns.length ? (
           <div>
-            <h2>Campaigns In Project</h2>
-            <ul>
-              {campaigns.map(campaign => {
-                return <li key={campaign.id}>{campaign.name}</li>
-              })}
-            </ul>
+            <ProjectCheckout campaigns={campaigns} />
             <button type="submit" onClick={() => this.handleSubmit()}>
               Deploy Bundle
             </button>
