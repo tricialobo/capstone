@@ -138,8 +138,9 @@ export function addBundle(obj) {
 export function updateBundle(bundleId) {
   return async dispatch => {
     console.log('IN THUNK!', bundleId)
-    const { data: bundle } = axios.put(`/api/bundles/deploy/${bundleId}`)
-    dispatch(deployedBundle(bundle))
+    const bundle = await axios.put(`/api/bundles/deploy/${bundleId}`)
+    console.log('this is bundle', bundle)
+    dispatch(deployedBundle(bundle.data))
   }
 }
 

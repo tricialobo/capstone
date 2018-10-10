@@ -571,7 +571,6 @@ class BundleCheckout extends Component {
                   <!--[if (mso)|(IE)]><table align="center" class="header" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="width: 600px"><![endif]-->
                     <div class="logo"  emb-logo-margin-box" style="font-size: 26px;line-height: 32px;Margin-top: 6px;Margin-bottom: 20px;color: #c3ced9;font-family: Roboto,Tahoma,sans-serif;Margin-left: 20px;Margin-right: 20px;" align="center">
                    
-                    <img src ='http://localhost:8080/images/logo.png' style=”display:block;” />
 
                     <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 211px;" alt="" width="211" /></div>
                     <p class="size-64" style="Margin-top: 0;Margin-bottom: 0;font-size: 44px;line-height: 50px;text-align: center;" lang="x-size-64"><span style="color:#000000"><strong>grace</strong></span></p>
