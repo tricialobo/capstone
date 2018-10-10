@@ -9,7 +9,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import {addAd} from '../store'
+import {addAd, removeAdFromCamp} from '../store'
 
 const StyledTileBar = withStyles({
   titleWrap: {
@@ -45,8 +45,12 @@ class AdsGridList extends Component {
     this.addClick = this.addClick.bind(this)
     }
     
-    addClick (campId, adId) {
-        this.props.addAd(campId, adId)
+    async addClick (campId, adId) {
+        await this.props.addAd(campId, adId)
+    }
+
+    async removeClick (campId, adId) {
+        await this.props.removeAdFromCamp(campId, adId)
     }
 
   render() {  
@@ -56,13 +60,13 @@ class AdsGridList extends Component {
         <div>
         <GridList cellHeight={450} spacing={24} cols={3}>
             {ads && ads.length && ads.map(ad => (
-                <div>
+                
+                       //<button onClick = {() => this.addClick(this.props.campId, ad.id)}>add</button>
+                       //<button onClick = {() => this.removeClick(this.props.campId, ad.id)}>remove</button>
             <GridListTile className={classes.adTile} key={ad.id}>
                 <img src={ad.image} alt={ad.name} />
-                <StyledTileBar className={classes.tileBar} title={ad.name} />
+            <StyledTileBar className={classes.tileBar} title={ad.name} actionIcon = {<button onClick = {() => this.removeClick(this.props.campId, ad.id)}>remove</button>}/>
             </GridListTile>
-            <button onClick = {() => this.addClick(this.props.campId, ad.id)}>add</button>
-            </div>
             ))}
         </GridList>
         </div>
@@ -78,7 +82,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
     return {
-        addAd: (campId, adId) => dispatch(addAd(campId, adId))
+        addAd: (campId, adId) => dispatch(addAd(campId, adId)),
+        removeAdFromCamp: (campId, adId) => dispatch(removeAdFromCamp(campId, adId))
     }
 }
 
