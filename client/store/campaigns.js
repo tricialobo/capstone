@@ -129,6 +129,7 @@ export const postCampaign = campaign => {
     try {
       const { data: newCampaign } = await axios.post('/api/campaigns', campaign)
       dispatch(createCampaign(newCampaign))
+      dispatch(fetchAllUserCampaigns(newCampaign.advertiserId))
     } catch (error) {
       console.error(error)
     }
@@ -176,7 +177,7 @@ export default function(state = initialState, action) {
     case CREATE_CAMPAIGN:
       return {
         ...state,
-        allUserCampaigns: [...state.allCampaigns, action.campaign]
+        allUserCampaigns: [...state.allUserCampaigns, action.campaign]
       }
     case UPDATE_CAMPAIGN:
       return {

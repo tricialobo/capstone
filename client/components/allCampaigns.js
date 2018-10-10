@@ -3,10 +3,7 @@ import { getAllCampaigns, addToBundle } from '../store'
 import { withStyles } from '@material-ui/core/styles'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import DisplayManyCampaigns from './displayManyCampaigns'
-import CampaignGridList from './bundles/CampaignsGridList'
 import AllBundles from './allBundles'
-import CampaignsAccordion from './ads/CampaignsAccordion'
 import AdsGalleryGridList from './ads/AdsGalleryGridList'
 import { ListItem, List, Grid, Typography, Button } from '@material-ui/core'
 
@@ -53,7 +50,7 @@ class AllCampaigns extends Component {
   render() {
     const { classes } = this.props
     const campaigns = this.props.campaigns
-    const filtCamps = campaigns.filter(camp => (camp.advertiser.balance > 0))
+    const filtCamps = campaigns.filter(camp => camp.advertiser.balance > 0)
     return (
       <Grid container direction="row">
         <Grid item xs={4}>
@@ -64,32 +61,34 @@ class AllCampaigns extends Component {
             Available Campaigns
           </Typography>
           <List>
-            {filtCamps.map(campaign => (
-              <ListItem key={campaign.id}>
-                <Grid container direction="column">
-                  <Grid container direction="row">
-                    <Grid item xs={10}>
-                      <Typography
-                        className={classes.campaignTitle}
-                        variant="subheading"
-                      >
-                        {campaign.name}
-                      </Typography>
+            {campaigns &&
+              campaigns.length &&
+              filtCamps.map(campaign => (
+                <ListItem key={campaign.id}>
+                  <Grid container direction="column">
+                    <Grid container direction="row">
+                      <Grid item xs={10}>
+                        <Typography
+                          className={classes.campaignTitle}
+                          variant="subheading"
+                        >
+                          {campaign.name}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={2}>
+                        <Button
+                          onClick={evt => this.handleClick({ evt }, campaign)}
+                        >
+                          add to {this.props.bundle.projectName}
+                        </Button>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={2}>
-                      <Button
-                        onClick={evt => this.handleClick({ evt }, campaign)}
-                      >
-                        add to {this.props.bundle.projectName}
-                      </Button>
+                    <Grid item xs={12}>
+                      <AdsGalleryGridList ads={campaign.advertisements} />
                     </Grid>
                   </Grid>
-                  <Grid item xs={12}>
-                    <AdsGalleryGridList ads={campaign.advertisements} />
-                  </Grid>
-                </Grid>
-              </ListItem>
-            ))}
+                </ListItem>
+              ))}
           </List>
         </Grid>
       </Grid>

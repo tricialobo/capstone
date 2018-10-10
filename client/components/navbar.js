@@ -83,7 +83,7 @@ class Navbar extends Component {
                 </div>
               ) : (
                 <Button className="hvr-underline-from-center" color="inherit">
-                  <Link className={classes.navLinks} to="#">
+                  <Link className={classes.navLinks} to="/allcampaigns">
                     Projects
                   </Link>
                 </Button>

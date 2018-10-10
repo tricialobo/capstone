@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core'
 import CampaignsList from './CampaignsList'
 import CampaignForm from './CampaignForm'
-import CreateCampaignDialog from '../ads/CreateCampaignDialog'
 import SingleCampaign from './SingleCampaign'
 import {
   fetchSingleCampaign,
@@ -26,21 +25,6 @@ import {
   removeCampaign
 } from '../../store'
 import history from '../../history'
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10
-}
-
-function getModalStyle() {
-  const top = 50 + rand()
-  const left = 50 + rand()
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  }
-}
 
 const styles = theme => ({
   container: {
@@ -68,7 +52,7 @@ class AdvertiserCampaigns extends Component {
       open: false,
       price: 0,
       selectedIndex: 0,
-      selectedDemographics: props.allDemographics
+      selectedDemographics: [...props.selectedDemographics]
     }
     this.handleListItemClick = this.handleListItemClick.bind(this)
     this.handleCreate = this.handleCreate.bind(this)
@@ -88,14 +72,19 @@ class AdvertiserCampaigns extends Component {
   }
 
   handleClose = () => {
-    this.setState({ open: false })
+    console.log('currently selected', this.state.selectedDemographics)
+    console.log('props', this.props.selectedDemographics)
+    this.setState({
+      open: false,
+      selectedDemographics: this.props.selectedDemographics
+    })
   }
 
   handleCreate(evt) {
     evt.preventDefault()
     const name = evt.target.name.value
     const advertiserId = this.props.currentUser.id
-    const price = this.props.price
+    const price = this.state.price
     const demographics = this.state.selectedDemographics.filter(
       demographic => demographic.checked
     )
@@ -106,11 +95,13 @@ class AdvertiserCampaigns extends Component {
       demographics: demographics
     }
     console.log('HANDLE CREATE CAMPAIGN', newCampaign)
-    this.props.createCampaign(newCampaign)
+    this.props.createCampaign(newCampaign, this.props.currentUser.id)
+    this.handleClose()
   }
 
-  componentDidMount() {
-    this.props.fetchCampaign(this.props.allCampaigns[0])
+  async componentDidMount() {
+    await this.props.fetchCampaign(this.props.allCampaigns[0])
+    await this.props.loadAllUserCampaigns(this.props.currentUser.id)
   }
 
   handleListItemClick = (event, index, campaign) => {
@@ -119,13 +110,7 @@ class AdvertiserCampaigns extends Component {
   }
 
   render() {
-    const {
-      classes,
-      allCampaigns,
-      currentUser,
-      selectedCampaign,
-      createCampaign
-    } = this.props
+    const { classes, allCampaigns, currentUser, selectedCampaign } = this.props
     const { selectedDemographics, price } = this.state
     return (
       <div className="container">
@@ -138,8 +123,8 @@ class AdvertiserCampaigns extends Component {
                     campaigns={allCampaigns}
                     handleListItemClick={this.handleListItemClick}
                     selectedIndex={this.state.selectedIndex}
+                    handleOpen={this.handleOpen}
                   />
-                  <Button onClick={this.handleOpen}>Create a campaign</Button>
                 </Grid>
                 <Grid item xs={9}>
                   {selectedCampaign && (
@@ -147,7 +132,6 @@ class AdvertiserCampaigns extends Component {
                   )}
                 </Grid>
               </Grid>
-
               <Dialog
                 fullScreen={true}
                 open={this.state.open}
@@ -165,7 +149,7 @@ class AdvertiserCampaigns extends Component {
                       open={open}
                       handleClose={this.handleClose}
                       selectedDemographics={selectedDemographics}
-                      onSubmit={this.handleCreate}
+                      formAction={this.handleCreate}
                     />
                   </DialogContent>
                 </Grid>
@@ -198,7 +182,7 @@ const mapState = state => {
   return {
     allCampaigns: state.campaigns.allUserCampaigns,
     selectedCampaign: state.campaigns.singleCampaign,
-    allDemographics: demographicsArray,
+    selectedDemographics: demographicsArray,
     currentUser: state.user.currentUser
   }
 }
@@ -217,7 +201,9 @@ const mapDispatch = dispatch => {
     fetchCampaign: campaign => {
       dispatch(setCampaign(campaign))
     },
-    createCampaign: campaign => dispatch(postCampaign(campaign)),
+    createCampaign: campaign => {
+      dispatch(postCampaign(campaign))
+    },
     editCampaign: campaignId => dispatch(editCampaign(campaignId)),
     deleteCampaign: campaignId => dispatch(removeCampaign(campaignId))
   }

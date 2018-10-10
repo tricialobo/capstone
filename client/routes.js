@@ -60,7 +60,7 @@ class Routes extends Component {
         <Route path="/checkout" component={BundleCheckout} />
         <Route path="/scriptTag" component={ScriptTag} />
         <Route path="/allcampaigns" component={AllCampaigns} />
-        <Route path="/allbundles" component={AllBundles} />
+        {/* <Route path="/allbundles" component={AllBundles} /> */}
         <Route path="/payment/:contractId" component={SingleContractPayment} />
         {/* <Route exact path="/payment" component={Payment} /> */}
         <Route path="/previousprojects" component={PreviousProjects} />
@@ -72,8 +72,8 @@ class Routes extends Component {
               path="/advertiser-dashboard"
               component={AdvertiserDashboard}
             />
-            <Route path="/account" component={AccountMenu} />
             <Route exact path="/ads" component={AllAds} />
+            <Route path="/ads/new" component={AdForm} />
             <Route exact path="/campaigns" component={AdvertiserCampaigns} />
             <Route
               exact
@@ -85,35 +85,34 @@ class Routes extends Component {
               path="/campaign/campaign/:campaignId/edit"
               component={EditCampaign}
             />
+            <Route path="/account" component={AccountMenu} />
           </Switch>
         )}
 
-        {isLoggedIn &&
-          currentUser.isAdvertiser && (
-            <Switch>
-              {/* Routes placed here are only available after logging in */}
-              <Route path="/home" component={Home} />
-              <Route
-                path="/advertiser-dashboard"
-                component={AdvertiserDashboard}
-              />
-              <Route path="/account" component={AccountMenu} />
-              <Route exact path="/ads" component={AllAds} />
-              {/* TEMP ROUTE */}
-              <Route exact path="/ads/new" component={AdForm} />
-              <Route exact path="/campaigns" component={AdvertiserCampaigns} />
-              <Route
-                exact
-                path="/campaigns/campaign/:campaignId"
-                component={SingleCampaign}
-              />
-              <Route
-                exact
-                path="/campaign/campaign/:campaignId/edit"
-                component={EditCampaign}
-              />
-            </Switch>
-          )}
+        {isLoggedIn && currentUser.isAdvertiser ? (
+          <Switch>
+            {/* ADVERTISER ROUTES */}
+            <Route path="/home" component={Home} />
+            <Route
+              path="/advertiser-dashboard"
+              component={AdvertiserDashboard}
+            />
+            <Route path="/account" component={AccountMenu} />
+          </Switch>
+        ) : (
+          <Switch>
+            {/* DEVELOPER ROUTES */}
+            <Route path="/scriptTag" component={ScriptTag} />
+            <Route path="/allcampaigns" component={AllCampaigns} />
+            {/* <Route path="/allbundles" component={AllBundles} /> */}
+            <Route
+              path="/payment/:contractId"
+              component={SingleContractPayment}
+            />
+            {/* <Route exact path="/payment" component={Payment} /> */}
+            <Route path="/previousprojects" component={PreviousProjects} />
+          </Switch>
+        )}
         {/* Displays our Login component as a fallback */}
         <Route component={LoadingScreen} />
       </Switch>
@@ -139,6 +138,7 @@ const mapDispatch = dispatch => {
       dispatch(me())
     },
     loadAllAds: userId => dispatch(fetchUserAds(userId)),
+    loadAllCampaigns: dispatch(getAllCampaigns()),
     loadAllUserCampaigns: userId => dispatch(fetchAllUserCampaigns(userId)),
     loadAllDemographics: () => dispatch(fetchAllDemographics())
   }

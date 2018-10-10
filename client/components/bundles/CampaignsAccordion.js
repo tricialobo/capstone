@@ -13,9 +13,7 @@ import {
   Button
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import LoadingScreen from '../LoadingScreen'
 import CampaignExpansionPanel from './CampaignExpansionPanel'
-import CreateCampaignDialog from './CreateCampaignDialog'
 
 const styles = theme => ({
   root: {
@@ -32,22 +30,7 @@ const styles = theme => ({
   }
 })
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10
-}
-
-function getModalStyle() {
-  const top = 50 + rand()
-  const left = 50 + rand()
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  }
-}
-
-class CampaignsAccordionModal extends Component {
+class CampaignsAccordion extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -81,9 +64,6 @@ class CampaignsAccordionModal extends Component {
         <div className={classes.root}>
           <Grid container direction="column">
             <Grid item xs={12}>
-              <Typography variant="title">Campaigns</Typography>
-            </Grid>
-            <Grid item xs={12}>
               {campaigns &&
                 campaigns.length &&
                 campaigns.map(campaign => {
@@ -107,24 +87,11 @@ class CampaignsAccordionModal extends Component {
                   )
                 })}
             </Grid>
-            <Button onClick={this.handleOpen}>Create a campaign</Button>
-            <CreateCampaignDialog
-              open={this.state.open}
-              onClose={this.handleClose}
-              campaigns={campaigns}
-            />
           </Grid>
         </div>
       )
     )
   }
 }
-
-CampaignsAccordionModal.propTypes = {
-  classes: PropTypes.object.isRequired
-}
-
-// We need an intermediary variable for handling the recursive nesting.
-const CampaignsAccordion = withStyles(styles)(CampaignsAccordionModal)
 
 export default withStyles(styles)(CampaignsAccordion)
