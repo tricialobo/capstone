@@ -4,7 +4,7 @@ import factory from '../../ethereum/factory'
 import fundsTransfer from '../../ethereum/fundsTransfer'
 import web3 from '../../ethereum/web3'
 import axios from 'axios'
-
+import { withRouter } from 'react-router-dom'
 class SingleContractPayment extends Component {
   constructor() {
     super()
@@ -38,16 +38,57 @@ class SingleContractPayment extends Component {
       value: 1000000000000000000,
       from: address
     })
-    axios({
-      method: 'PUT',
-      url: 'http://localhost:8080/api/contracts/paid',
-      data: {
-        contractHash: contractHash
-      }
-    })
-    this.setState({
-      address: ''
-    })
+
+    const contractPaid = () =>
+      axios({
+        method: 'PUT',
+        url: 'http://localhost:8080/api/contracts/paid',
+        data: {
+          contractHash: contractHash
+        }
+      }).then(
+        this.setState({
+          address: ''
+        })
+      )
+    const sendReceipt = (name, email, mail) =>
+      axios({
+        method: 'POST',
+        url: 'http://localhost:8080/api/send',
+        data: {
+          name: name,
+          email: email,
+          mail: mail
+        }
+      })
+
+    axios
+      .all([
+        contractPaid(),
+        sendReceipt('Tricia', 'tricia.lobo@gmail.com', {
+          from: 'tricia',
+          to: 'tricia.lobo@gmail.com',
+          subject: 'hi tricia'
+        })
+      ])
+      .then(
+        axios.spread(function() {
+          //
+        })
+      )
+      .then(response => {
+        if (response.data.msg === 'success') {
+          console.log('receipt sent')
+        } else if (response.data.msg === 'fail') {
+          console.log('Message failed to send.')
+        }
+      })
+
+      .then(
+        this.props.history.push({
+          pathname: '/confirmpayment'
+        })
+      )
   }
   render() {
     const contractHash = this.props.match.params.contractId
@@ -82,9 +123,9 @@ const mapState = state => {
   }
 }
 
-// const mapDispatch = dispatch => {
-//   return {
-//     fetchContract: userId => dispatch(fetchContract(userId))
-//   }
-// }
-export default connect(mapState)(SingleContractPayment)
+const mapDispatch = dispatch => {
+  return {
+    fetchContract: userId => dispatch(fetchContract(userId))
+  }
+}
+export default withRouter(connect(mapState)(SingleContractPayment))
