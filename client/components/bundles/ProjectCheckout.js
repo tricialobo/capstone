@@ -49,7 +49,7 @@ const styles = {
 
 class ProjectCheckout extends Component {
   render() {
-    const { campaigns, currentBundle, handleSubmit } = this.props
+    const { campaigns, currentBundle, handleClick } = this.props
     console.log(currentBundle)
 
     return (
@@ -59,7 +59,7 @@ class ProjectCheckout extends Component {
         </Grid>
         <Grid>
           {!currentBundle.deployed ? (
-            <Button type="submit" onClick={() => handleSubmit()}>
+            <Button type="submit" onClick={() => handleClick()}>
               Deploy project
             </Button>
           ) : (

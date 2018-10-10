@@ -137,6 +137,7 @@ export function addBundle(obj) {
 
 export function updateBundle(bundleId) {
   return async dispatch => {
+    console.log('IN THUNK!', bundleId)
     const { data: bundle } = axios.put(`/api/bundles/deploy/${bundleId}`)
     dispatch(deployedBundle(bundle))
   }
