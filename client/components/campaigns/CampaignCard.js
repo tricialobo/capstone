@@ -42,7 +42,9 @@ const styles = {
 }
 
 const CampaignCard = props => {
-  const { selectedCampaign, advertisements, demographics, classes } = props
+  const { selectedCampaign, classes } = props
+  const demographics = selectedCampaign.demographics
+  const advertisements = selectedCampaign.advertisements
   return (
     <Card className={classes.card}>
       <CardHeader

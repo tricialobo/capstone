@@ -12,7 +12,7 @@ const SET_BUNDLE = 'SET_BUNDLE'
 const REMOVED_CAMPAIGN_FROM_BUNDLE = 'REMOVED_CAMPAIGN_FROM_BUNDLE'
 const ADDED_BUNDLE = 'ADDED_BUNDLE'
 const OPEN_ADD_NEW = 'OPEN_ADD_NEW'
-
+const DEPLOYED_BUNDLE = 'DEPLOYED_BUNDLE'
 const GOT_PREVIOUS_BUNDLES = 'GOT_PREVIOUS_BUNDLES'
 /**
  * INITIAL STATE
@@ -23,7 +23,7 @@ const initialState = {
   allBundles: [],
   bundle: {},
   addNewBool: false,
-  previousBundles: [],
+  previousBundles: []
 }
 
 /**
@@ -60,6 +60,11 @@ export const setBundle = bundle => ({
 
 export const addedBundle = bundle => ({
   type: ADDED_BUNDLE,
+  bundle
+})
+
+export const deployedBundle = bundle => ({
+  type: DEPLOYED_BUNDLE,
   bundle
 })
 
@@ -130,6 +135,13 @@ export function addBundle(obj) {
   }
 }
 
+export function updateBundle(bundleId) {
+  return async dispatch => {
+    const { data: bundle } = axios.put(`/api/bundles/deploy/${bundleId}`)
+    dispatch(deployedBundle(bundle))
+  }
+}
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GOT_PREVIOUS_BUNDLES: {
@@ -153,9 +165,11 @@ export default function(state = initialState, action) {
     case SET_BUNDLE:
       return { ...state, bundle: action.bundle }
     case ADDED_BUNDLE:
-      return {...state, allBundles: [...state.allBundles, action.bundle]}
+      return { ...state, allBundles: [...state.allBundles, action.bundle] }
     case OPEN_ADD_NEW:
-      return {...state, addNewBool: (!state.addNewBool)}
+      return { ...state, addNewBool: !state.addNewBool }
+    case DEPLOYED_BUNDLE:
+      return { ...state, bundle: action.bundle }
     default:
       return state
   }

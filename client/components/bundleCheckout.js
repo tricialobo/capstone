@@ -4,13 +4,16 @@ import factory from '../../ethereum/factory'
 import fundsTransfer from '../../ethereum/fundsTransfer'
 import web3 from '../../ethereum/web3'
 import axios from 'axios'
+import { withStyles } from '@material-ui/core/styles'
 import {
   getCampaignsInBundle,
   getAdvertisements,
-  getAdScript
+  getAdScript,
+  updateBundle
 } from '../store/bundles'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
+import Grid from '@material-ui/core/Grid'
 import ProjectCheckout from './bundles/ProjectCheckout'
 class BundleCheckout extends Component {
   constructor(props) {
@@ -26,6 +29,8 @@ class BundleCheckout extends Component {
 
     await this.props.getAdvertisements(this.props.bundleId)
     await this.props.getCampaignsInBundle(this.props.bundleId)
+
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   sendEmail = (name, email, mail) => {
     axios({
@@ -696,10 +701,11 @@ class BundleCheckout extends Component {
           })
         )
         .then(() =>
-          this.props.history.push({
-            pathname: '/scriptTag',
-            bundleId: 1
-          })
+          // this.props.history.push({
+          //   pathname: '/scriptTag',
+          //   bundleId: 1
+          // })
+          updateBundle(this.props.bundleId)
         )
     })
   }
@@ -709,23 +715,24 @@ class BundleCheckout extends Component {
     console.log('state', this.state)
     const props = this.props
     console.log('props', props)
-    const { campaigns, bundle } = this.props
+    const { campaigns, bundle, classes } = this.props
     return (
-      <div>
-        <Typography variant="title">{bundle.projectName}</Typography>
-        <br />
-        <Divider />
+      <Grid container className={classes.contain} justifyContent="center">
         {campaigns && campaigns.length ? (
-          <div>
-            <ProjectCheckout campaigns={campaigns} />
-            <button type="submit" onClick={() => this.handleSubmit()}>
-              Deploy Bundle
-            </button>
-          </div>
+          <Grid>
+            <Typography variant="title">{bundle.projectName}</Typography>
+            <br />
+            <Divider />
+            <ProjectCheckout
+              bundle={bundle}
+              campaigns={campaigns}
+              handleSubmit={this.handleSubmit}
+            />
+          </Grid>
         ) : (
           <h2>No Campaigns In Your Bundle</h2>
         )}
-      </div>
+      </Grid>
     )
   }
 }
@@ -743,6 +750,14 @@ const mapState = state => {
   }
 }
 
+const styles = {
+  contain: {
+    width: '75%',
+    flexGrow: 1,
+    margin: 'auto'
+  }
+}
+
 const mapDispatch = dispatch => {
   return {
     // getCampaigns: bundleId => dispatch(getCampaigns(bundleId)),
@@ -751,4 +766,6 @@ const mapDispatch = dispatch => {
     getCampaignsInBundle: bundleId => dispatch(getCampaignsInBundle(bundleId))
   }
 }
-export default connect(mapState, mapDispatch)(BundleCheckout)
+export default withStyles(styles)(
+  connect(mapState, mapDispatch)(BundleCheckout)
+)
