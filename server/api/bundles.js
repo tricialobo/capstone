@@ -1,6 +1,13 @@
 const router = require('express').Router()
 var nodemailer = require('nodemailer')
-const { Bundle, User, Campaign, Contract } = require('../db/models')
+const {
+  Bundle,
+  User,
+  Campaign,
+  Contract,
+  Advertisement,
+  Demographic
+} = require('../db/models')
 
 router.put('/remove', async (req, res, next) => {
   console.log('bundleId & campaignId', req.body.bundleId, req.body.campaignId)
@@ -101,7 +108,11 @@ router.get('/:bundleId', async (req, res, next) => {
         {
           model: Campaign,
           as: 'campaigns',
-          include: [{ model: User, as: 'advertiser' }]
+          include: [
+            { model: User, as: 'advertiser' },
+            { model: Advertisement, as: 'advertisements' },
+            { model: Demographic, as: 'demographics' }
+          ]
         }
       ]
     })
@@ -127,4 +138,17 @@ router.get('/previous/:userid', async (req, res, next) => {
     console.error(error)
   }
 })
+
+router.put('/deploy/:projectId', async (req, res, next) => {
+  try {
+    const project = await Bundle.findById(req.params.projectId)
+    const deployProject = await project.update({
+      deployed: true
+    })
+    res.json(deployProject)
+  } catch (error) {
+    next(err)
+  }
+})
+
 module.exports = router

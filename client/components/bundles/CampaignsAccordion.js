@@ -7,6 +7,7 @@ import {
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
+  ExpansionPanelActions,
   Grid,
   Typography,
   Divider,
@@ -34,7 +35,6 @@ class CampaignsAccordion extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      open: false,
       expanded: null
     }
   }
@@ -45,18 +45,9 @@ class CampaignsAccordion extends Component {
     })
   }
 
-  handleOpen = () => {
-    this.setState({ open: true })
-  }
-
-  handleClose = value => {
-    this.setState({ value, open: false })
-  }
-
   render() {
-    const { classes } = this.props
+    const { classes, campaigns, bundle } = this.props
     const { expanded } = this.state
-    const campaigns = this.props.campaigns
     console.log('campaigns', campaigns)
     let panelIndex = 1
     return (
@@ -81,7 +72,10 @@ class CampaignsAccordion extends Component {
                         </Typography>
                       </ExpansionPanelSummary>
                       <ExpansionPanelDetails>
-                        <CampaignExpansionPanel campaign={campaign} />
+                        <CampaignExpansionPanel
+                          campaign={campaign}
+                          bundle={bundle}
+                        />
                       </ExpansionPanelDetails>
                     </ExpansionPanel>
                   )

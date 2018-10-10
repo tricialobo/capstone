@@ -14,8 +14,6 @@ import {
   Divider
 } from '@material-ui/core'
 import CampaignsAccordion from './CampaignsAccordion'
-import classnames from 'classnames'
-import campaigns from '../../store/campaigns'
 
 const styles = {
   grow: {
@@ -27,6 +25,7 @@ const styles = {
   },
   root: {
     display: 'flex',
+    width: '75%',
     justifyContent: 'center',
     flexGrow: 1
   },
@@ -50,15 +49,32 @@ const styles = {
 
 class ProjectCheckout extends Component {
   render() {
-    const { classes, campaigns } = this.props
+    const { campaigns, currentBundle, handleSubmit } = this.props
+    console.log(currentBundle)
+
     return (
-      <div>
-        <Grid container justify="center">
-          <CampaignsAccordion campaigns={campaigns} />
+      <Grid container direction="column" alignContent="center">
+        <Grid>
+          <CampaignsAccordion campaigns={campaigns} bundle={currentBundle} />
         </Grid>
-      </div>
+        <Grid>
+          {!currentBundle.deployed ? (
+            <Button type="submit" onClick={() => handleSubmit()}>
+              Deploy project
+            </Button>
+          ) : (
+            ''
+          )}
+        </Grid>
+      </Grid>
     )
   }
 }
 
-export default withStyles(styles)(ProjectCheckout)
+const mapState = state => {
+  return {
+    currentBundle: state.bundles.bundle
+  }
+}
+
+export default withStyles(styles)(connect(mapState)(ProjectCheckout))

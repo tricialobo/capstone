@@ -58,6 +58,25 @@ const theme = createMuiTheme({
         marginTop: 18
       }
     },
+    MuiPaper: {
+      root: {
+        MuiExpansionPanelSummary: {
+          root: {
+            expanded: {
+              content: {
+                margin: 0,
+                display: 'none'
+              }
+            }
+          }
+        }
+      }
+    },
+    MuiExpansionPanelDetails: {
+      root: {
+        paddingTop: 0
+      }
+    },
     MuiMenuItem: {
       root: {
         fontSize: 14,
@@ -109,6 +128,18 @@ const theme = createMuiTheme({
     MuiFormControl: {
       root: {
         marginTop: 16
+      }
+    },
+    MuiNotchedOutline: {
+      disabled: {
+        border: 'solid 2px',
+        borderColor: 'black',
+        borderRadius: 0
+      }
+    },
+    MuiInputBase: {
+      disabled: {
+        fontFamily: 'monospace'
       }
     }
   }
