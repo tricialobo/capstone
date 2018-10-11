@@ -84,6 +84,7 @@ class AllCampaigns extends Component {
                           </Typography>
                         </Grid>
                         <Grid item xs={2}>
+                        
                           <Button
                             onClick={evt => this.handleClick({ evt }, campaign)}
                           >

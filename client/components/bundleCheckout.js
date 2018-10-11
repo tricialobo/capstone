@@ -47,7 +47,7 @@ class BundleCheckout extends Component {
       }
     }).then(response => {
       if (response.data.msg === 'success') {
-        alert('Bundle dispatched')
+        console.log('success!!!!!!')
       } else if (response.data.msg === 'fail') {
         console.log('Message failed to send.')
       }

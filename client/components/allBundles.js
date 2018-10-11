@@ -45,9 +45,8 @@ class Bundles extends Component {
     await this.props.removeCampaignFromBundle(info)
   }
 
-  newBunClick = () => {
-    console.log('helloooo')
-    this.props.addNew()
+  newBunClick = async () => {
+    await this.props.addNew()
   }
 
   async componentDidMount() {

@@ -28,11 +28,12 @@ class PreviousProjects extends Component {
         <h1>All Projects</h1>
         <h2>Active Projects</h2>
         {filtBuns.map(bun => {
+          console.log('BUN.campaigns', bun.campaigns)
           return (
             <ul key = {bun.id}>
               <li>{bun.projectName} </li>
               <li>
-                {bun.campaigns.map(campaign => (
+                {bun.campaigns[0] && bun.campaigns.map(campaign => (
                   <ul key = {campaign.id}>
                     <li>{campaign.name}</li>
                     <li>{campaign.price}</li>
