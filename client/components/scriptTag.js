@@ -3,23 +3,24 @@ import { TextField, Typography, Grid } from '@material-ui/core/'
 import { withStyles } from '@material-ui/core/styles'
 import axios from 'axios'
 class ScriptTag extends Component {
-  componentDidMount() {
-    let bundleId = this.props.bundleId
-    const updateBundle = axios({
-      method: 'PUT',
-      url: `http://localhost:8080/api/bundles/${bundleId}`,
-      data: {
-        ScriptTag: `<pre> <script> src="http://localhost:8080/api/scripts/${bundleId}.js" </script> </pre>`
-      }
-    }).then(response => {
-      if (response.data.msg === 'success') {
-        alert('success')
-      } else if (response.data.msg === 'fail') {
-        console.log('you did it wrong with put request')
-      }
-    })
-    updateBundle()
+  constructor(props) {
+    super(props)
   }
+
+  // updateBundle = bundleId =>
+  //   axios({
+  //     method: 'PUT',
+  //     url: `http://localhost:8080/api/bundles/${bundleId}`,
+  //     data: {
+  //       ScriptTag: `<pre> <script> src="http://localhost:8080/api/scripts/${bundleId}.js" </script> </pre>`
+  //     }
+  //   }).then(response => {
+  //     if (response.data.msg === 'success') {
+  //       alert('success')
+  //     } else if (response.data.msg === 'fail') {
+  //       console.log('you did it wrong with put request')
+  //     }
+  //   })
   render() {
     const { classes } = this.props
     //let bundleId = this.props.location.bundleId
