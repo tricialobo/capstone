@@ -15,7 +15,7 @@ import {
   Button
 } from '@material-ui/core'
 import AdsGridList from './AdsGridList'
-import { postAd } from '../../store'
+import { postAd, fetchUserAds } from '../../store'
 import AdForm from './AdForm'
 
 const styles = theme => ({
@@ -45,6 +45,10 @@ class AllAds extends Component {
     this.handleCreate = this.handleCreate.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+  }
+
+  async componentDidMount() {
+    await fetchUserAds(this.props.currentUser.id)
   }
 
   handleOpen = () => {
@@ -105,7 +109,7 @@ class AllAds extends Component {
           onClose={this.handleClose}
         >
           <Grid container direction="column" alignItems="center">
-            <DialogTitle>New campaign</DialogTitle>
+            <DialogTitle>New advertisement</DialogTitle>
             <DialogContent>
               <DialogContentText>
                 Name your new ad, upload its corresponding image, and set the
@@ -134,7 +138,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    createAd: newAd => dispatch(postAd(newAd))
+    createAd: newAd => dispatch(postAd(newAd)),
+    fetchUserAds: userId => dispatch(fetchUserAds(userId))
   }
 }
 

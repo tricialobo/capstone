@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import classNames from 'classnames'
 import { updateUserOnServer } from '../../store/user'
 import {
   Select,

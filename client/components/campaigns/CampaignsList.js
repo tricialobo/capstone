@@ -12,6 +12,7 @@ import { fetchSingleCampaign } from '../../store'
 
 const styles = theme => ({
   root: {
+    marginTop: 9,
     borders: 'none',
     width: '100%',
     maxWidth: 400,
