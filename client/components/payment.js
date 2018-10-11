@@ -43,6 +43,7 @@ class Payment extends Component {
   //   })
 
   // }
+
   async componentDidMount() {
     //gets all of user's open contracts
     await this.props.fetchContract(this.props.user.currentUser.id)

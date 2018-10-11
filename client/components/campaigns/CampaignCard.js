@@ -47,8 +47,11 @@ const CampaignCard = props => {
   const { selectedCampaign, classes } = props
   const demographics = selectedCampaign.demographics
   const advertisements = selectedCampaign.advertisements
+<<<<<<< HEAD
 
   
+=======
+>>>>>>> 5e1380a9a18c819d081430a8433142ab25f69fed
   return (
     <div>
     <Card className={classes.card}>

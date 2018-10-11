@@ -65,7 +65,7 @@ class AdsGridList extends Component {
                        //<button onClick = {() => this.removeClick(this.props.campId, ad.id)}>remove</button>
             <GridListTile className={classes.adTile} key={ad.id}>
                 <img src={ad.image} alt={ad.name} />
-            <StyledTileBar className={classes.tileBar} title={ad.name} actionIcon = {<button onClick = {() => this.removeClick(this.props.campId, ad.id)}>remove</button>}/>
+            <StyledTileBar className={classes.tileBar} title={ad.name} actionIcon = { <button onClick = {() => this.addClick(this.props.campId, ad.id)}>add</button>}/>
             </GridListTile>
             ))}
         </GridList>

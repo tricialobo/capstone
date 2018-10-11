@@ -75,6 +75,16 @@ async function seed() {
     salt: 'salt'
   })
 
+  const user5 = await User.create({
+    firstName: 'Jesus',
+    lastName: 'Christ',
+    email: 'ck@email.com',
+    password: '1234',
+    isAdvertiser: true,
+    budget: 110.0,
+    salt: 'salt'
+  })
+
   // const contract1 = await Contract.create({
   //   contractHash: '0x94d52535fe072e44c0745c114d816ff066fcee9e',
   //   balance: 15.0,
@@ -244,7 +254,7 @@ async function seed() {
   const campaign2 = await Campaign.create({
     blockChainKey: '',
     clicks: 3,
-    name: 'Gucci',
+    name: '#mycalvins S19',
     price: '18.0',
     isActive: true,
     advertiserId: 5
@@ -312,6 +322,58 @@ async function seed() {
   await campaign6.addDemographic(demographic1)
   await campaign6.addDemographic(demographic3)
 
+  const campaign7 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: '#mycalvins F18',
+    price: '70.0',
+    isActive: true,
+    advertiserId: 5
+  })
+  await campaign7.addCategory(category3)
+  await campaign7.addCategory(category2)
+  await campaign7.addDemographic(demographic1)
+  await campaign7.addDemographic(demographic3)
+
+  const campaign8 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: 'Calvin Klein SS19',
+    price: '100.0',
+    isActive: true,
+    advertiserId: 5
+  })
+  await campaign8.addCategory(category3)
+  await campaign8.addCategory(category2)
+  await campaign8.addDemographic(demographic1)
+  await campaign8.addDemographic(demographic3)
+
+  const campaign9 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: 'F18 CK 205W39NYC',
+    price: '10.0',
+    isActive: true,
+    advertiserId: 5
+  })
+  await campaign9.addCategory(category3)
+  await campaign9.addCategory(category2)
+  await campaign9.addDemographic(demographic1)
+  await campaign9.addDemographic(demographic3)
+
+  const campaign10 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: 'CK x Pendleton',
+    price: '10.0',
+    isActive: true,
+    advertiserId: 5
+  })
+  await campaign10.addCategory(category3)
+  await campaign10.addCategory(category2)
+  await campaign10.addDemographic(demographic2)
+  await campaign10.addDemographic(demographic3)
+
   const ad1 = await Advertisement.create({
     name: 'Rolex-Ad-1',
     image:
@@ -349,7 +411,47 @@ async function seed() {
     adSpecs: 'format3',
     advertiserId: 5
   })
-  await ad4.addCampaign(campaign2)
+  await ad4.addCampaign(campaign1)
+
+  const ad17 = await Advertisement.create({
+    name: 'Ad-1',
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnTTmjGfrpN-c9z_YughJE943uQI9nx0Zh2Z6pGQjrx6vDJZDNkQ',
+    url: 'http://google.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad17.addCampaign(campaign2)
+
+  const ad18 = await Advertisement.create({
+    name: 'Ad-2',
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTCbgXTDah6VKis0q06PrcEI7VuYFn2ePkWqPuwtDY8wmLcYZR',
+    url: 'http://google.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad18.addCampaign(campaign2)
+
+  const ad19 = await Advertisement.create({
+    name: 'Ad-3',
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNHyXAoxhgwpfy04nTnMPievJDhbNMjzaTh0PGTok_lO237AUd',
+    url: 'http://google.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad19.addCampaign(campaign2)
+
+  const ad20 = await Advertisement.create({
+    name: 'Ad-1',
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_n7nBvVGdESM7n8Vy10oavcFBmkKJm9GCTv_YTqkORuJD0Lfp',
+    url: 'http://google.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad20.addCampaign(campaign2)
 
   const ad5 = await Advertisement.create({
     name: 'Gucci-Ad-2',
@@ -359,7 +461,7 @@ async function seed() {
     adSpecs: 'format3',
     advertiserId: 5
   })
-  await ad5.addCampaign(campaign2)
+  await ad5.addCampaign(campaign1)
 
   const ad6 = await Advertisement.create({
     name: 'Mcdonalds-Ad-1',
