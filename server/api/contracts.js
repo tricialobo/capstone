@@ -15,7 +15,39 @@ const axios = require('axios')
 
 module.exports = router
 
+router.get('/:contractHash', async (req, res, next) => {
+  try {
+    const contract = await Contract.findOne({
+      where: {
+        contractHash: req.params.contractHash
+      },
+      include: [
+        {
+          model: User,
+          through: 'partiesToContracts',
+          where: {
+            isAdvertiser: true
+          }
+        },
+        { model: Bundle }
+      ]
+    })
+    res.json(contract)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+router.get('/user/:contractHash', async (req, res, next) => {
+  try {
+    const use = await Contract
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 //for getting previous contracts for dev view
+
 router.get('/closed/:userid', async (req, res, next) => {
   try {
     const contracts = await PartiesToContract.findAll({
