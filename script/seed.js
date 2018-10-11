@@ -22,6 +22,7 @@ async function seed() {
       email: 'rolex@email.com',
       password: '123',
       budget: 100.0,
+      balance: 100.0,
       isAdvertiser: true
     }),
     User.create({
@@ -62,6 +63,7 @@ async function seed() {
     password: '1234',
     isAdvertiser: true,
     budget: 80.0,
+    balance: 80.0,
     salt: 'salt'
   })
 
@@ -72,6 +74,7 @@ async function seed() {
     password: '1234',
     isAdvertiser: true,
     budget: 110.0,
+    balance: 110.0,
     salt: 'salt'
   })
 
@@ -82,6 +85,7 @@ async function seed() {
     password: '1234',
     isAdvertiser: true,
     budget: 110.0,
+    balance: 110.0,
     salt: 'salt'
   })
 
