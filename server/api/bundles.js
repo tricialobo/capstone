@@ -9,18 +9,6 @@ const {
   Demographic
 } = require('../db/models')
 
-router.put('/:bundleid', async (req, res, next) => {
-  try {
-    console.log('in put request')
-    const bundle = await Bundle.findById(req.params.bundleid)
-    const scriptTag = req.body.scriptTag
-    bundle.update({
-      scriptTag: scriptTag
-    })
-  } catch (error) {
-    console.error(error)
-  }
-})
 router.put('/remove', async (req, res, next) => {
   console.log('bundleId & campaignId', req.body.bundleId, req.body.campaignId)
   const bundleId = req.body.bundleId
@@ -144,7 +132,7 @@ router.get('/previous/:userid', async (req, res, next) => {
         developerId: userId,
         deployed: true
       },
-      include: [{ model: Campaign}]
+      include: [{ model: Campaign }]
     })
     res.send(projects)
   } catch (error) {
