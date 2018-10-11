@@ -56,15 +56,19 @@ router.put('/addcampaign/:bundleId', async (req, res, next) => {
 })
 
 router.post('/newbundle/:userId', async (req, res, next) => {
-  console.log('hello??')
   const userId = req.params.userId
   try {
     const newBun = await Bundle.create({
       developerId: userId,
       projectName: req.body.projectName
     })
-    newBun.campaigns = []
-    res.json(newBun)
+    const newBunId = newBun.id
+    const fullNewBun = await Bundle.findAll({
+      where: {
+        id: newBunId
+      }, include: [{model: Campaign}]
+    })
+    res.json(fullNewBun)
   } catch (err) {
     next(err)
   }
