@@ -9,6 +9,18 @@ const {
   Demographic
 } = require('../db/models')
 
+router.put('/:bundleid', async (req, res, next) => {
+  try {
+    console.log('in put request')
+    const bundle = await Bundle.findById(req.params.bundleid)
+    const scriptTag = req.body.scriptTag
+    bundle.update({
+      scriptTag: scriptTag
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
 router.put('/remove', async (req, res, next) => {
   console.log('bundleId & campaignId', req.body.bundleId, req.body.campaignId)
   const bundleId = req.body.bundleId
@@ -44,15 +56,19 @@ router.put('/addcampaign/:bundleId', async (req, res, next) => {
 })
 
 router.post('/newbundle/:userId', async (req, res, next) => {
-  console.log('hello??')
   const userId = req.params.userId
   try {
     const newBun = await Bundle.create({
       developerId: userId,
       projectName: req.body.projectName
     })
-    newBun.campaigns = []
-    res.json(newBun)
+    const newBunId = newBun.id
+    const fullNewBun = await Bundle.findAll({
+      where: {
+        id: newBunId
+      }, include: [{model: Campaign}]
+    })
+    res.json(fullNewBun)
   } catch (err) {
     next(err)
   }
@@ -127,13 +143,14 @@ router.get('/previous/:userid', async (req, res, next) => {
   const userId = req.params.userid
   try {
     console.log('in api request for previous contracts')
-    const project = await Bundle.findAll({
+    const projects = await Bundle.findAll({
       where: {
-        developerId: userId
+        developerId: userId,
+        deployed: true
       },
-      include: [{ model: Contract, where: { status: 'FALSE' } }]
+      include: [{ model: Campaign}]
     })
-    res.send(project)
+    res.send(projects)
   } catch (error) {
     console.error(error)
   }
@@ -143,7 +160,10 @@ router.put('/deploy/:projectId', async (req, res, next) => {
   try {
     const project = await Bundle.findById(req.params.projectId)
     const deployProject = await project.update({
-      deployed: true
+      deployed: true,
+      scriptTag: `<pre> <script> src="http://localhost:8080/api/scripts/${
+        req.params.projectId
+      }.js" </script> </pre>`
     })
     res.json(deployProject)
   } catch (error) {

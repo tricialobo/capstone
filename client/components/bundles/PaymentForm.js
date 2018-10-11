@@ -80,6 +80,7 @@ const PaymentForm = props => {
                 minWidth="100%"
                 type="submit"
                 className={classes.textField}
+                onClick = {handleSubmit}
               >
                 Submit payment
               </Button>

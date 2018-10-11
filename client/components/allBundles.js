@@ -45,9 +45,8 @@ class Bundles extends Component {
     await this.props.removeCampaignFromBundle(info)
   }
 
-  newBunClick = () => {
-    console.log('helloooo')
-    this.props.addNew()
+  newBunClick = async () => {
+    await this.props.addNew()
   }
 
   async componentDidMount() {
@@ -58,19 +57,18 @@ class Bundles extends Component {
   }
 
   render() {
-    console.log('IT IS BEING RENDERED')
     const { classes, bundles } = this.props
     const filtBuns = bundles.filter(bundle => bundle.deployed === false)
     let index = 0
-    return filtBuns && filtBuns.length ? (
+    return bundles ? (
       <div className={classes.root}>
         <List
           component="nav"
           subheader={
             <ListSubheader component="div">Active Projects</ListSubheader>
           }
-        >
-          {filtBuns.map(bundle => {
+        > 
+          {filtBuns.length ? filtBuns.map(bundle => {
             const indexValue = index
             index++
             return (
@@ -140,7 +138,7 @@ class Bundles extends Component {
                 </Collapse>
               </div>
             )
-          })}
+          }) : <h5>No Active Projects</h5>} 
           <ListItem
             className={classes.nested}
             button

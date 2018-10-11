@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { TextField, Typography, Grid } from '@material-ui/core/'
 import { withStyles } from '@material-ui/core/styles'
-
+import axios from 'axios'
 class ScriptTag extends Component {
   constructor(props) {
     super(props)
@@ -9,7 +9,8 @@ class ScriptTag extends Component {
 
   render() {
     const { classes } = this.props
-    let bundleId = this.props.location.bundleId
+    //let bundleId = this.props.location.bundleId
+    let bundleId = this.props.bundleId
     console.log('bundleId', bundleId)
     return (
       <Grid container justifyContent="center">
