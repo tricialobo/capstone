@@ -31,6 +31,7 @@ class SingleContractPayment extends Component {
     })
   }
   async handleSubmit(evt) {
+    console.log('hi we are in handlesubmit')
     evt.preventDefault()
 
     let accounts = await web3.eth.getAccounts(console.log)
@@ -42,7 +43,9 @@ class SingleContractPayment extends Component {
     const currentContract = fundsTransfer(blocks[indexOf])
     console.log('currentContract', currentContract)
     currentContract.options.address = `${contractHash}`
-    let address = document.getElementById('address').value
+    //let address = document.getElementById('address').value
+    //let address = document.getElementById(this.state.address).value
+    let address = this.state.address
     console.log('address', address)
     const depositFunds = await currentContract.methods.deposit().send({
       gas: 6000000,
