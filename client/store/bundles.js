@@ -131,7 +131,8 @@ export function addBundle(obj) {
       obj
     )
     console.log('newBun', data)
-    dispatch(addedBundle(data))
+    dispatch(addedBundle(data[0]))
+    dispatch(setBundle(data[0]))
   }
 }
 
