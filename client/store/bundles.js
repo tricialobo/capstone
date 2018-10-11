@@ -132,6 +132,7 @@ export function addBundle(obj) {
     )
     console.log('newBun', data)
     dispatch(addedBundle(data))
+    dispatch(setBundle(data))
   }
 }
 
