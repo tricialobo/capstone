@@ -8,16 +8,10 @@ import fundsTransfer from '../../ethereum/fundsTransfer'
 import web3 from '../../ethereum/web3'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
-
-import CheckoutCard from './bundles/CheckoutCard'
-import CampaignCard from './campaigns/CampaignCard'
-import CheckoutDetails from './bundles/CheckoutDetails'
 import { Grid } from '@material-ui/core'
 import PaymentForm from './bundles/PaymentForm'
 
-
 import { fetchUserByContract, getContractInfo } from '../store/contracts'
-
 class SingleContractPayment extends Component {
   constructor() {
     super()

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getCampaignsInBundle } from './bundles';
 
 // ACTION TYPES
 const SET_ALL_ADS = 'SET_ALL_ADS'
@@ -9,6 +10,7 @@ const UPDATE_AD = 'UPDATE_AD'
 const DELETE_AD = 'DELETE_AD'
 const SET_AD_LOADING_STATUS = 'SET_AD_LOADING_STATUS'
 const SET_AD_ERROR_STATUS = 'SET_AD_ERROR_STATUS'
+const ADDED_AD_TO_CAMPAIGN = 'ADDED_AD_TO_CAMPAIGN'
 
 // ACTION CREATORS
 export const setAllAds = ads => {
@@ -67,7 +69,15 @@ export const setAdErrorStatus = status => {
   }
 }
 
+export const addedAd = ad => {
+  return {
+    type: ADDED_AD_TO_CAMPAIGN,
+    ad
+  }
+}
+
 // THUNK CREATORS
+
 export const fetchAllAds = () => {
   return async dispatch => {
     try {
@@ -154,7 +164,7 @@ const initialState = {
   isLoading: true,
   allAds: [],
   selectedAd: {},
-  isError: {}
+  isError: {},
 }
 
 // REDUCER
@@ -205,6 +215,8 @@ export default function(state = initialState, action) {
         ...state,
         isError: action.status
       }
+    // case ADDED_AD_TO_CAMPAIGN:
+    //   return {...state, adsInCampaign: [...action.}
     default:
       return state
   }

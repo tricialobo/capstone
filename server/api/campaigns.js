@@ -83,6 +83,42 @@ router.put('/campaign/:campaignId', (req, res, next) => {
     .catch(next)
 })
 
+router.put('/add/:campaignId/:adId', async (req, res, next) => {
+  const campaignId = req.params.campaignId
+  const adId = req.params.adId
+  try{
+  const campaign = await Campaign.findById(campaignId)
+  await campaign.addAdvertisement(adId)
+  await campaign.save()
+  const updatedCampaign = await Campaign.findAll({
+    where: {
+      id: campaignId
+    }, include: [{model: Advertisement}]
+  })
+  res.json((updatedCampaign))
+  }catch (err) {
+    next(err)
+  }
+}) 
+
+router.put('/remove/:campaignId/:adId', async (req, res, next) => {
+  const campaignId = req.params.campaignId
+  const adId = req.params.adId
+  try{
+  const campaign = await Campaign.findById(campaignId)
+  await campaign.removeAdvertisement(adId)
+  await campaign.save()
+  const updatedCampaign = await Campaign.findAll({
+    where: {
+      id: campaignId
+    }, include: [{model: Advertisement}]
+  })
+  res.json((updatedCampaign))
+  }catch (err) {
+    next(err)
+  }
+}) 
+
 router.delete('/:campaignId', (req, res, next) => {
   Campaign.findById(req.params.campaignId)
     .then(campaign => {
