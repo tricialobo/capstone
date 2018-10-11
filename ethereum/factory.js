@@ -3,6 +3,6 @@ const BlockFactory = require('./build/BlockFactory.json')
 
 const instance = new web3.eth.Contract(
   JSON.parse(BlockFactory.interface),
-  '0xc0ED63E3A70BfCB003452B1Cc083db822e1f23e1'
+  '0x4415A98a7195C3b1a0dF40659a40fb1C4B902766'
 )
 module.exports = instance

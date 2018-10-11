@@ -139,13 +139,14 @@ router.get('/previous/:userid', async (req, res, next) => {
   const userId = req.params.userid
   try {
     console.log('in api request for previous contracts')
-    const project = await Bundle.findAll({
+    const projects = await Bundle.findAll({
       where: {
-        developerId: userId
+        developerId: userId,
+        deployed: true
       },
-      include: [{ model: Contract, where: { status: 'FALSE' } }]
+      include: [{ model: Campaign}]
     })
-    res.send(project)
+    res.send(projects)
   } catch (error) {
     console.error(error)
   }
