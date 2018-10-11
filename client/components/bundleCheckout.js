@@ -15,12 +15,16 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
 import ProjectCheckout from './bundles/ProjectCheckout'
+import ScriptTag from './scriptTag'
+
 class BundleCheckout extends Component {
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
     //this.sendEmail = this.sendEmail.bind(this)
-    this.state = {}
+    this.state = {
+      showScriptTag: false
+    }
   }
   async componentDidMount() {
     // // await this.props.getCampaigns(1)
@@ -706,6 +710,7 @@ class BundleCheckout extends Component {
             this.props.bundle && this.props.updateBundle(this.props.bundle.id)
         )
     })
+    this.setState({showScriptTag: true})
   }
 
   render() {
@@ -728,9 +733,11 @@ class BundleCheckout extends Component {
               handleClick={this.handleClick}
             />
           </Grid>
+          
         ) : (
           <h2>No Campaigns In Your Bundle</h2>
         )}
+        {this.state.showScriptTag ? <ScriptTag bundleId = {bundle.id}/> : null}
       </Grid>
     )
   }
