@@ -9,6 +9,18 @@ const {
   Demographic
 } = require('../db/models')
 
+router.put('/:bundleid', async (req, res, next) => {
+  try {
+    console.log('in put request')
+    const bundle = await Bundle.findById(req.params.bundleid)
+    const scriptTag = req.body.scriptTag
+    bundle.update({
+      scriptTag: scriptTag
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
 router.put('/remove', async (req, res, next) => {
   console.log('bundleId & campaignId', req.body.bundleId, req.body.campaignId)
   const bundleId = req.body.bundleId
@@ -143,7 +155,10 @@ router.put('/deploy/:projectId', async (req, res, next) => {
   try {
     const project = await Bundle.findById(req.params.projectId)
     const deployProject = await project.update({
-      deployed: true
+      deployed: true,
+      scriptTag: `<pre> <script> src="http://localhost:8080/api/scripts/${
+        req.params.projectId
+      }.js" </script> </pre>`
     })
     res.json(deployProject)
   } catch (error) {
