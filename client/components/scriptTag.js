@@ -7,20 +7,6 @@ class ScriptTag extends Component {
     super(props)
   }
 
-  // updateBundle = bundleId =>
-  //   axios({
-  //     method: 'PUT',
-  //     url: `http://localhost:8080/api/bundles/${bundleId}`,
-  //     data: {
-  //       ScriptTag: `<pre> <script> src="http://localhost:8080/api/scripts/${bundleId}.js" </script> </pre>`
-  //     }
-  //   }).then(response => {
-  //     if (response.data.msg === 'success') {
-  //       alert('success')
-  //     } else if (response.data.msg === 'fail') {
-  //       console.log('you did it wrong with put request')
-  //     }
-  //   })
   render() {
     const { classes } = this.props
     //let bundleId = this.props.location.bundleId
