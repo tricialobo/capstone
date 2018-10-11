@@ -122,16 +122,9 @@ class CampaignForm extends Component {
                 <DemographicsList selectedDemographics={selectedDemographics} />
               </Grid>
             </Grid>
-            <Button classNames={classes.button} type="submit">
-              Create campaign
-            </Button>
+            <Button type="submit">Submit</Button>
 
-            <Button
-              classNames={classes.button}
-              onClick={this.props.handleClose}
-            >
-              Cancel
-            </Button>
+            <Button onClick={this.props.handleClose}>Cancel</Button>
 
             <br />
 
