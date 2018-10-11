@@ -5,6 +5,12 @@ import fundsTransfer from '../../ethereum/fundsTransfer'
 import web3 from '../../ethereum/web3'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import CheckoutCard from './bundles/CheckoutCard'
+import CampaignCard from './campaigns/CampaignCard'
+import CheckoutDetails from './bundles/CheckoutDetails'
+import { Grid } from '@material-ui/core'
+import PaymentForm from './bundles/PaymentForm'
+
 class SingleContractPayment extends Component {
   constructor() {
     super()
@@ -92,26 +98,16 @@ class SingleContractPayment extends Component {
   }
   render() {
     const contractHash = this.props.match.params.contractId
+    console.log('temp campaign', this.props.tempCampaign)
     console.log('contractHash', contractHash)
     console.log('props', this.props)
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <div>
-            <h3> Payment </h3>
-            {/* <p> Contract Balance: {this.props.contract.contract.balance} ETH</p> */}
-            <p>Enter your Ethereum Address:</p>
-            <input
-              name="address"
-              type="string"
-              id="address"
-              onChange={this.handleChange}
-              value={this.state.address}
-            />
-          </div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+      <PaymentForm
+        campaign={this.props.tempCampaign}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+        address={this.state.address}
+      />
     )
   }
 }
@@ -119,7 +115,8 @@ class SingleContractPayment extends Component {
 const mapState = state => {
   return {
     user: state.user,
-    contract: state.contracts.currentUserContract
+    contract: state.contracts.currentUserContract,
+    tempCampaign: state.campaigns.allCampaigns[1]
   }
 }
 
