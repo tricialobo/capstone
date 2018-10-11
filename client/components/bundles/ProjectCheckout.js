@@ -49,8 +49,8 @@ const styles = {
 
 class ProjectCheckout extends Component {
   render() {
-    const { campaigns, currentBundle, handleSubmit } = this.props
-    console.log(currentBundle)
+    const { campaigns, currentBundle, handleClick } = this.props
+    console.log('PROPS IN PROJ CHECL', this.props)
 
     return (
       <Grid container direction="column" alignContent="center">
@@ -59,7 +59,7 @@ class ProjectCheckout extends Component {
         </Grid>
         <Grid>
           {!currentBundle.deployed ? (
-            <Button type="submit" onClick={() => handleSubmit()}>
+            <Button type="submit" onClick={handleClick}>
               Deploy project
             </Button>
           ) : (
