@@ -77,6 +77,20 @@ export const setCampaignErrorStatus = status => {
 
 //thunks
 
+export const addAd = (campId, adId) => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/campaigns/add/${campId}/${adId}`)
+    dispatch(setCampaign(data[0]))
+  }
+}
+
+export const removeAdFromCamp = (campId, adId) => {
+  return async dispatch => {
+    const {data} = await axios.put(`api/campaigns/remove/${campId}/${adId}`)
+    dispatch(setCampaign(data[0]))
+  }
+}
+
 export function getAllCampaigns() {
   return async dispatch => {
     try {
