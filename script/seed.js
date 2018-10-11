@@ -423,7 +423,7 @@ async function seed() {
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnTTmjGfrpN-c9z_YughJE943uQI9nx0Zh2Z6pGQjrx6vDJZDNkQ',
     url: 'http://google.com',
     adSpecs: 'format3',
-    advertiserId: 7
+    advertiserId: 5
   })
   await ad17.addCampaign(campaign2)
 
@@ -433,7 +433,7 @@ async function seed() {
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTCbgXTDah6VKis0q06PrcEI7VuYFn2ePkWqPuwtDY8wmLcYZR',
     url: 'http://google.com',
     adSpecs: 'format3',
-    advertiserId: 7
+    advertiserId: 5
   })
   await ad18.addCampaign(campaign2)
 
@@ -443,17 +443,17 @@ async function seed() {
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNHyXAoxhgwpfy04nTnMPievJDhbNMjzaTh0PGTok_lO237AUd',
     url: 'http://google.com',
     adSpecs: 'format3',
-    advertiserId: 7
+    advertiserId: 5
   })
   await ad19.addCampaign(campaign2)
 
   const ad20 = await Advertisement.create({
-    name: 'Ad-1',
+    name: 'Ad-4',
     image:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_n7nBvVGdESM7n8Vy10oavcFBmkKJm9GCTv_YTqkORuJD0Lfp',
     url: 'http://google.com',
     adSpecs: 'format3',
-    advertiserId: 7
+    advertiserId: 5
   })
   await ad20.addCampaign(campaign2)
 

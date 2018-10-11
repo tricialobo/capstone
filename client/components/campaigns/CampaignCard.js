@@ -9,8 +9,8 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import AdsGridList from '../ads/AdsGridList'
-import AddAdvert from '../AddAdvert'
-import {fetchUserAds} from '../../store'
+import AddAdvert from './AddAdvert'
+import { fetchUserAds } from '../../store'
 
 const styles = {
   grow: {
@@ -44,65 +44,65 @@ const styles = {
 }
 
 const CampaignCard = props => {
-  const { selectedCampaign, classes } = props
+  const { selectedCampaign, classes, handleOpen, handleClose } = props
   const demographics = selectedCampaign.demographics
   const advertisements = selectedCampaign.advertisements
 
-  
   return (
     <div>
-    <Card className={classes.card}>
-      <CardHeader
-        action={
-          <Button component={Link} to={`/campaign/edit/${selectedCampaign.id}`}>
-            Edit campaign
-          </Button>
-        }
-        title={selectedCampaign.name}
-        subheader={selectedCampaign.isActive ? 'Currently active' : 'Inactive'}
-      />
-      <Divider />
-      <CardContent className={classes.content}>
-        <Grid container direction="row" spacing={40}>
-          <Grid item xs={2}>
-            <Grid container direction="column">
-              <Grid>
-                <Typography variant="subheading">Price</Typography>
-                <Typography variant="body1">
-                  {selectedCampaign.price} ETH
+      <Card className={classes.card}>
+        <CardHeader
+          action={<Button onClick={handleOpen}>Edit campaign</Button>}
+          title={selectedCampaign.name}
+          subheader={
+            selectedCampaign.isActive ? 'Currently active' : 'Inactive'
+          }
+        />
+        <Divider />
+        <CardContent className={classes.content}>
+          <Grid container direction="row" spacing={40}>
+            <Grid item xs={2}>
+              <Grid container direction="column">
+                <Grid>
+                  <Typography variant="subheading">Price</Typography>
+                  <Typography variant="body1">
+                    {selectedCampaign.price} ETH
+                  </Typography>
+                </Grid>
+                <Grid>
+                  <Typography variant="subheading">Demographics</Typography>
+                  {demographics &&
+                    demographics.length &&
+                    demographics.map(demographic => (
+                      <Typography key={demographic.id} variant="body1">
+                        {demographic.name}
+                      </Typography>
+                    ))}
+                </Grid>
+              </Grid>
+            </Grid>
+            {advertisements && advertisements.length ? (
+              <Grid item xs={10}>
+                <AdsGridList ads={advertisements} />
+              </Grid>
+            ) : (
+              <Grid item container justify="center">
+                <Typography variant="subheading">
+                  There are currently no advertisements in this campaign.
                 </Typography>
               </Grid>
-              <Grid>
-                <Typography variant="subheading">Demographics</Typography>
-                {demographics &&
-                  demographics.length &&
-                  demographics.map(demographic => (
-                    <Typography key={demographic.id} variant="body1">
-                      {demographic.name}
-                    </Typography>
-                  ))}
-              </Grid>
-            </Grid>
+            )}
           </Grid>
-          {advertisements && advertisements.length ? (
-            <Grid item xs={10}>
-              <AdsGridList ads={advertisements} />
-            </Grid>
-          ) : (
-            <Grid item container justify="center">
-              <Typography variant="subheading">
-                There are currently no advertisements in this campaign.
-              </Typography>
-            </Grid>
-          )}
-        </Grid>
-      </CardContent>
-    </Card>
-    <h1>JAN THIS IS JUST ALL ADS BEING RENDERED BELOW, WILL GO AWAY</h1>
-    <AddAdvert ads = {props.ads} alreadychosen = {advertisements} campId = {selectedCampaign.id}/>
+        </CardContent>
+      </Card>
+      {/* <h1>JAN THIS IS JUST ALL ADS BEING RENDERED BELOW, WILL GO AWAY</h1>
+      <AddAdvert
+        ads={props.ads}
+        alreadychosen={advertisements}
+        campId={selectedCampaign.id}
+      /> */}
     </div>
   )
 }
-
 
 export default withStyles(styles)(CampaignCard)

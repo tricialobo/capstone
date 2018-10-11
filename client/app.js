@@ -141,6 +141,17 @@ const theme = createMuiTheme({
       disabled: {
         fontFamily: 'monospace'
       }
+    },
+    MuiListItem: {
+      selected: {
+        borderBottom: '2px solid',
+        backgroundColor: '#fff'
+      },
+      root: {
+        selected: {
+          backgroundColor: '#fff'
+        }
+      }
     }
   }
 })
