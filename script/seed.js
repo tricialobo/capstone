@@ -59,7 +59,7 @@ async function seed() {
   const user3 = await User.create({
     firstName: 'Stacy',
     lastName: 'Harfenist',
-    email: 'gucci@email.com',
+    email: 'ck@email.com',
     password: '1234',
     isAdvertiser: true,
     budget: 80.0,
@@ -81,7 +81,7 @@ async function seed() {
   const user5 = await User.create({
     firstName: 'Jesus',
     lastName: 'Christ',
-    email: 'ck@email.com',
+    email: 'muji@email.com',
     password: '1234',
     isAdvertiser: true,
     budget: 110.0,
@@ -95,7 +95,7 @@ async function seed() {
   })
 
   const bundle2 = await Bundle.create({
-    projectName: 'Project2A',
+    projectName: 'Petal',
     developerId: 2
   })
 
@@ -110,7 +110,7 @@ async function seed() {
       developerId: 4
     }),
     Bundle.create({
-      projectName: 'Project2B',
+      projectName: '66Royale',
       developerId: 2
     }),
     Bundle.create({
@@ -122,7 +122,7 @@ async function seed() {
       developerId: 3
     }),
     Bundle.create({
-      projectName: 'Project2C',
+      projectName: 'Infinity',
       developerId: 2
     }),
     Bundle.create({
@@ -130,7 +130,7 @@ async function seed() {
       developerId: 4
     }),
     Bundle.create({
-      projectName: 'Project2D',
+      projectName: 'MILK',
       developerId: 2
     })
   ])
@@ -210,7 +210,7 @@ async function seed() {
   const campaign1 = await Campaign.create({
     blockChainKey: 'abc',
     clicks: 8,
-    name: 'Mens FW18',
+    name: 'UQ_Mens FW18',
     price: '20.0',
     isActive: true,
     advertiserId: 1
@@ -269,7 +269,7 @@ async function seed() {
   const campaign5 = await Campaign.create({
     blockChainKey: 'abc',
     clicks: 8,
-    name: 'Womens FW18',
+    name: 'UQ_Womens FW18',
     price: '20.0',
     isActive: true,
     advertiserId: 1
@@ -346,6 +346,45 @@ async function seed() {
   await campaign10.addDemographic(demographic2)
   await campaign10.addDemographic(demographic3)
 
+  const campaign11 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: 'UQ U',
+    price: '10.0',
+    isActive: true,
+    advertiserId: 1
+  })
+  await campaign11.addCategory(category3)
+  await campaign11.addCategory(category2)
+  await campaign11.addDemographic(demographic2)
+  await campaign11.addDemographic(demographic3)
+
+  const campaign12 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: 'UQ x LEMAIRE',
+    price: '15.0',
+    isActive: true,
+    advertiserId: 1
+  })
+  await campaign12.addCategory(category3)
+  await campaign12.addCategory(category2)
+  await campaign12.addDemographic(demographic2)
+  await campaign12.addDemographic(demographic3)
+
+  const campaign13 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: 'UQ x JWANDERSON',
+    price: '12.0',
+    isActive: true,
+    advertiserId: 1
+  })
+  await campaign13.addCategory(category3)
+  await campaign13.addCategory(category2)
+  await campaign13.addDemographic(demographic2)
+  await campaign13.addDemographic(demographic3)
+
   const ad1 = await Advertisement.create({
     name: 'stretch-jeans-mn',
     image:
@@ -363,7 +402,7 @@ async function seed() {
     adSpecs: 'format2',
     advertiserId: 1
   })
-  await ad2.addCampaign(campaign2)
+  await ad2.addCampaign(campaign5)
 
   const ad3 = await Advertisement.create({
     name: 'mns-fw18-preview-2',
@@ -373,7 +412,7 @@ async function seed() {
     adSpecs: 'format3',
     advertiserId: 1
   })
-  await ad3.addCampaign(campaign5)
+  await ad3.addCampaign(campaign1)
 
   const ad4 = await Advertisement.create({
     name: 'mns-fw18-preview-1',
@@ -391,47 +430,133 @@ async function seed() {
       'https://pausemag.co.uk/wp-content/uploads/2018/08/uniqlo-christophe-lemaire-fall-201813.jpg',
     url: 'http://uniqlo.com',
     adSpecs: 'format3',
-    advertiserId: 5
+    advertiserId: 1
   })
   await ad17.addCampaign(campaign5)
 
-  const ad18 = await Advertisement.create({
-    name: 'Ad-2',
+  const ad21 = await Advertisement.create({
+    name: 'wmns-fw18-preview-3',
     image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTCbgXTDah6VKis0q06PrcEI7VuYFn2ePkWqPuwtDY8wmLcYZR',
-    url: 'http://google.com',
+      'https://pixel.nymag.com/imgs/fashion/daily/2015/08/26/26-lemaire-uniqlo-market-opener-2.w1200.h630.jpg',
+    url: 'http://uniqlo.com',
     adSpecs: 'format3',
-    advertiserId: 5
+    advertiserId: 1
   })
-  await ad18.addCampaign(campaign2)
+  await ad21.addCampaign(campaign5)
+
+  const ad22 = await Advertisement.create({
+    name: 'wmns-ULdown-1',
+    image:
+      'https://sg.everydayonsales.com/wp-content/uploads/2017/04/UNIQLO-Ultra-Light-Down-Jackets-and-Parkas-Promotion.jpg',
+    url: 'http://uniqlo.com',
+    adSpecs: 'format3',
+    advertiserId: 1
+  })
+  await ad22.addCampaign(campaign5)
+
+  const ad23 = await Advertisement.create({
+    name: 'wmns-fleece-zip',
+    image: 'https://im.uniqlo.com/style/180927_women_006.jpg',
+    url: 'http://uniqlo.com',
+    adSpecs: 'format3',
+    advertiserId: 1
+  })
+  await ad23.addCampaign(campaign5)
+
+  const ad24 = await Advertisement.create({
+    name: 'wmns-heattech-sale',
+    image:
+      'https://pixel.nymag.com/imgs/daily/strategist/2017/10/12/12-uniqlo-lede.w710.h473.2x.jpg',
+    url: 'http://uniqlo.com',
+    adSpecs: 'format3',
+    advertiserId: 1
+  })
+  await ad24.addCampaign(campaign5)
+
+  const ad25 = await Advertisement.create({
+    name: 'wmns-3d-knit',
+    image:
+      'http://im.uniqlo.com/images/common/pc/goods/412838/item/10_412838_large.jpg',
+    url: 'http://uniqlo.com',
+    adSpecs: 'format3',
+    advertiserId: 1
+  })
+  await ad25.addCampaign(campaign5)
+
+  const ad26 = await Advertisement.create({
+    name: 'uq-u-wm-1',
+    image: 'http://www.uniqlo.com/sg/news/topics/2018020901/img/mimg_1_m.jpg',
+    url: 'http://uniqlo.com',
+    adSpecs: 'format3',
+    advertiserId: 1
+  })
+  await ad26.addCampaign(campaign11)
+
+  const ad27 = await Advertisement.create({
+    name: 'uq-u-wm-2',
+    image:
+      'https://juice.com.sg/wp-content/uploads/2018/01/lookBook-item-25-945x1300.jpg',
+    url: 'http://uniqlo.com',
+    adSpecs: 'format3',
+    advertiserId: 1
+  })
+  await ad27.addCampaign(campaign11)
+
+  const ad28 = await Advertisement.create({
+    name: 'uq-u-grid',
+    image:
+      'https://i.pinimg.com/originals/18/91/ef/1891efc29dcc92d46378d87a3196023f.jpg',
+    url: 'http://uniqlo.com',
+    adSpecs: 'format3',
+    advertiserId: 1
+  })
+  await ad28.addCampaign(campaign11)
+
+  const ad29 = await Advertisement.create({
+    name: 'uq-u-ss18-1',
+    image: 'https://i1.wp.com/duggal.com/wp-content/uploads/2018/02/2.jpg',
+    url: 'http://uniqlo.com',
+    adSpecs: 'format3',
+    advertiserId: 1
+  })
+  await ad29.addCampaign(campaign11)
+
+  const ad18 = await Advertisement.create({
+    name: 'uq-u-ss18-2',
+    image:
+      'https://images.summitmedia-digital.com/esquiremagph/images/2018/01/10/Uniqlo%20U%20SS18.jpg',
+    url: 'http://uniqlo.com',
+    adSpecs: 'format3',
+    advertiserId: 1
+  })
+  await ad18.addCampaign(campaign11)
 
   const ad19 = await Advertisement.create({
-    name: 'Ad-3',
+    name: 'uq-u-1',
     image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNHyXAoxhgwpfy04nTnMPievJDhbNMjzaTh0PGTok_lO237AUd',
-    url: 'http://google.com',
+      'https://static1.squarespace.com/static/59a21819bebafbe040f6ad2a/59a25d28ccc5c5e77deed571/5a698c97ec212d357d834f22/1517557787833/1+-+pQw9pVh.jpg?format=1500w',
+    url: 'http://uniqlo.com',
     adSpecs: 'format3',
-    advertiserId: 5
+    advertiserId: 1
   })
-  await ad19.addCampaign(campaign2)
+  await ad19.addCampaign(campaign11)
 
   const ad20 = await Advertisement.create({
-    name: 'Ad-4',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_n7nBvVGdESM7n8Vy10oavcFBmkKJm9GCTv_YTqkORuJD0Lfp',
-    url: 'http://google.com',
+    name: 'uq-u-fw18',
+    image: 'https://i.ytimg.com/vi/d8fCuWodJ1g/maxresdefault.jpg',
+    url: 'http://uniqlo.com',
     adSpecs: 'format3',
-    advertiserId: 5
+    advertiserId: 1
   })
-  await ad20.addCampaign(campaign2)
+  await ad20.addCampaign(campaign11)
 
   const ad5 = await Advertisement.create({
-    name: 'Gucci-Ad-2',
+    name: 'easy-care-shirt',
     image:
-      'http://cdn2-www.thefashionspot.com/assets/uploads/2014/07/ad-campaign-gucci-fall-2014-mert-and-marcus-article-two.jpg',
-    url: 'http://google.com',
+      'https://1.bp.blogspot.com/-Wex3htABsWo/WcvRtZFRQWI/AAAAAAAAFDQ/1NkAwuGO1hAZU8frBSeAkVVox1l4OH_sACLcBGAs/s1600/092517_tailored_shirts_lp_01.jpg',
+    url: 'http://uniqlo.com',
     adSpecs: 'format3',
-    advertiserId: 5
+    advertiserId: 1
   })
   await ad5.addCampaign(campaign1)
 
@@ -462,56 +587,86 @@ async function seed() {
     adSpecs: 'format1',
     advertiserId: 1
   })
-  await ad8.addCampaign(campaign5)
+  await ad8.addCampaign(campaign1)
 
   const ad9 = await Advertisement.create({
-    name: 'mns-heattech',
+    name: 'mns-blocktech',
     image:
-      'https://payload419.cargocollective.com/1/1/36302/10688603/UNIQLO_HEAT4_1000.jpg',
+      'http://theinspirationroom.com/daily/interactive/2011/10/uniqlo_one_man.jpg',
     url: 'http://uniqlo.com',
     adSpecs: 'format1',
     advertiserId: 1
   })
-  await ad9.addCampaign(campaign5)
+  await ad9.addCampaign(campaign1)
 
   const ad10 = await Advertisement.create({
     name: 'mns-fw18-preview-4',
-    image: 'http://pic.mote001.com/344374-800w.jpg',
+    image:
+      'http://daman.co.id/daman.co.id/wp-content/uploads/2016/08/Uniqlo-U-Mens-Campaign-2-3.jpg?x38403',
     url: 'http://google.com',
     adSpecs: 'format1',
     advertiserId: 1
   })
-  await ad10.addCampaign(campaign5)
+  await ad10.addCampaign(campaign1)
 
   const ad11 = await Advertisement.create({
-    name: 'Gucci-Ad-4-W',
+    name: 'ss19-my-calvins-1',
     image:
-      'http://cdn2-www.thefashionspot.com/assets/uploads/2014/07/ad-campaign-gucci-fall-2014-mert-and-marcus-article-two.jpg',
-    url: 'http://google.com',
+      'http://dazedimg.dazedgroup.netdna-cdn.com/786/azure/dazed-prod/1150/9/1159034.jpg',
+    url: 'https://www.calvinklein.us/en/mycalvins',
     adSpecs: 'format3',
     advertiserId: 5
   })
-  await ad11.addCampaign(campaign4)
+  await ad11.addCampaign(campaign2)
 
   const ad12 = await Advertisement.create({
-    name: 'Gucci-Ad-5-W',
+    name: 'ss19-my-calvins-2',
     image:
-      'http://cdn2-www.thefashionspot.com/assets/uploads/2014/07/ad-campaign-gucci-fall-2014-mert-and-marcus-article-two.jpg',
-    url: 'http://google.com',
+      'https://i.pinimg.com/originals/72/f4/73/72f473081dec3b37b222feefa19f9912.jpg',
+    url: 'https://www.calvinklein.us/en/mycalvins',
     adSpecs: 'format3',
     advertiserId: 5
   })
-  await ad12.addCampaign(campaign4)
+  await ad12.addCampaign(campaign2)
 
   const ad13 = await Advertisement.create({
-    name: 'Gucci-Ad-6-W',
+    name: 'ss19-my-calvins-3',
     image:
-      'http://cdn2-www.thefashionspot.com/assets/uploads/2014/07/ad-campaign-gucci-fall-2014-mert-and-marcus-article-two.jpg',
-    url: 'http://google.com',
+      'https://akns-images.eonline.com/eol_images/Entire_Site/2016411/rs_634x888-160511063548-634.kendall-jenner-calvin-klein.51116.jpg?fit=inside|900:auto&output-quality=90',
+    url: 'https://www.calvinklein.us/en/mycalvins',
     adSpecs: 'format3',
     advertiserId: 5
   })
-  await ad13.addCampaign(campaign4)
+  await ad13.addCampaign(campaign2)
+
+  const ad30 = await Advertisement.create({
+    name: 'ss19-my-calvins-4',
+    image: 'https://pbs.twimg.com/media/CZ7L1OVWcAAauPK.jpg',
+    url: 'https://www.calvinklein.us/en/mycalvins',
+    adSpecs: 'format3',
+    advertiserId: 5
+  })
+  await ad30.addCampaign(campaign2)
+
+  const ad31 = await Advertisement.create({
+    name: 'ss19-my-calvins-5',
+    image:
+      'https://i2.wp.com/campaignsoftheworld.com/wp-content/uploads/2016/03/calvin-klein-spring-2016-mycalvins-24.jpg?resize=700%2C980&ssl=1',
+    url: 'https://www.calvinklein.us/en/mycalvins',
+    adSpecs: 'format3',
+    advertiserId: 5
+  })
+  await ad31.addCampaign(campaign2)
+
+  const ad32 = await Advertisement.create({
+    name: 'ss19-my-calvins-6',
+    image:
+      'https://media.gq.com/photos/577d1b095e51460c396637b8/master/w_800/calvin-klein-fall-2016-campaign-young-thug_ph_tyrone-lebon-034.jpg',
+    url: 'https://www.calvinklein.us/en/mycalvins',
+    adSpecs: 'format3',
+    advertiserId: 5
+  })
+  await ad32.addCampaign(campaign2)
 
   const ad14 = await Advertisement.create({
     name: 'Mcdonalds-Ad-3',
