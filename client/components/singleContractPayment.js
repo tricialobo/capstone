@@ -32,6 +32,8 @@ class SingleContractPayment extends Component {
     })
   }
   async handleSubmit(evt) {
+    console.log('contract', this.props.contract)
+    console.log('contract', this.props.contract.data.balance)
     console.log('hi we are in handlesubmit')
     evt.preventDefault()
 
@@ -50,8 +52,8 @@ class SingleContractPayment extends Component {
     console.log('address', address)
     const depositFunds = await currentContract.methods.deposit().send({
       gas: 6000000,
+      value: this.props.contract.data.balance * 1000000000000000000,
       //this needs to change to actual value... we need to talk about this value being lower!
-      value: 1000000000000000000,
       from: address
     })
 

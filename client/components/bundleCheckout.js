@@ -54,9 +54,12 @@ class BundleCheckout extends Component {
     })
   }
   async handleClick() {
+    console.log('hello, before accounts')
     let accounts = await web3.eth.getAccounts(console.log)
+    console.log('hello, after accounts')
     let campaigns = this.props.campaigns
     console.log('campaigns', campaigns)
+
     campaigns.forEach(async campaign => {
       const newBlock = await factory.methods.createBlock().send({
         // const newBlock = await factory.methods.createBlock(campaign.price).send({
@@ -75,7 +78,7 @@ class BundleCheckout extends Component {
           url: 'http://localhost:8080/api/contracts',
           data: {
             campaignId: campaign.id,
-            bundleId: 1,
+            bundleId: this.props.bundle.id,
             contractHash: contractHash,
             balance: campaign.price,
             advertiserId: campaign.advertiser.id,
@@ -714,6 +717,7 @@ class BundleCheckout extends Component {
   }
 
   render() {
+    console.log('bundle', this.props.bundle)
     console.log('bundleid', this.props.bundleId)
     //const campaigns = this.state.campaigns
     console.log('state', this.state)

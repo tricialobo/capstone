@@ -3,6 +3,7 @@ import { Grid, Typography, Button } from '@material-ui/core'
 
 export default class Receipt extends Component {
   render() {
+    console.log('in receipt')
     return (
       <Grid container justify="center" alignItems="center">
         <h3>Thank you!</h3>

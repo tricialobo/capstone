@@ -26,14 +26,15 @@ router.get('/:bundleId.js', async (req, res, next) => {
         }
       ]
     })
-    // console.log('contract', contracts[0])
+    console.log('contract', contracts[0])
 
     await contracts.forEach(contract => {
       contract.bundle.campaigns.map(campaign => {
         campaign.advertisements.map(ad => ads.push([ad, contract.contractHash]))
       })
     })
-    console.log('ads', ads[0][1])
+    console.log('ads', ads)
+    //console.log('ads', ads[0][1])
     // await bundle.campaigns.map(campaign => {
     //   campaign.advertisements.map(ad => {
     //     ads.push(ad)
@@ -42,7 +43,7 @@ router.get('/:bundleId.js', async (req, res, next) => {
     // // console.log('ads', ads)
 
     const currentAd = ads[Math.floor(Math.random() * ads.length)]
-
+    console.log('currentAd', currentAd)
     const blockHash = currentAd[1]
     console.log('blockhash', blockHash)
 

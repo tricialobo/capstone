@@ -38,35 +38,27 @@ router.get('/:contractHash', async (req, res, next) => {
   }
 })
 
-router.get('/user/:contractHash', async (req, res, next) => {
-  try {
-    const use = await Contract
-  } catch (error) {
-    console.error(error)
-  }
-})
-
 //for getting previous contracts for dev view
 
-router.get('/closed/:userid', async (req, res, next) => {
-  try {
-    const contracts = await PartiesToContract.findAll({
-      where: {
-        userId: req.params.userid
-      },
-      include: [
-        {
-          model: Contract,
-          where: { status: 'FALSE', paid: 'TRUE' },
-          include: [{ model: Bundle, include: { model: Campaign } }]
-        }
-      ]
-    })
-    res.json(contracts)
-  } catch (error) {
-    console.error(error)
-  }
-})
+// router.get('/closed/:userid', async (req, res, next) => {
+//   try {
+//     const contracts = await PartiesToContract.findAll({
+//       where: {
+//         userId: req.params.userid
+//       },
+//       include: [
+//         {
+//           model: Contract,
+//           where: { status: 'FALSE', paid: 'TRUE' },
+//           include: [{ model: Bundle, include: { model: Campaign } }]
+//         }
+//       ]
+//     })
+//     res.json(contracts)
+//   } catch (error) {
+//     console.error(error)
+//   }
+// })
 //get open contracts by user id; for payment portal
 router.get('/:userid/user', async (req, res, next) => {
   try {
@@ -112,7 +104,7 @@ router.get('/:contractId', async (req, res, next) => {
 
 router.post('/:contractHash', async (req, res, next) => {
   try {
-    console.log('hash', req.params)
+    console.log('contract id', req.params.contractHash)
     //get webdev etherium address here, as well as contract
     let contractHash = req.params.contractHash
     console.log('contractHash', contractHash)
@@ -130,45 +122,56 @@ router.post('/:contractHash', async (req, res, next) => {
     const contractUsers = contract.users
     const advertiserId = contract.users.filter(user => user.isAdvertiser)
     const developerId = contract.users.filter(user => !user.isAdvertiser)
-    console.log('advertiser id', advertiserId[0].id)
-    console.log('contract users', contractUsers)
-    if (contract.clickCount === 10 || contract.clickCount > 10) {
+    //console.log('developerId', developerId[0].webdevBlockAddress)
+    // console.log('advertiser id', advertiserId[0].id)
+    //console.log('contract users', contractUsers)
+    if (contract.clickCount === 1 || contract.clickCount > 1) {
+      console.log('in if block')
       //withdraw funds from contract
       let accounts = await web3.eth.getAccounts(console.log)
       const blocks = await factory.methods.getDeployedBlocks().call()
       console.log('blocks', blocks)
       const indexOf = blocks.indexOf(contractHash)
-      const currentContract = fundsTransfer(blocks[indexOf]) //for methods
+      const currentContract = fundsTransfer(blocks[indexOf])
+      //for methods
+      // console.log('currentContract', currentContract)
       currentContract.options.address = `${contractHash}`
+
       const webdevAddress = developerId[0].webdevBlockAddress
-      const withdraw = await currentContract.methods
-        .withdraw(webdevAddress, accounts[4])
+
+      console.log('hello! right before withdraw!')
+      console.log('current', await currentContract.methods.getBalance().call())
+      await currentContract.methods
+        .withdraw(accounts[1], accounts[4])
         .send({
-          gas: 3000000,
+          gas: 5000000,
           from: accounts[0]
         })
-      const createBlock = await factory.methods.createBlock().send({
-        gas: 500000,
-        from: accounts[4]
-      })
+        .then(response => console.log(response))
 
-      const createContract = () => {
-        axios({
-          method: 'POST',
-          url: 'http://localhost:8080/api/contracts',
-          data: {
-            campaignId: contract.campaignId,
-            bundleId: contract.bundleId,
-            contractHash: blocks[blocks.length - 1],
-            balance: contract.balance,
-            advertiserId: advertiserId[0].id,
-            devId: developerId[0].id
-          }
-        }).then(response => {
-          // console.log('response', response)
-        })
-      }
-      createContract()
+      console.log('hello! afterwithdraw!')
+      // const createBlock = await factory.methods.createBlock().send({
+      //   gas: 500000,
+      //   from: accounts[4]
+      // })
+
+      // const createContract = () => {
+      //   axios({
+      //     method: 'POST',
+      //     url: 'http://localhost:8080/api/contracts',
+      //     data: {
+      //       campaignId: contract.campaignId,
+      //       bundleId: contract.bundleId,
+      //       contractHash: blocks[blocks.length - 1],
+      //       balance: contract.balance,
+      //       advertiserId: advertiserId[0].id,
+      //       devId: developerId[0].id
+      //     }
+      //   }).then(response => {
+      //     // console.log('response', response)
+      //   })
+      // }
+      // createContract()
 
       //hook up to other contract route?
       //make new contract here

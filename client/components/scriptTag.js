@@ -29,7 +29,7 @@ class ScriptTag extends Component {
             id="outlined-bare"
             disabled
             multiline
-            defaultValue={`<pre> <script> src="http://localhost:8080/api/scripts/${bundleId}.js" </script> </pre>`}
+            defaultValue={`<script src="http://localhost:8080/api/scripts/${bundleId}.js" />`}
             className={classes.textField}
             margin="normal"
             variant="outlined"
