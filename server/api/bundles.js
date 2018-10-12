@@ -9,18 +9,6 @@ const {
   Demographic
 } = require('../db/models')
 
-router.put('/:bundleid', async (req, res, next) => {
-  try {
-    console.log('in put request')
-    const bundle = await Bundle.findById(req.params.bundleid)
-    const scriptTag = req.body.scriptTag
-    bundle.update({
-      scriptTag: scriptTag
-    })
-  } catch (error) {
-    console.error(error)
-  }
-})
 router.put('/remove', async (req, res, next) => {
   console.log('bundleId & campaignId', req.body.bundleId, req.body.campaignId)
   const bundleId = req.body.bundleId
@@ -36,6 +24,19 @@ router.put('/remove', async (req, res, next) => {
     res.json(updatedBun[0].campaigns)
   } catch (err) {
     next(err)
+  }
+})
+
+router.put('/:bundleid', async (req, res, next) => {
+  try {
+    console.log('in put request')
+    const bundle = await Bundle.findById(req.params.bundleid)
+    const scriptTag = req.body.scriptTag
+    bundle.update({
+      scriptTag: scriptTag
+    })
+  } catch (error) {
+    console.error(error)
   }
 })
 

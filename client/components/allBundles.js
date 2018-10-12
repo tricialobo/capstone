@@ -42,6 +42,7 @@ class Bundles extends Component {
   }
 
   removeClick = async info => {
+    console.log('hello?')
     await this.props.removeCampaignFromBundle(info)
   }
 
