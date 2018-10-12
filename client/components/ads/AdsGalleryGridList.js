@@ -11,8 +11,6 @@ import {
   Typography
 } from '@material-ui/core/'
 
-import StarBorderIcon from '@material-ui/icons/StarBorder'
-
 const styles = theme => ({
   root: {
     display: 'flex',

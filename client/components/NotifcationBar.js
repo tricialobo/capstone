@@ -7,43 +7,40 @@ import {
   Button,
   IconButton,
   Divider,
-  Button,
   Snackbar
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import Add from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'
 
-const Snackbar = props => {
-  const { classes, text, openSnackbar, handleClose } = this.props
+const styles = theme => ({
+  close: {
+    padding: theme.spacing.unit / 2
+  }
+})
+
+const NotificationBar = props => {
+  const { classes, text, openSnackbar, handleClose } = props
   return (
     <Snackbar
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'left'
+        horizontal: 'center'
       }}
-      open={this.state.open}
+      open={openSnackbar}
       autoHideDuration={6000}
-      onClose={this.handleClose}
+      onClose={handleClose}
       ContentProps={{
         'aria-describedby': 'message-id'
       }}
-      message={<span id="message-id">Note archived</span>}
+      message={<span id="message-id">{text}</span>}
       action={[
-        <Button
-          key="undo"
-          color="secondary"
-          size="small"
-          onClick={this.handleClose}
-        >
-          UNDO
-        </Button>,
         <IconButton
           key="close"
           aria-label="Close"
           color="inherit"
           className={classes.close}
-          onClick={this.handleClose}
+          onClick={handleClose}
         >
           <CloseIcon />
         </IconButton>
@@ -52,4 +49,4 @@ const Snackbar = props => {
   )
 }
 
-export default withStyles(styles)(Snackbar)
+export default withStyles(styles)(NotificationBar)

@@ -16,8 +16,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import CampaignExpansionPanel from './CampaignExpansionPanel'
 
 const styles = theme => ({
-  root: {
-    width: '100%'
+  details: {
+    padding: '0 130px 0 130px'
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -27,6 +27,9 @@ const styles = theme => ({
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary
+  },
+  divider: {
+    marginTop: 10
   }
 })
 
@@ -51,37 +54,42 @@ class CampaignsAccordion extends Component {
     let panelIndex = 1
     return (
       campaigns && (
-        <div className={classes.root}>
-          <Grid container direction="column">
-            <Grid item xs={12}>
-              {campaigns &&
-                campaigns.length &&
-                campaigns.map(campaign => {
-                  const index = panelIndex
-                  panelIndex++
-                  return (
-                    <ExpansionPanel
-                      expanded={expanded === `panel${index}`}
-                      onChange={this.handleChange(`panel${index}`)}
-                      key={campaign.id}
-                    >
-                      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography className={classes.heading}>
-                          {campaign.name}
-                        </Typography>
-                      </ExpansionPanelSummary>
-                      <ExpansionPanelDetails>
-                        <CampaignExpansionPanel
-                          campaign={campaign}
-                          bundle={bundle}
-                        />
-                      </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                  )
-                })}
-            </Grid>
+        <Grid container direction="column" className={classes.details}>
+          <Typography variant="title">{bundle.projectName}</Typography>
+          {bundle.deployed && (
+            <Typography variant="body1" color="primary">
+              <b>Deployed</b>
+            </Typography>
+          )}
+          <Divider className={classes.divider} />
+          <Grid item xs={12}>
+            {campaigns &&
+              campaigns.length &&
+              campaigns.map(campaign => {
+                const index = panelIndex
+                panelIndex++
+                return (
+                  <ExpansionPanel
+                    expanded={expanded === `panel${index}`}
+                    onChange={this.handleChange(`panel${index}`)}
+                    key={campaign.id}
+                  >
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography className={classes.heading}>
+                        {campaign.name}
+                      </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                      <CampaignExpansionPanel
+                        campaign={campaign}
+                        bundle={bundle}
+                      />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                )
+              })}
           </Grid>
-        </div>
+        </Grid>
       )
     )
   }

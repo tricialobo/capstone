@@ -242,7 +242,7 @@ async function seed() {
   const campaign3 = await Campaign.create({
     blockChainKey: '',
     clicks: 6,
-    name: 'Mcdonalds',
+    name: "Mcdonald's",
     price: '10.0',
     isActive: true,
     advertiserId: 6
@@ -256,10 +256,10 @@ async function seed() {
   const campaign4 = await Campaign.create({
     blockChainKey: '',
     clicks: 6,
-    name: 'Gucci - Women',
+    name: 'MUJI HOME F18',
     price: '20.0',
     isActive: true,
-    advertiserId: 3
+    advertiserId: 7
   })
   await campaign4.addCategory(category1)
   await campaign4.addCategory(category2)
@@ -385,6 +385,32 @@ async function seed() {
   await campaign13.addDemographic(demographic2)
   await campaign13.addDemographic(demographic3)
 
+  const campaign14 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: 'MUJI SKINCARE',
+    price: '17.0',
+    isActive: true,
+    advertiserId: 7
+  })
+  await campaign14.addCategory(category3)
+  await campaign14.addCategory(category2)
+  await campaign14.addDemographic(demographic2)
+  await campaign14.addDemographic(demographic3)
+
+  const campaign15 = await Campaign.create({
+    blockChainKey: '',
+    clicks: 6,
+    name: 'MUJI CLOTHING F18',
+    price: '11.0',
+    isActive: true,
+    advertiserId: 7
+  })
+  await campaign15.addCategory(category3)
+  await campaign15.addCategory(category2)
+  await campaign15.addDemographic(demographic2)
+  await campaign15.addDemographic(demographic3)
+
   const ad1 = await Advertisement.create({
     name: 'stretch-jeans-mn',
     image:
@@ -418,7 +444,7 @@ async function seed() {
     name: 'mns-fw18-preview-1',
     image:
       'http://www.uniqlo.com/UniqloU18fw/common/images/topImg-thumb-men2.jpg',
-    url: 'http://google.com',
+    url: 'http://uniqlo.com',
     adSpecs: 'format3',
     advertiserId: 1
   })
@@ -668,6 +694,131 @@ async function seed() {
   })
   await ad32.addCampaign(campaign2)
 
+  const ad33 = await Advertisement.create({
+    name: 'muji-home18-1',
+    image:
+      'https://cdn.gearpatrol.com/wp-content/uploads/2018/06/Muji-M2W-Gear-Patrol-Ambaince-2.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad33.addCampaign(campaign4)
+
+  const ad34 = await Advertisement.create({
+    name: 'muji-home18-2',
+    image:
+      'https://mir-s3-cdn-cf.behance.net/project_modules/fs/1ee3d932217887.567403db8e222.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad34.addCampaign(campaign4)
+
+  const ad41 = await Advertisement.create({
+    name: 'muji-wmn-f18',
+    image: 'http://www.muji.com/hk-en/campaign/flannel2017/img/main.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad41.addCampaign(campaign15)
+
+  const ad42 = await Advertisement.create({
+    name: 'muji-home18-3',
+    image:
+      'http://www.muji.us/store/pub/media/wysiwyg/cleaning/17aw_hakkentohinto_1456_1.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad42.addCampaign(campaign4)
+
+  const ad43 = await Advertisement.create({
+    name: 'muji-home18-4',
+    image:
+      'https://www.everydayonsales.com/wp-content/uploads/2018/01/Muji-Bedlinen-and-Pillow-Promotion.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad43.addCampaign(campaign4)
+
+  const ad44 = await Advertisement.create({
+    name: 'muji-home18-5',
+    image: 'https://i.vimeocdn.com/video/611075219.jpg?mw=1800&mh=1014&q=70',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad44.addCampaign(campaign4)
+
+  const ad45 = await Advertisement.create({
+    name: 'muji-SALE',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/s3.loopme.my/img/newos/posts/2x/5374_51gvoozHbQQ3HxSP_1.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad45.addCampaign(campaign15)
+
+  const ad35 = await Advertisement.create({
+    name: 'skincare-2',
+    image: 'https://i.ytimg.com/vi/7D4g5fccfIk/maxresdefault.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad35.addCampaign(campaign14)
+
+  const ad36 = await Advertisement.create({
+    name: 'skincare-3',
+    image: 'https://www.muji.com/img/skincare/sensitive.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad36.addCampaign(campaign14)
+
+  const ad37 = await Advertisement.create({
+    name: 'skincare-4',
+    image:
+      'https://cdn.vox-cdn.com/thumbor/7YehGzPj8AlUMBG8Rq5Vn2LuwgY=/0x0:720x405/1200x800/filters:focal(303x146:417x260)/cdn.vox-cdn.com/uploads/chorus_image/image/56860245/muji_skincare.0.png',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad37.addCampaign(campaign14)
+
+  const ad38 = await Advertisement.create({
+    name: 'balancing-skincare-line',
+    image:
+      'http://tamirajarrel.com/wp-content/uploads/2017/05/FullSizeRender-50-1.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad38.addCampaign(campaign14)
+
+  const ad39 = await Advertisement.create({
+    name: 'skincare-cover',
+    image:
+      'http://info.muji.us/info/wp-content/uploads/2017/03/SKINCARE-CATALOG-Cover.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad39.addCampaign(campaign14)
+
+  const ad40 = await Advertisement.create({
+    name: 'skincare-banner',
+    image:
+      'https://media.cleo.com.sg/2017/03/SC0417_Banner_MujiGiveaway_FA-768x500.jpg',
+    url: 'https://muji.com',
+    adSpecs: 'format3',
+    advertiserId: 7
+  })
+  await ad40.addCampaign(campaign14)
+
   const ad14 = await Advertisement.create({
     name: 'Mcdonalds-Ad-3',
     image:
@@ -676,27 +827,27 @@ async function seed() {
     adSpecs: 'format3',
     advertiserId: 6
   })
-  await ad14.addCampaign(campaign6)
+  await ad14.addCampaign(campaign3)
 
   const ad15 = await Advertisement.create({
     name: 'Mcdonalds-Ad-4',
     image:
-      'https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-9/42533407_10155863687227014_8105177112362614784_o.jpg?_nc_cat=100&oh=3fef04c3b2bbd169c4a05c9544becdf8&oe=5C6250B0',
+      'https://static.adweek.com/adweek.com-prod/wp-content/uploads/files/blogs/big-mac-canada-hed-2017.jpg',
     url: 'http://google.com',
     adSpecs: 'format3',
     advertiserId: 6
   })
-  await ad15.addCampaign(campaign6)
+  await ad15.addCampaign(campaign3)
 
   const ad16 = await Advertisement.create({
     name: 'Mcdonalds-Ad-5',
     image:
-      'https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-9/42533407_10155863687227014_8105177112362614784_o.jpg?_nc_cat=100&oh=3fef04c3b2bbd169c4a05c9544becdf8&oe=5C6250B0',
+      'http://www.adeevee.com/aimages/201609/15/mcdonalds-medal-karate-ring-rowing-bicycle-basketball-fencing-javelin-diving-torch-print-388326-adeevee.jpg',
     url: 'http://google.com',
     adSpecs: 'format3',
     advertiserId: 6
   })
-  await ad16.addCampaign(campaign6)
+  await ad16.addCampaign(campaign3)
 
   console.log(`seeded successfully`)
 }

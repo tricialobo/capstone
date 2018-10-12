@@ -17,12 +17,11 @@ import {
   Typography,
   Button,
   IconButton,
-  Divider,
-  Button,
-  Snackbar
+  Divider
 } from '@material-ui/core'
 import Add from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'
+import NotificationBar from './NotifcationBar'
 
 const StyledButton = withStyles({
   border: 'none'
@@ -43,7 +42,8 @@ class AllCampaigns extends Component {
   constructor() {
     super()
     this.state = {
-      openSnackbar: false
+      openSnackbar: false,
+      snackbarText: ''
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleClose = this.handleClose.bind(this)
@@ -59,30 +59,37 @@ class AllCampaigns extends Component {
     if (this.props.campaignsInBundle.length) {
       const ids = this.props.campaignsInBundle.map(camp => camp.id)
       if (ids.includes(campaign.id)) {
-        alert(
-          `${campaign.name} campaign is already in ${
+        this.setState({
+          openSnackbar: true,
+          snackbarText: `${campaign.name} campaign is already in ${
             this.props.bundle.projectName
           }`
-        )
+        })
       } else {
         await this.props.addToBundle(campaign, this.props.bundle.id)
-        alert(`${campaign.name} added to ${this.props.bundle.projectName}`)
+        this.setState({
+          openSnackbar: true,
+          snackbarText: `${campaign.name} added to ${
+            this.props.bundle.projectName
+          }`
+        })
       }
     } else {
       await this.props.addToBundle(campaign, this.props.bundle.id)
-      alert(`${campaign.name} added to ${this.props.bundle.projectName}`)
+      this.setState({
+        openSnackbar: true,
+        snackbarText: `${campaign.name} added to ${
+          this.props.bundle.projectName
+        }`
+      })
     }
-    this.setState({
-      openSnackbar: true
-    })
   }
 
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return
     }
-
-    this.setState({ open: false })
+    this.setState({ openSnackbar: false })
   }
 
   render() {
@@ -127,8 +134,8 @@ class AllCampaigns extends Component {
                             >
                               <Add /> Add to {this.props.bundle.projectName}
                             </Button>
-                            <Snackbar
-                              text={`Added to ${this.props.bundle.projectName}`}
+                            <NotificationBar
+                              text={this.state.snackbarText}
                               openSnackbar={this.state.openSnackbar}
                               handleClose={this.handleClose}
                             />
@@ -138,6 +145,8 @@ class AllCampaigns extends Component {
                       <Grid item xs={12}>
                         <AdsGalleryGridList ads={campaign.advertisements} />
                       </Grid>
+                      <br />
+                      <Divider />
                     </Grid>
                   </ListItem>
                 ))}
