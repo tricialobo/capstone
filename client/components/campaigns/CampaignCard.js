@@ -83,7 +83,7 @@ const CampaignCard = props => {
             </Grid>
             {advertisements && advertisements.length ? (
               <Grid item xs={10}>
-                <AdsGridList ads={advertisements} />
+                <AdsGridList ads={advertisements} selectedCampaign = {selectedCampaign}/>
               </Grid>
             ) : (
               <Grid item container justify="center">

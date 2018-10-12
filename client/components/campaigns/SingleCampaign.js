@@ -93,6 +93,8 @@ class SingleCampaign extends Component {
     console.log('state', this.state)
     console.log('selected campaign', selectedCampaign)
     console.log('demographics', selectedCampaign.demographics)
+    const currAdsIds = selectedCampaign.advertisements.map(ad => ad.id)
+    const filtAds = allAds.filter(ad => !currAdsIds.includes(ad.id))
     return (
       selectedCampaign && (
         <div>
@@ -112,7 +114,7 @@ class SingleCampaign extends Component {
                     Choose from your existing advertisements to add to this
                     campaign or create a new advertisement.
                   </DialogContentText>
-                  <AddAdvert ads={allAds} campId={selectedCampaign.id} />
+                  <AddAdvert ads={filtAds} campId={selectedCampaign.id}/>
                 </DialogContent>
                 <Grid className={classes.grid}>
                   <Button className={classes.button} onClick={this.handleClose}>

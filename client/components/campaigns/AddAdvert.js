@@ -42,8 +42,11 @@ const styles = theme => ({
 })
 
 class AdsGridList extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    this.state = {
+      adsToRender: this.props.ads
+    }
     this.addClick = this.addClick.bind(this)
   }
 
@@ -58,7 +61,7 @@ class AdsGridList extends Component {
   render() {
     console.log('in ad advert')
     const { classes } = this.props
-    const ads = this.props.allAds
+    const ads = this.props.ads
     return (
       <GridList cellHeight={280} spacing={24} cols={3}>
         {ads &&
