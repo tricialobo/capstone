@@ -18,20 +18,12 @@ import {
   RadioGroup,
   MenuItem,
   FormHelperText,
+  Divider,
   Select,
   Grid
 } from '@material-ui/core'
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: 'white',
-    boxShadow: 'none',
-    marginBottom: 60
-  },
-  grow: {
-    flexGrow: 1
-  },
   card: {
     position: 'fixed',
     top: '50%',
@@ -44,7 +36,8 @@ const styles = theme => ({
     boxShadow: '0px'
   },
   formControl: {
-    marginTop: 16
+    marginTop: 16,
+    width: '90%'
   },
   group: {
     margin: '0px',
@@ -53,6 +46,9 @@ const styles = theme => ({
   title: {
     fontWeight: '600px',
     paddingBottom: '10px'
+  },
+  addressField: {
+    width: '100%'
   }
 })
 
@@ -79,6 +75,8 @@ class SignUpForm extends Component {
             Sign up with us to get access to high quality ads and advertisers
             who are relevant to your users.
           </Typography>
+          <br />
+          <Divider />
         </div>
         <form onSubmit={handleSubmit}>
           <FormGroup style={{ marginTop: '30px' }}>
@@ -110,7 +108,7 @@ class SignUpForm extends Component {
                 </FormControl>
               </Grid>
               <Grid item xs={6}>
-                {this.state.userType === 'advertiser' && (
+                {this.state.userType === 'advertiser' ? (
                   <FormControl
                     aria-label="My budget is"
                     className={classes.formControl}
@@ -135,10 +133,17 @@ class SignUpForm extends Component {
                       <MenuItem value={300}>300+ ETH</MenuItem>
                     </Select>
                   </FormControl>
+                ) : (
+                  <FormControl className={classes.addressField}>
+                    <Typography variant="subheading">
+                      My ethereum wallet address is:
+                    </Typography>
+                    <Input name="address" type="text" />
+                  </FormControl>
                 )}
               </Grid>
             </Grid>
-            <Grid container direction="row">
+            <Grid container direction="row" spacing={8}>
               <Grid item xs={6}>
                 <FormControl>
                   <InputLabel>First Name</InputLabel>
@@ -151,15 +156,21 @@ class SignUpForm extends Component {
                   <Input name="lastName" type="text" />
                 </FormControl>
               </Grid>
+              <Grid item xs={6}>
+                <FormControl>
+                  <InputLabel>Email</InputLabel>
+                  <Input name="email" type="password" />
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                {' '}
+                <FormControl>
+                  <InputLabel>Password</InputLabel>
+                  <Input name="password" type="password" />
+                </FormControl>
+              </Grid>
             </Grid>
-            <FormControl>
-              <InputLabel>Email</InputLabel>
-              <Input name="email" type="text" />
-            </FormControl>
-            <FormControl>
-              <InputLabel>Password</InputLabel>
-              <Input name="password" type="password" />
-            </FormControl>
+
             <br />
             <Button type="submit">Sign up</Button>
             <Button component="a" href="/auth/google">
@@ -190,6 +201,7 @@ const mapDispatch = dispatch => {
       const email = evt.target.email.value
       const password = evt.target.password.value
       const isAdvertiser = evt.target.userType.value === 'advertiser'
+      const webdevBlockAddress = evt.target.address.value
       const budget = evt.target.budget ? evt.target.budget.value : 0
       const balance = budget
       const newUser = {
@@ -198,6 +210,7 @@ const mapDispatch = dispatch => {
         email: email,
         password: password,
         isAdvertiser: isAdvertiser,
+        webdevBlockAddress: webdevBlockAddress,
         budget: budget,
         balance: balance
       }

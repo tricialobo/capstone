@@ -15,7 +15,8 @@ import { removeCampaignFromBundle } from '../../store'
 
 const styles = theme => ({
   root: {
-    width: '100%'
+    width: '100%',
+    border: '2px solid'
   },
   details: {
     alignItems: 'center'

@@ -16,7 +16,8 @@ import {removeAdFromCamp} from '../../store'
 
 const StyledTileBar = withStyles({
   titleWrap: {
-    marginLeft: 0
+    marginLeft: 0,
+    marginBottom: 15
   },
   title: {
     color: '#000',

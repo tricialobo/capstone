@@ -48,6 +48,8 @@ const CheckoutCard = props => {
     <Grid container className={classes.container}>
       <Card className={classes.card}>
         <CardHeader title={campaign.name} />
+
+        <br />
         <CardContent className={classes.content}>
           <Grid container direction="row" spacing={40}>
             <Grid item xs={2}>

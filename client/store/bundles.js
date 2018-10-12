@@ -74,7 +74,9 @@ export const deployedBundle = bundle => ({
 
 export function getPreviousBundles(userid) {
   return async dispatch => {
-    const previousBundles = await axios.get(`/api/bundles/previous/${userid}`)
+    const { data: previousBundles } = await axios.get(
+      `/api/bundles/previous/${userid}`
+    )
     const action = gotPreviousBundles(previousBundles)
     dispatch(action)
   }

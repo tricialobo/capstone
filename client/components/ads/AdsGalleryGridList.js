@@ -28,10 +28,6 @@ const styles = theme => ({
   title: {
     color: '#fff'
   },
-  titleBar: {
-    background:
-      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)'
-  },
   adsTitles: {
     fontSize: '18px',
     fontWeight: '600'
@@ -50,7 +46,7 @@ function AdsGalleryGridList(props) {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <GridList className={classes.gridList} cols={2.5}>
+          <GridList className={classes.gridList} cellHeight={180} cols={2.5}>
             {ads.map(ad => (
               <GridListTile key={ad.id}>
                 <img src={ad.image} alt={ad.name} />

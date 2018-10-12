@@ -16,7 +16,8 @@ class SingleContractPayment extends Component {
   constructor() {
     super()
     this.state = {
-      address: ''
+      address: '',
+      paid: true
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -65,7 +66,8 @@ class SingleContractPayment extends Component {
         }
       }).then(
         this.setState({
-          address: ''
+          address: '',
+          paid: true
         })
       )
 
@@ -728,17 +730,15 @@ class SingleContractPayment extends Component {
     console.log('temp campaign', this.props.tempCampaign)
     console.log('contractHash', contractHash)
     console.log('props', this.props)
-    if (this.props.contract) {
-      return (
-        <PaymentForm
-          contractPrice={this.props.contract.data.balance}
-          campaign={this.props.tempCampaign}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-          address={this.state.address}
-        />
-      )
-    } else return null
+    return (
+      <PaymentForm
+        campaign={this.props.tempCampaign}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+        address={this.state.address}
+        paid={this.state.paid}
+      />
+    )
   }
 }
 
