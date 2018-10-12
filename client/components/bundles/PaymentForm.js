@@ -44,7 +44,7 @@ const styles = theme => ({
 
 const PaymentForm = props => {
   const { classes, handleChange, handleSubmit, address, campaign, paid } = props
-
+  console.log('CAMPAIGN', campaign)
   return (
     <Grid
       container
