@@ -87,7 +87,6 @@ export function addToBundle(campaign, bundleid) {
         campaign: campaign.id
       }
     )
-    console.log('bundleupdated', bundleUpdated)
     const action = addedToBundle(campaign)
     dispatch(action)
   }
@@ -96,7 +95,6 @@ export function addToBundle(campaign, bundleid) {
 export function getCampaignsInBundle(id) {
   return async dispatch => {
     const bundle = await axios.get(`/api/bundles/${id}`)
-    console.log('campaigns', bundle.data.campaigns)
     dispatch(gotCampaignsInBundle(bundle.data.campaigns))
   }
 }
@@ -116,8 +114,11 @@ export function getAllBundles(userId) {
 }
 
 export function removeCampaignFromBundle(info) {
+  console.log('in removecampaignsfrombundle')
+  console.log('info in', info)
   return async dispatch => {
     const { data } = await axios.put('/api/bundles/remove', info)
+    console.log('data?', data)
     dispatch(gotCampaignsInBundle(data))
   }
 }

@@ -27,6 +27,19 @@ router.put('/remove', async (req, res, next) => {
   }
 })
 
+router.put('/:bundleid', async (req, res, next) => {
+  try {
+    console.log('in put request')
+    const bundle = await Bundle.findById(req.params.bundleid)
+    const scriptTag = req.body.scriptTag
+    bundle.update({
+      scriptTag: scriptTag
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 router.put('/addcampaign/:bundleId', async (req, res, next) => {
   try {
     const bundleId = req.params.bundleId
