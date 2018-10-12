@@ -3,7 +3,7 @@ const Web3 = require('web3')
 const compiledFactory = require('./build/BlockFactory.json')
 
 const provider = new HDWalletProvider(
-  'pulp describe wash clinic tragic first decorate tourist crystal tomorrow civil august',
+  'punch soon over smooth convince improve stock spoon very deposit device endless',
   'HTTP://127.0.0.1:7545',
   1,
   10
