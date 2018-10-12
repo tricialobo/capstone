@@ -40,8 +40,6 @@ class AddBundle extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <FormGroup style={{ margin: '1em' }}>
-            <Typography variant="body1">Create a new project</Typography>
-            <br />
             <FormControl>
               <InputLabel>Project Name</InputLabel>
               <Input

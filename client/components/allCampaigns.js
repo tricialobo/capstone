@@ -10,7 +10,23 @@ import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import AllBundles from './allBundles'
 import AdsGalleryGridList from './ads/AdsGalleryGridList'
-import { ListItem, List, Grid, Typography, Button } from '@material-ui/core'
+import {
+  ListItem,
+  List,
+  Grid,
+  Typography,
+  Button,
+  IconButton,
+  Divider,
+  Button,
+  Snackbar
+} from '@material-ui/core'
+import Add from '@material-ui/icons/Add'
+import CloseIcon from '@material-ui/icons/Close'
+
+const StyledButton = withStyles({
+  border: 'none'
+})
 
 const styles = theme => ({
   titleText: {
@@ -26,7 +42,11 @@ const styles = theme => ({
 class AllCampaigns extends Component {
   constructor() {
     super()
+    this.state = {
+      openSnackbar: false
+    }
     this.handleClick = this.handleClick.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
 
   async componentDidMount() {
@@ -52,29 +72,44 @@ class AllCampaigns extends Component {
       await this.props.addToBundle(campaign, this.props.bundle.id)
       alert(`${campaign.name} added to ${this.props.bundle.projectName}`)
     }
+    this.setState({
+      openSnackbar: true
+    })
+  }
+
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    this.setState({ open: false })
   }
 
   render() {
     const { classes } = this.props
     const campaigns = this.props.campaigns
-    const filtCamps = campaigns.filter(camp => camp.advertiser.balance > 0)
+    const filtCamps = campaigns.filter(
+      camp => camp.advertiser.balance > 0 && camp.advertisements.length
+    )
     if (this.props.bundle) {
       return (
-        <Grid container direction="row">
-          <Grid item xs={4}>
+        <Grid container direction="row" spacing={32}>
+          <Grid item xs={3}>
             <AllBundles />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Typography className={classes.titleText} variant="title">
               Available Campaigns
             </Typography>
+            <br />
+            <Divider />
             <List>
-              {campaigns &&
-                campaigns.length &&
+              {filtCamps &&
+                filtCamps.length &&
                 filtCamps.map(campaign => (
                   <ListItem key={campaign.id}>
                     <Grid container direction="column">
-                      <Grid container direction="row">
+                      <Grid container direction="row" alignItems="flex-start">
                         <Grid item xs={10}>
                           <Typography
                             className={classes.campaignTitle}
@@ -84,12 +119,20 @@ class AllCampaigns extends Component {
                           </Typography>
                         </Grid>
                         <Grid item xs={2}>
-                        
-                          <Button
-                            onClick={evt => this.handleClick({ evt }, campaign)}
-                          >
-                            add to {this.props.bundle.projectName}
-                          </Button>
+                          <Grid container direction="row" alignItems="center">
+                            <Button
+                              onClick={evt =>
+                                this.handleClick({ evt }, campaign)
+                              }
+                            >
+                              <Add /> Add to {this.props.bundle.projectName}
+                            </Button>
+                            <Snackbar
+                              text={`Added to ${this.props.bundle.projectName}`}
+                              openSnackbar={this.state.openSnackbar}
+                              handleClose={this.handleClose}
+                            />
+                          </Grid>
                         </Grid>
                       </Grid>
                       <Grid item xs={12}>

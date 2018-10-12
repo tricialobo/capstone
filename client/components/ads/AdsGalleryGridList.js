@@ -47,7 +47,7 @@ function AdsGalleryGridList(props) {
           <Divider />
         </Grid>
         <Grid item xs={12}>
-          <GridList className={classes.gridList} cellHeight={180} cols={2.5}>
+          <GridList className={classes.gridList} cellHeight={200} cols={5}>
             {ads.map(ad => (
               <GridListTile key={ad.id}>
                 <img src={ad.image} alt={ad.name} />
