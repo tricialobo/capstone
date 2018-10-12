@@ -5,6 +5,7 @@ export default class Receipt extends Component {
     super()
   }
   render() {
+    console.log('in receipt')
     return (
       <div>
         <h3>Thank you!</h3>

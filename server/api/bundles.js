@@ -9,18 +9,6 @@ const {
   Demographic
 } = require('../db/models')
 
-router.put('/:bundleid', async (req, res, next) => {
-  try {
-    console.log('in put request')
-    const bundle = await Bundle.findById(req.params.bundleid)
-    const scriptTag = req.body.scriptTag
-    bundle.update({
-      scriptTag: scriptTag
-    })
-  } catch (error) {
-    console.error(error)
-  }
-})
 router.put('/remove', async (req, res, next) => {
   console.log('bundleId & campaignId', req.body.bundleId, req.body.campaignId)
   const bundleId = req.body.bundleId
@@ -66,7 +54,8 @@ router.post('/newbundle/:userId', async (req, res, next) => {
     const fullNewBun = await Bundle.findAll({
       where: {
         id: newBunId
-      }, include: [{model: Campaign}]
+      },
+      include: [{ model: Campaign }]
     })
     res.json(fullNewBun)
   } catch (err) {
@@ -148,7 +137,7 @@ router.get('/previous/:userid', async (req, res, next) => {
         developerId: userId,
         deployed: true
       },
-      include: [{ model: Campaign}]
+      include: [{ model: Campaign }]
     })
     res.send(projects)
   } catch (error) {
@@ -161,9 +150,9 @@ router.put('/deploy/:projectId', async (req, res, next) => {
     const project = await Bundle.findById(req.params.projectId)
     const deployProject = await project.update({
       deployed: true,
-      scriptTag: `<pre> <script> src="http://localhost:8080/api/scripts/${
+      scriptTag: `<script src="http://localhost:8080/api/scripts/${
         req.params.projectId
-      }.js" </script> </pre>`
+      }.js" /> `
     })
     res.json(deployProject)
   } catch (error) {
