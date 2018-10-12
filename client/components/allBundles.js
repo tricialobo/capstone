@@ -164,7 +164,7 @@ const mapState = state => {
     bundles: state.bundles.allBundles,
     selectedBundle: state.bundles.bundle,
     campaignsInBundle: state.bundles.campaignsInBundle,
-    addNewBool: true
+    addNewBool: state.bundles.addNewBool
   }
 }
 
