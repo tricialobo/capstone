@@ -54,7 +54,8 @@ router.post('/newbundle/:userId', async (req, res, next) => {
     const fullNewBun = await Bundle.findAll({
       where: {
         id: newBunId
-      }, include: [{model: Campaign}]
+      },
+      include: [{ model: Campaign }]
     })
     res.json(fullNewBun)
   } catch (err) {
@@ -149,9 +150,9 @@ router.put('/deploy/:projectId', async (req, res, next) => {
     const project = await Bundle.findById(req.params.projectId)
     const deployProject = await project.update({
       deployed: true,
-      scriptTag: `<pre> <script> src="http://localhost:8080/api/scripts/${
+      scriptTag: `<script src="http://localhost:8080/api/scripts/${
         req.params.projectId
-      }.js" </script> </pre>`
+      }.js" /> `
     })
     res.json(deployProject)
   } catch (error) {
