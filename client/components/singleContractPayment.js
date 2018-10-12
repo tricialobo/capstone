@@ -24,7 +24,7 @@ class SingleContractPayment extends Component {
   }
 
   async componentDidMount() {
-    await this.props.getContractInfo(this.props.match.params.contractId)
+    // await this.props.getContractInfo(this.props.match.params.contractId)
   }
   handleChange(evt) {
     this.setState({
@@ -719,26 +719,28 @@ class SingleContractPayment extends Component {
         }
       })
 
-      // .then(
-      //   this.props.history.push({
-      //     pathname: '/confirmpayment'
-      //   })
-      //)
+    // .then(
+    //   this.props.history.push({
+    //     pathname: '/confirmpayment'
+    //   })
+    //)
   }
   render() {
     const contractHash = this.props.match.params.contractId
-
-     const campaign = this.props.allCampaigns.filter(camp => camp.id === this.props.contract.data.campaignId)
-   
-
-    return this.props.contract.data && campaign && (
-      <PaymentForm
-        campaign={campaign[0]}
-        handleChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
-        address={this.state.address}
-        paid={this.state.paid}
-      />
+    const campaign = this.props.allCampaigns.filter(
+      camp => camp.id === this.props.contract.data.campaignId
+    )
+    return (
+      this.props.contract.data.campaignId &&
+      campaign.length && (
+        <PaymentForm
+          campaign={campaign[0]}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          address={this.state.address}
+          paid={this.state.paid}
+        />
+      )
     )
   }
 }

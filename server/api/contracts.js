@@ -138,7 +138,7 @@ router.post('/:contractHash', async (req, res, next) => {
       currentContract.options.address = `${contractHash}`
 
       const webdevAddress = developerId[0].webdevBlockAddress
-
+      console.log('webdev', webdevAddress)
       console.log('hello! right before withdraw!')
       console.log('current', await currentContract.methods.getBalance().call())
       await currentContract.methods
