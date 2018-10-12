@@ -10,7 +10,9 @@ import {
   FormGroup,
   Input,
   InputLabel,
-  Card
+  Card,
+  Typography,
+  Divider
 } from '@material-ui/core'
 
 const styles = theme => ({
@@ -56,6 +58,9 @@ const AuthForm = props => {
     <Card className={classes.card} style={{ width: '40%' }}>
       <form onSubmit={handleSubmit}>
         <FormGroup style={{ margin: '1em' }}>
+          <Typography variant="title">Log into your account</Typography>
+          <br />
+          <Divider />
           <FormControl>
             <InputLabel>Email</InputLabel>
             <Input name="email" type="text" />
@@ -65,7 +70,7 @@ const AuthForm = props => {
             <Input name="password" type="password" />
           </FormControl>
           <br />
-          <Button type="submit">LOGIN</Button>
+          <Button type="submit">Login</Button>
           <Button component="a" href="/auth/google">
             Login with Google
           </Button>

@@ -11,7 +11,8 @@ import Typography from '@material-ui/core/Typography'
 
 const StyledTileBar = withStyles({
   titleWrap: {
-    marginLeft: 0
+    marginLeft: 0,
+    marginBottom: 15
   },
   title: {
     color: '#000',
@@ -33,7 +34,8 @@ const styles = theme => ({
   tileBar: {
     marginLeft: 0,
     color: '#000',
-    background: '#fff'
+    background: '#fff',
+    marginBottom: 15
   }
 })
 

@@ -15,6 +15,7 @@ import {
   Divider
 } from '@material-ui/core'
 import CheckoutCard from './CheckoutCard'
+import receipt from '../receipt'
 
 const styles = theme => ({
   container: {
@@ -35,11 +36,14 @@ const styles = theme => ({
   },
   menu: {
     width: 400
+  },
+  paymentText: {
+    textAlign: 'center'
   }
 })
 
 const PaymentForm = props => {
-  const { classes, handleChange, handleSubmit, address, campaign } = props
+  const { classes, handleChange, handleSubmit, address, campaign, paid } = props
 
   return (
     <Grid
@@ -51,42 +55,62 @@ const PaymentForm = props => {
     >
       <Grid item xs={3}>
         <Typography variant="title">Payment details</Typography>
+        {paid && (
+          <Typography variant="body1" color="primary">
+            <b>Paid</b>
+          </Typography>
+        )}
         <br />
         <Divider />
         <br />
-        <Typography variant="subheading">
-          Total: {campaign.price} ETH{' '}
-        </Typography>
-        <form
-          className={classes.container}
-          noValidate
-          autoComplete="off"
-          onSubmit={handleSubmit}
-        >
-          <Grid container alignContent="center" direction="column">
+        <Typography variant="subheading">Total</Typography>
+        <Typography variant="body1">{campaign.price} ETH</Typography>
+        <br />
+        <Divider />
+        <br />
+        {!paid ? (
+          <form
+            className={classes.container}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
+            <Grid container alignContent="center" direction="column">
+              <Grid>
+                <TextField
+                  id="eth-address"
+                  label="Ethereum address"
+                  name="address"
+                  className={classes.textField}
+                  value={address}
+                  onChange={handleChange}
+                  margin="normal"
+                />
+              </Grid>
+              <Grid>
+                <Button
+                  type="submit"
+                  className={classes.textField}
+                  onClick={handleSubmit}
+                >
+                  Submit payment
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        ) : (
+          <Grid container justify="center" className={classes.paymentText}>
             <Grid>
-              <TextField
-                id="eth-address"
-                label="Ethereum address"
-                name="address"
-                className={classes.textField}
-                value={address}
-                onChange={handleChange}
-                margin="normal"
-              />
+              <Typography variant="subheading">Thank you!</Typography>
             </Grid>
             <Grid>
-              <Button
-                minWidth="100%"
-                type="submit"
-                className={classes.textField}
-                onClick = {handleSubmit}
-              >
-                Submit payment
-              </Button>
+              <Typography variant="body1">
+                Your payment has been received. You will receive an email with a
+                payment confirmation and receipt. Your campaign is now active.
+              </Typography>
             </Grid>
           </Grid>
-        </form>
+        )}
       </Grid>
       <Grid item xs={9}>
         <CheckoutCard campaign={campaign} />

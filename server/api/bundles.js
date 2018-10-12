@@ -66,7 +66,8 @@ router.post('/newbundle/:userId', async (req, res, next) => {
     const fullNewBun = await Bundle.findAll({
       where: {
         id: newBunId
-      }, include: [{model: Campaign}]
+      },
+      include: [{ model: Campaign }]
     })
     res.json(fullNewBun)
   } catch (err) {
@@ -148,7 +149,7 @@ router.get('/previous/:userid', async (req, res, next) => {
         developerId: userId,
         deployed: true
       },
-      include: [{ model: Campaign}]
+      include: [{ model: Campaign }]
     })
     res.send(projects)
   } catch (error) {

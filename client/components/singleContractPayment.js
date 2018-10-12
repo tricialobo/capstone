@@ -16,7 +16,8 @@ class SingleContractPayment extends Component {
   constructor() {
     super()
     this.state = {
-      address: ''
+      address: '',
+      paid: true
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -63,7 +64,8 @@ class SingleContractPayment extends Component {
         }
       }).then(
         this.setState({
-          address: ''
+          address: '',
+          paid: true
         })
       )
 
@@ -732,6 +734,7 @@ class SingleContractPayment extends Component {
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         address={this.state.address}
+        paid={this.state.paid}
       />
     )
   }

@@ -18,6 +18,7 @@ import {
   RadioGroup,
   MenuItem,
   FormHelperText,
+  Divider,
   Select,
   Grid
 } from '@material-ui/core'
@@ -74,6 +75,8 @@ class SignUpForm extends Component {
             Sign up with us to get access to high quality ads and advertisers
             who are relevant to your users.
           </Typography>
+          <br />
+          <Divider />
         </div>
         <form onSubmit={handleSubmit}>
           <FormGroup style={{ marginTop: '30px' }}>

@@ -19,7 +19,8 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 30
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -61,91 +62,97 @@ class AccountDetails extends Component {
     const user = this.state
 
     return (
-      <form
-        className={classes.container}
-        noValidate
-        autoComplete="off"
-        onSubmit={this.handleSubmit}
-      >
-        <Grid container alignContent="center" direction="column" spacing={40}>
-          <Grid>
-            <TextField
-              id="standard-firstName"
-              label="First Name"
-              name="firstName"
-              className={classes.textField}
-              value={user.firstName}
-              onChange={this.handleChange}
-              margin="normal"
-            />
-          </Grid>
-          <Grid>
-            <TextField
-              id="standard-lastName"
-              label="Last Name"
-              name="lastName"
-              className={classes.textField}
-              value={user.lastName}
-              onChange={this.handleChange}
-              margin="normal"
-            />
-          </Grid>
-          <Grid>
-            <TextField
-              id="standard-email"
-              label="Email"
-              name="email"
-              className={classes.textField}
-              value={user.email}
-              onChange={this.handleChange}
-              margin="normal"
-            />
-          </Grid>
-          <Grid>
-            {this.props.currentUser.isAdvertiser && (
-              <FormControl
-                aria-label="Advertising Budget"
+      <Grid container justify="center">
+        <form
+          className={classes.container}
+          noValidate
+          autoComplete="off"
+          onSubmit={this.handleSubmit}
+        >
+          <Grid container alignContent="center" direction="column" spacing={40}>
+            <Grid>
+              <TextField
+                id="standard-firstName"
+                label="First Name"
+                name="firstName"
+                className={classes.textField}
+                value={user.firstName}
+                onChange={this.handleChange}
+                margin="normal"
+              />
+            </Grid>
+            <Grid>
+              <TextField
+                id="standard-lastName"
+                label="Last Name"
+                name="lastName"
+                className={classes.textField}
+                value={user.lastName}
+                onChange={this.handleChange}
+                margin="normal"
+              />
+            </Grid>
+            <Grid>
+              <TextField
+                id="standard-email"
+                label="Email"
+                name="email"
+                className={classes.textField}
+                value={user.email}
+                onChange={this.handleChange}
+                margin="normal"
+              />
+            </Grid>
+            <Grid>
+              {this.props.currentUser.isAdvertiser && (
+                <FormControl
+                  aria-label="Advertising Budget"
+                  className={classes.textField}
+                >
+                  <InputLabel>Advertising Budget</InputLabel>
+                  <Select
+                    value={this.state.budget}
+                    onChange={this.handleChange}
+                    displayEmpty
+                    name="budget"
+                    className={classes.selectEmpty}
+                  >
+                    <MenuItem value="">
+                      <em>Budget</em>
+                    </MenuItem>
+                    <MenuItem value={100}>100 ETH</MenuItem>
+                    <MenuItem value={150}>150 ETH</MenuItem>
+                    <MenuItem value={200}>200 ETH</MenuItem>
+                    <MenuItem value={250}>250 ETH</MenuItem>
+                    <MenuItem value={300}>300+ ETH</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
+            </Grid>
+            <Grid>
+              <TextField
+                id="standard-password-input"
+                label="Password"
+                name="password"
+                className={classes.textField}
+                type="password"
+                value="lmaooooooooo"
+                onChange={this.handleChange}
+                margin="normal"
+              />
+            </Grid>
+            <Grid>
+              <Button
+                minWidth="100%"
+                type="submit"
                 className={classes.textField}
               >
-                <InputLabel>Advertising Budget</InputLabel>
-                <Select
-                  value={this.state.budget}
-                  onChange={this.handleChange}
-                  displayEmpty
-                  name="budget"
-                  className={classes.selectEmpty}
-                >
-                  <MenuItem value="">
-                    <em>Budget</em>
-                  </MenuItem>
-                  <MenuItem value={100}>100 ETH</MenuItem>
-                  <MenuItem value={150}>150 ETH</MenuItem>
-                  <MenuItem value={200}>200 ETH</MenuItem>
-                  <MenuItem value={250}>250 ETH</MenuItem>
-                  <MenuItem value={300}>300+ ETH</MenuItem>
-                </Select>
-              </FormControl>
-            )}
+                Save
+              </Button>
+            </Grid>
           </Grid>
-          <Grid>
-            <TextField
-              id="standard-password-input"
-              label="Password"
-              name="password"
-              className={classes.textField}
-              type="password"
-              value={user.password}
-              onChange={this.handleChange}
-              margin="normal"
-            />
-          </Grid>
-          <Grid>
-            <Button minWidth="100%" type="submit" className={classes.textField}>
-              Save
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
+        </form>
+      </Grid>
     )
   }
 }

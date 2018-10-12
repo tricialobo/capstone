@@ -736,11 +736,17 @@ class BundleCheckout extends Component {
               campaigns={campaigns}
               handleClick={this.handleClick}
             />
+            {bundle.scriptTag && (
+              <div className={classes.scriptTag}>
+                <Divider /> <br />
+                <br />
+                <ScriptTag bundleId={bundle.id} />
+              </div>
+            )}
           </Grid>
         ) : (
           <h2>No Campaigns In Your Bundle</h2>
         )}
-        {this.state.showScriptTag ? <ScriptTag bundleId={bundle.id} /> : null}
       </Grid>
     )
   }
@@ -767,6 +773,9 @@ const styles = {
   },
   divider: {
     marginTop: 10
+  },
+  scriptTag: {
+    textAlign: 'center'
   }
 }
 
