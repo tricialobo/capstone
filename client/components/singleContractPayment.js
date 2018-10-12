@@ -727,13 +727,11 @@ class SingleContractPayment extends Component {
   }
   render() {
     const contractHash = this.props.match.params.contractId
-    console.log('allCampaigns', this.props.allCampaigns)
-    console.log('can we get the id? contract', this.props.contract)
-   const campaign = this.props.allCampaigns.filter(camp => camp.id === this.props.contract.data.campaignId)
-    console.log('temp campaign', this.props.tempCampaign)
-    console.log('contractHash', contractHash)
-    console.log('props', this.props)
-    return (
+
+     const campaign = this.props.allCampaigns.filter(camp => camp.id === this.props.contract.data.campaignId)
+   
+
+    return this.props.contract.data && campaign && (
       <PaymentForm
         campaign={campaign[0]}
         handleChange={this.handleChange}
