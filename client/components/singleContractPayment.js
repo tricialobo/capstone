@@ -17,7 +17,7 @@ class SingleContractPayment extends Component {
     super()
     this.state = {
       address: '',
-      paid: true
+      paid: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -719,20 +719,23 @@ class SingleContractPayment extends Component {
         }
       })
 
-      .then(
-        this.props.history.push({
-          pathname: '/confirmpayment'
-        })
-      )
+      // .then(
+      //   this.props.history.push({
+      //     pathname: '/confirmpayment'
+      //   })
+      //)
   }
   render() {
     const contractHash = this.props.match.params.contractId
+    console.log('allCampaigns', this.props.allCampaigns)
+    console.log('can we get the id? contract', this.props.contract)
+   const campaign = this.props.allCampaigns.filter(camp => camp.id === this.props.contract.data.campaignId)
     console.log('temp campaign', this.props.tempCampaign)
     console.log('contractHash', contractHash)
     console.log('props', this.props)
     return (
       <PaymentForm
-        campaign={this.props.tempCampaign}
+        campaign={campaign[0]}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         address={this.state.address}
@@ -745,7 +748,7 @@ class SingleContractPayment extends Component {
 const mapState = state => {
   return {
     user: state.user,
-    tempCampaign: state.campaigns.allCampaigns[1],
+    allCampaigns: state.campaigns.allCampaigns,
     contract: state.contracts.contract
   }
 }
