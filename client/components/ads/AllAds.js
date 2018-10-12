@@ -8,6 +8,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Divider,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -96,6 +97,7 @@ class AllAds extends Component {
                     }
                     title="Advertisements"
                   />
+                  <Divider />
                   <CardContent className={classes.content}>
                     <AdsGridList ads={ads} />
                   </CardContent>
