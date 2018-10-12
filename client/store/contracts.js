@@ -35,6 +35,7 @@ const getContract = contract => {
 }
 
 export function getContractInfo(contractHash) {
+  console.log('hello out there, in getcontractinfo')
   return async dispatch => {
     const contract = await axios.get(`/api/contracts/${contractHash}`)
     const action = gotContractInfo(contract)
