@@ -34,8 +34,7 @@ const styles = theme => ({
   tileBar: {
     marginLeft: 0,
     color: '#000',
-    background: '#fff',
-    marginBottom: 15
+    background: '#fff'
   }
 })
 

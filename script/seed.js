@@ -19,7 +19,7 @@ async function seed() {
     User.create({
       firstName: 'Bill',
       lastName: 'Gates',
-      email: 'rolex@email.com',
+      email: 'uniqlo@email.com',
       password: '123',
       budget: 100.0,
       balance: 100.0,
@@ -88,38 +88,6 @@ async function seed() {
     balance: 110.0,
     salt: 'salt'
   })
-
-  // const contract1 = await Contract.create({
-  //   contractHash: '0x94d52535fe072e44c0745c114d816ff066fcee9e',
-  //   balance: 15.0,
-  //   status: true,
-  //   clickCount: 500
-  // })
-  // await contract1.addUser(user1)
-
-  // const contract2 = await Contract.create({
-  //   contractHash: '0x94d52535fe072e44c0745c114d816ff066fcee9e',
-  //   balance: 10.0,
-  //   status: true,
-  //   clickCount: 500
-  // })
-  // await contract2.addUser(user1)
-
-  // const contract3 = await Contract.create({
-  //   contractHash: '0x94d52535fe072e44c0745c114d816ff066fcee9e',
-  //   balance: 18.0,
-  //   status: true,
-  //   clickCount: 500
-  // })
-  // await contract3.addUser(user2)
-
-  // const contract4 = await Contract.create({
-  //   contractHash: '0x94d52535fe072e44c0745c114d816ff066fcee9e',
-  //   balance: 20.0,
-  //   status: true,
-  //   clickCount: 500
-  // })
-  // await contract4.addUser(user3)
 
   const bundle1 = await Bundle.create({
     projectName: 'Project1A',
@@ -242,7 +210,7 @@ async function seed() {
   const campaign1 = await Campaign.create({
     blockChainKey: 'abc',
     clicks: 8,
-    name: 'Rolex',
+    name: 'Mens FW18',
     price: '20.0',
     isActive: true,
     advertiserId: 1
@@ -301,7 +269,7 @@ async function seed() {
   const campaign5 = await Campaign.create({
     blockChainKey: 'abc',
     clicks: 8,
-    name: 'Rolex - Women',
+    name: 'Womens FW18',
     price: '20.0',
     isActive: true,
     advertiserId: 1
@@ -379,53 +347,53 @@ async function seed() {
   await campaign10.addDemographic(demographic3)
 
   const ad1 = await Advertisement.create({
-    name: 'Rolex-Ad-1',
+    name: 'stretch-jeans-mn',
     image:
-      'https://i.pinimg.com/originals/3d/1c/71/3d1c7119f809873fe15d75da8151c770.jpg',
-    url: 'http://google.com',
+      'https://www.thefashionisto.com/wp-content/uploads/2014/08/UNIQLO-Stretch-Jeans.jpg',
+    url: 'http://uniqlo.com',
     adSpecs: 'format1',
     advertiserId: 1
   })
   await ad1.addCampaign(campaign1)
 
   const ad2 = await Advertisement.create({
-    name: 'Rolex-Ad-2',
-    image:
-      'https://happinessequalsoutlook.files.wordpress.com/2013/03/david-beckham.png',
-    url: 'http://google.com',
+    name: 'womens-fw18-preview-1',
+    image: 'https://cdn.shopmined.com/content/wBjlc92-m.jpg',
+    url: 'http://uniqlo.com',
     adSpecs: 'format2',
     advertiserId: 1
   })
-  await ad2.addCampaign(campaign1)
+  await ad2.addCampaign(campaign2)
 
   const ad3 = await Advertisement.create({
-    name: 'Rolex-Ad-3',
+    name: 'mns-fw18-preview-2',
     image:
-      'https://static1.squarespace.com/static/55e0902de4b0903e2fc9145d/5893b87417bffcb23ca6ecb3/5893b8aacd0f68ddeaf31004/1486117597714/Rolex+Ads.jpg',
-    url: 'http://google.com',
+      'https://www.uniqlo.com/us/en/news/topics/2018091301/img/mimg_1_m.jpg',
+    url: 'http://uniqlo.com',
     adSpecs: 'format3',
     advertiserId: 1
   })
-  await ad3.addCampaign(campaign1)
+  await ad3.addCampaign(campaign5)
 
   const ad4 = await Advertisement.create({
-    name: 'Gucci-Ad-1',
-    image: 'http://www.leblogluxe.com/files/2014/11/1200.jpg',
+    name: 'mns-fw18-preview-1',
+    image:
+      'http://www.uniqlo.com/UniqloU18fw/common/images/topImg-thumb-men2.jpg',
     url: 'http://google.com',
     adSpecs: 'format3',
-    advertiserId: 5
+    advertiserId: 1
   })
   await ad4.addCampaign(campaign1)
 
   const ad17 = await Advertisement.create({
-    name: 'Ad-1',
+    name: 'wmns-fw18-preview-2',
     image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnTTmjGfrpN-c9z_YughJE943uQI9nx0Zh2Z6pGQjrx6vDJZDNkQ',
-    url: 'http://google.com',
+      'https://pausemag.co.uk/wp-content/uploads/2018/08/uniqlo-christophe-lemaire-fall-201813.jpg',
+    url: 'http://uniqlo.com',
     adSpecs: 'format3',
     advertiserId: 5
   })
-  await ad17.addCampaign(campaign2)
+  await ad17.addCampaign(campaign5)
 
   const ad18 = await Advertisement.create({
     name: 'Ad-2',
@@ -487,29 +455,28 @@ async function seed() {
   await ad7.addCampaign(campaign3)
 
   const ad8 = await Advertisement.create({
-    name: 'Rolex-Ad-4 -W',
+    name: 'mns-fw18-preview-3',
     image:
-      'https://i.pinimg.com/originals/3d/1c/71/3d1c7119f809873fe15d75da8151c770.jpg',
-    url: 'http://google.com',
+      'https://www.uniqlo.com/us/en/news/topics/2018091301/img/1330T_180907e40h0E.jpg',
+    url: 'http://uniqlo.com',
     adSpecs: 'format1',
     advertiserId: 1
   })
   await ad8.addCampaign(campaign5)
 
   const ad9 = await Advertisement.create({
-    name: 'Rolex-Ad-5-W',
+    name: 'mns-heattech',
     image:
-      'https://i.pinimg.com/originals/3d/1c/71/3d1c7119f809873fe15d75da8151c770.jpg',
-    url: 'http://google.com',
+      'https://payload419.cargocollective.com/1/1/36302/10688603/UNIQLO_HEAT4_1000.jpg',
+    url: 'http://uniqlo.com',
     adSpecs: 'format1',
     advertiserId: 1
   })
   await ad9.addCampaign(campaign5)
 
   const ad10 = await Advertisement.create({
-    name: 'Rolex-Ad-6-W',
-    image:
-      'https://i.pinimg.com/originals/3d/1c/71/3d1c7119f809873fe15d75da8151c770.jpg',
+    name: 'mns-fw18-preview-4',
+    image: 'http://pic.mote001.com/344374-800w.jpg',
     url: 'http://google.com',
     adSpecs: 'format1',
     advertiserId: 1

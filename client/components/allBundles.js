@@ -67,78 +67,82 @@ class Bundles extends Component {
           subheader={
             <ListSubheader component="div">Active Projects</ListSubheader>
           }
-        > 
-          {filtBuns.length ? filtBuns.map(bundle => {
-            const indexValue = index
-            index++
-            return (
-              <div key={bundle.id}>
-                <ListItem
-                  key={bundle.id}
-                  button
-                  selected={this.state.selectedIndex === indexValue}
-                  open={this.state.open === indexValue}
-                  onClick={event =>
-                    this.handleListItemClick(event, indexValue, bundle)
-                  }
-                >
-                  <ListItemText primary={bundle.projectName} />
-                  {this.state.open ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse
-                  in={
-                    indexValue === this.state.selectedIndex && this.state.open
-                  }
-                  timeout="auto"
-                >
-                  <List component="div" key={bundle.id}>
-                    {this.props.campaignsInBundle &&
-                    this.props.campaignsInBundle.length > 0 ? (
-                      this.props.campaignsInBundle.map(campaign => {
-                        return (
-                          <ListItem
-                            button
-                            className={classes.nested}
-                            key={campaign.id}
-                          >
-                            <ListItemText inset primary={campaign.name} />
-                            <ListItemText
-                              inset
-                              secondary="remove"
-                              onClick={() =>
-                                this.removeClick({
-                                  campaignId: campaign.id,
-                                  bundleId: bundle.id
-                                })
-                              }
-                            />
-                          </ListItem>
-                        )
-                      })
-                    ) : (
-                      <ListItem>
-                        {' '}
-                        <ListItemText
-                          inset
-                          primary="No Campaigns In Project"
-                        />{' '}
-                      </ListItem>
-                    )}
-                    <NavLink
-                      to={{
-                        pathname: '/checkout',
-                        state: { bundleId: bundle.id }
-                      }}
-                    >
-                      <ListItem className={classes.nested} button>
-                        <ListItemText inset primary="See Full Details" />
-                      </ListItem>
-                    </NavLink>
-                  </List>
-                </Collapse>
-              </div>
-            )
-          }) : <h5>No Active Projects</h5>} 
+        >
+          {filtBuns.length ? (
+            filtBuns.map(bundle => {
+              const indexValue = index
+              index++
+              return (
+                <div key={bundle.id}>
+                  <ListItem
+                    key={bundle.id}
+                    button
+                    selected={this.state.selectedIndex === indexValue}
+                    open={this.state.open === indexValue}
+                    onClick={event =>
+                      this.handleListItemClick(event, indexValue, bundle)
+                    }
+                  >
+                    <ListItemText primary={bundle.projectName} />
+                    {this.state.open ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                  <Collapse
+                    in={
+                      indexValue === this.state.selectedIndex && this.state.open
+                    }
+                    timeout="auto"
+                  >
+                    <List component="div" key={bundle.id}>
+                      {this.props.campaignsInBundle &&
+                      this.props.campaignsInBundle.length > 0 ? (
+                        this.props.campaignsInBundle.map(campaign => {
+                          return (
+                            <ListItem
+                              button
+                              className={classes.nested}
+                              key={campaign.id}
+                            >
+                              <ListItemText inset primary={campaign.name} />
+                              <ListItemText
+                                inset
+                                secondary="remove"
+                                onClick={() =>
+                                  this.removeClick({
+                                    campaignId: campaign.id,
+                                    bundleId: bundle.id
+                                  })
+                                }
+                              />
+                            </ListItem>
+                          )
+                        })
+                      ) : (
+                        <ListItem>
+                          {' '}
+                          <ListItemText
+                            inset
+                            primary="No Campaigns In Project"
+                          />{' '}
+                        </ListItem>
+                      )}
+                      <NavLink
+                        to={{
+                          pathname: '/checkout',
+                          state: { bundleId: bundle.id }
+                        }}
+                      >
+                        <ListItem className={classes.nested} button>
+                          <ListItemText inset primary="See Full Details" />
+                        </ListItem>
+                      </NavLink>
+                    </List>
+                  </Collapse>
+                </div>
+              )
+            })
+          ) : (
+            <h5>No Active Projects</h5>
+          )}
           <ListItem
             className={classes.nested}
             button
@@ -159,7 +163,7 @@ const mapState = state => {
     bundles: state.bundles.allBundles,
     selectedBundle: state.bundles.bundle,
     campaignsInBundle: state.bundles.campaignsInBundle,
-    addNewBool: state.bundles.addNewBool
+    addNewBool: true
   }
 }
 
