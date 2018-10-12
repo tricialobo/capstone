@@ -6,6 +6,7 @@ import {
   GridListTileBar,
   IconButton,
   GridList,
+  Divider,
   Grid,
   Typography
 } from '@material-ui/core/'
@@ -41,9 +42,9 @@ function AdsGalleryGridList(props) {
     <div className={classes.root}>
       <Grid container direction="column" spacing={16}>
         <Grid item xs={12}>
-          <Typography className={classes.adsTitles} variant="body1">
-            Ads
-          </Typography>
+          <Typography variant="body1">Advertisements</Typography>
+          <br />
+          <Divider />
         </Grid>
         <Grid item xs={12}>
           <GridList className={classes.gridList} cellHeight={180} cols={2.5}>
