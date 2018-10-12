@@ -55,7 +55,7 @@ const PaymentForm = props => {
         <Divider />
         <br />
         <Typography variant="subheading">
-          Total: {campaign.price} ETH{' '}
+          Total: {props.contractPrice} ETH{' '}
         </Typography>
         <form
           className={classes.container}
@@ -80,7 +80,7 @@ const PaymentForm = props => {
                 minWidth="100%"
                 type="submit"
                 className={classes.textField}
-                onClick = {handleSubmit}
+                onClick={handleSubmit}
               >
                 Submit payment
               </Button>

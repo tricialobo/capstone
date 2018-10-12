@@ -93,7 +93,7 @@ function withdraw(address webdev, address grace) payable public {
    balance[webdev]+=toWebdev;
   grace.transfer(toGrace);
    balance[grace] += toGrace;
-   selfdestruct(grace);
+  // selfdestruct(grace);
    
    }
    

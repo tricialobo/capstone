@@ -54,9 +54,12 @@ class BundleCheckout extends Component {
     })
   }
   async handleClick() {
+    console.log('hello, before accounts')
     let accounts = await web3.eth.getAccounts(console.log)
+    console.log('hello, after accounts')
     let campaigns = this.props.campaigns
     console.log('campaigns', campaigns)
+
     campaigns.forEach(async campaign => {
       const newBlock = await factory.methods.createBlock().send({
         // const newBlock = await factory.methods.createBlock(campaign.price).send({
@@ -75,7 +78,7 @@ class BundleCheckout extends Component {
           url: 'http://localhost:8080/api/contracts',
           data: {
             campaignId: campaign.id,
-            bundleId: 1,
+            bundleId: this.props.bundle.id,
             contractHash: contractHash,
             balance: campaign.price,
             advertiserId: campaign.advertiser.id,
@@ -710,10 +713,11 @@ class BundleCheckout extends Component {
             this.props.bundle && this.props.updateBundle(this.props.bundle.id)
         )
     })
-    this.setState({showScriptTag: true})
+    this.setState({ showScriptTag: true })
   }
 
   render() {
+    console.log('bundle', this.props.bundle)
     console.log('bundleid', this.props.bundleId)
     //const campaigns = this.state.campaigns
     console.log('state', this.state)
@@ -733,11 +737,10 @@ class BundleCheckout extends Component {
               handleClick={this.handleClick}
             />
           </Grid>
-          
         ) : (
           <h2>No Campaigns In Your Bundle</h2>
         )}
-        {this.state.showScriptTag ? <ScriptTag bundleId = {bundle.id}/> : null}
+        {this.state.showScriptTag ? <ScriptTag bundleId={bundle.id} /> : null}
       </Grid>
     )
   }
