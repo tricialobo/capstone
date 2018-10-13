@@ -12,7 +12,7 @@ const { getDeployedBlocks } = require('../../client/components/controller')
 const fundsTransfer = require('../../ethereum/fundsTransfer')
 const web3 = require('../../ethereum/web3')
 const axios = require('axios')
-
+const DeveloperEmail = require('./emails/DeveloperEmail')
 module.exports = router
 
 router.get('/:contractHash', async (req, res, next) => {
@@ -120,8 +120,10 @@ router.post('/:contractHash', async (req, res, next) => {
       ]
     })
     const contractUsers = contract.users
+
     const advertiserId = contract.users.filter(user => user.isAdvertiser)
     const developerId = contract.users.filter(user => !user.isAdvertiser)
+    console.log('developerId', developerId)
     //console.log('developerId', developerId[0].webdevBlockAddress)
     // console.log('advertiser id', advertiserId[0].id)
     //console.log('contract users', contractUsers)
@@ -133,11 +135,13 @@ router.post('/:contractHash', async (req, res, next) => {
       console.log('blocks', blocks)
       const indexOf = blocks.indexOf(contractHash)
       const currentContract = fundsTransfer(blocks[indexOf])
+      console.log('current contract', currentContract)
       //for methods
       // console.log('currentContract', currentContract)
       currentContract.options.address = `${contractHash}`
 
       const webdevAddress = developerId[0].webdevBlockAddress
+      const balance = await currentContract.methods.getBalance().call()
       console.log('webdev', webdevAddress)
       console.log('hello! right before withdraw!')
       console.log('current', await currentContract.methods.getBalance().call())
@@ -150,6 +154,19 @@ router.post('/:contractHash', async (req, res, next) => {
         .then(response => console.log(response))
 
       console.log('hello! afterwithdraw!')
+      console.log('dev', developerId[0].email)
+
+      sendEmail(developerId[0].firstName, developerId[0].email, {
+        from: 'Grace',
+        to: 'tricia.lobo@gmail.com',
+        //to: developerId.email,
+        subject: 'Grace has sent a payment to your Etherium wallet',
+        html: DeveloperEmail(
+          developerId[0].firstName,
+          contractHash,
+          balance * 0.75
+        )
+      })
       // const createBlock = await factory.methods.createBlock().send({
       //   gas: 500000,
       //   from: accounts[4]
