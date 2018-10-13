@@ -125,7 +125,7 @@ router.post('/:contractHash', async (req, res, next) => {
     //console.log('developerId', developerId[0].webdevBlockAddress)
     // console.log('advertiser id', advertiserId[0].id)
     //console.log('contract users', contractUsers)
-    if (contract.clickCount === 1 || contract.clickCount > 1) {
+    if (contract.clickCount === 0) {
       console.log('in if block')
       //withdraw funds from contract
       let accounts = await web3.eth.getAccounts(console.log)
