@@ -9,7 +9,8 @@ const initialState = {
   currentUserContract: {},
   currentUser: {},
   previousContracts: [],
-  contract: {}
+  contract: {},
+  allContracts: []
 }
 
 const gotContractInfo = contract => ({

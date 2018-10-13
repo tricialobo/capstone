@@ -11,8 +11,8 @@ import {
   AllAds,
   BundleCheckout,
   ScriptTag,
-  //Payment,
   SingleContractPayment,
+  AdvertiserChart,
   AllCampaigns,
   AllBundles,
   AccountMenu,
@@ -24,7 +24,7 @@ import {
   AdForm,
   Receipt
 } from './components'
-import Ethereum from './components/ethereum'
+import Ethereum from './components'
 import {
   me,
   getPreviousProjects,
@@ -61,6 +61,7 @@ class Routes extends Component {
         <Route path="/checkout" component={BundleCheckout} />
         <Route path="/scriptTag" component={ScriptTag} />
         <Route path="/allcampaigns" component={AllCampaigns} />
+        <Route path="/advertisercharts" component={AdvertiserChart} />
         {/* <Route path="/allbundles" component={AllBundles} /> */}
         <Route path="/payment/:contractId" component={SingleContractPayment} />
         <Route path="/confirmpayment" component={Receipt} />

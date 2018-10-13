@@ -76,7 +76,6 @@ router.get('/:userid/user', async (req, res, next) => {
   }
 })
 
-// get all contracts
 router.get('/', async (req, res, next) => {
   try {
     const contracts = await Contract.findAll({
@@ -85,7 +84,7 @@ router.get('/', async (req, res, next) => {
     // comment this back in eventually res.json(contracts)
     const blocks = await getDeployedBlocks()
     console.log('blocks', blocks)
-    res.json(blocks)
+    res.json(contracts)
   } catch (err) {
     next(err)
   }
@@ -102,6 +101,20 @@ router.get('/:contractId', async (req, res, next) => {
   }
 })
 
+router.get('/user/:userid', async (req, res, next) => {
+  console.log('in cool new user route')
+  try {
+    const contracts = await PartiesToContract.findAll({
+      where: {
+        userId: req.params.userid
+      },
+      include: [{ model: Contract, include: { model: Campaign } }]
+    })
+    res.json(contracts)
+  } catch (err) {
+    next(err)
+  }
+})
 router.post('/:contractHash', async (req, res, next) => {
   try {
     console.log('contract id', req.params.contractHash)
