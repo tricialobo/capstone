@@ -41,7 +41,7 @@ const ProjectsTable = props => {
   const { classes, project } = props
 
   return (
-    <Grid container justifyContent="center" className={classes.root}>
+    <Grid container className={classes.root}>
       <Divider />
       <Link
         to={{

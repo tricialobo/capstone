@@ -433,7 +433,7 @@ async function seed() {
   const ad3 = await Advertisement.create({
     name: 'mns-fw18-preview-2',
     image:
-      'https://www.uniqlo.com/us/en/news/topics/2018091301/img/mimg_1_m.jpg',
+      'http://daveysutton.com/wp-content/uploads/2016/04/uniqlo-this-way-to-utopia-skepta-davey-sutton.jpg',
     url: 'http://uniqlo.com',
     adSpecs: 'format3',
     advertiserId: 1
@@ -443,7 +443,7 @@ async function seed() {
   const ad4 = await Advertisement.create({
     name: 'mns-fw18-preview-1',
     image:
-      'http://www.uniqlo.com/UniqloU18fw/common/images/topImg-thumb-men2.jpg',
+      'https://www.brandchannel.com/wp-content/uploads/2011/09/uniqlo_nyc_voices_tower_550.png',
     url: 'http://uniqlo.com',
     adSpecs: 'format3',
     advertiserId: 1
@@ -579,7 +579,7 @@ async function seed() {
   const ad5 = await Advertisement.create({
     name: 'easy-care-shirt',
     image:
-      'https://1.bp.blogspot.com/-Wex3htABsWo/WcvRtZFRQWI/AAAAAAAAFDQ/1NkAwuGO1hAZU8frBSeAkVVox1l4OH_sACLcBGAs/s1600/092517_tailored_shirts_lp_01.jpg',
+      'http://day.se/wsite/wp-content/uploads/2015/08/Uniqlo11-1350x1800.jpg',
     url: 'http://uniqlo.com',
     adSpecs: 'format3',
     advertiserId: 1
@@ -608,7 +608,7 @@ async function seed() {
   const ad8 = await Advertisement.create({
     name: 'mns-fw18-preview-3',
     image:
-      'https://www.uniqlo.com/us/en/news/topics/2018091301/img/1330T_180907e40h0E.jpg',
+      'http://day.se/wsite/wp-content/uploads/2015/08/Uniqlo6-1350x1800.jpg',
     url: 'http://uniqlo.com',
     adSpecs: 'format1',
     advertiserId: 1
@@ -618,7 +618,7 @@ async function seed() {
   const ad9 = await Advertisement.create({
     name: 'mns-blocktech',
     image:
-      'http://theinspirationroom.com/daily/interactive/2011/10/uniqlo_one_man.jpg',
+      'https://art8amby.files.wordpress.com/2010/10/uniqlo-down-kaan-tilki-2.jpg',
     url: 'http://uniqlo.com',
     adSpecs: 'format1',
     advertiserId: 1
@@ -628,7 +628,7 @@ async function seed() {
   const ad10 = await Advertisement.create({
     name: 'mns-fw18-preview-4',
     image:
-      'http://daman.co.id/daman.co.id/wp-content/uploads/2016/08/Uniqlo-U-Mens-Campaign-2-3.jpg?x38403',
+      'http://danielle.muntyan.co.uk/wp-content/uploads/2016/10/UNIQLO_InnovationProject11.jpg',
     url: 'http://google.com',
     adSpecs: 'format1',
     advertiserId: 1

@@ -20,7 +20,7 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: 'white',
     boxShadow: 'none',
-    marginBottom: 20
+    marginBottom: 30
   },
   grow: {
     flexGrow: 1
