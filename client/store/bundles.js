@@ -14,6 +14,7 @@ const ADDED_BUNDLE = 'ADDED_BUNDLE'
 const OPEN_ADD_NEW = 'OPEN_ADD_NEW'
 const DEPLOYED_BUNDLE = 'DEPLOYED_BUNDLE'
 const GOT_PREVIOUS_BUNDLES = 'GOT_PREVIOUS_BUNDLES'
+
 /**
  * INITIAL STATE
  */
@@ -74,9 +75,7 @@ export const deployedBundle = bundle => ({
 
 export function getPreviousBundles(userid) {
   return async dispatch => {
-    const { data: previousBundles } = await axios.get(
-      `/api/bundles/previous/${userid}`
-    )
+    const previousBundles = await axios.get(`/api/bundles/previous/${userid}`)
     const action = gotPreviousBundles(previousBundles)
     dispatch(action)
   }
@@ -89,6 +88,7 @@ export function addToBundle(campaign, bundleid) {
         campaign: campaign.id
       }
     )
+    console.log('bundleupdated', bundleUpdated)
     const action = addedToBundle(campaign)
     dispatch(action)
   }
@@ -97,6 +97,7 @@ export function addToBundle(campaign, bundleid) {
 export function getCampaignsInBundle(id) {
   return async dispatch => {
     const bundle = await axios.get(`/api/bundles/${id}`)
+    console.log('campaigns', bundle.data.campaigns)
     dispatch(gotCampaignsInBundle(bundle.data.campaigns))
   }
 }
@@ -116,11 +117,8 @@ export function getAllBundles(userId) {
 }
 
 export function removeCampaignFromBundle(info) {
-  console.log('in removecampaignsfrombundle')
-  console.log('info in', info)
   return async dispatch => {
     const { data } = await axios.put('/api/bundles/remove', info)
-    console.log('data?', data)
     dispatch(gotCampaignsInBundle(data))
   }
 }
@@ -134,8 +132,7 @@ export function addBundle(obj) {
       obj
     )
     console.log('newBun', data)
-    dispatch(addedBundle(data[0]))
-    dispatch(setBundle(data[0]))
+    dispatch(addedBundle(data))
   }
 }
 

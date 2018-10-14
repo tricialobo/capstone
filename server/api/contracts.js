@@ -8,11 +8,11 @@ const {
 } = require('../db/models')
 const { getUser, sendEmail } = require('./helpers')
 const factory = require('../../ethereum/factory')
-const { getDeployedBlocks } = require('../../client/components/controller')
+//const { getDeployedBlocks } = require('../../client/components/controller')
 const fundsTransfer = require('../../ethereum/fundsTransfer')
 const web3 = require('../../ethereum/web3')
 const axios = require('axios')
-
+const DeveloperEmail = require('./emails/DeveloperEmail')
 module.exports = router
 
 router.get('/:contractHash', async (req, res, next) => {
@@ -76,20 +76,19 @@ router.get('/:userid/user', async (req, res, next) => {
   }
 })
 
-// get all contracts
-router.get('/', async (req, res, next) => {
-  try {
-    const contracts = await Contract.findAll({
-      include: [{ model: User, through: 'partiesToContract' }]
-    })
-    // comment this back in eventually res.json(contracts)
-    const blocks = await getDeployedBlocks()
-    console.log('blocks', blocks)
-    res.json(blocks)
-  } catch (err) {
-    next(err)
-  }
-})
+// router.get('/', async (req, res, next) => {
+//   try {
+//     const contracts = await Contract.findAll({
+//       include: [{ model: User, through: 'partiesToContract' }]
+//     })
+//     // comment this back in eventually res.json(contracts)
+//     const blocks = await getDeployedBlocks()
+//     console.log('blocks', blocks)
+//     res.json(contracts)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 // get contract by id
 router.get('/:contractId', async (req, res, next) => {
@@ -102,6 +101,19 @@ router.get('/:contractId', async (req, res, next) => {
   }
 })
 
+router.get('/user/:userid', async (req, res, next) => {
+  try {
+    const contracts = await PartiesToContract.findAll({
+      where: {
+        userId: req.params.userid
+      },
+      include: [{ model: Contract, include: { model: Campaign } }]
+    })
+    res.json(contracts)
+  } catch (err) {
+    next(err)
+  }
+})
 router.post('/:contractHash', async (req, res, next) => {
   try {
     console.log('contract id', req.params.contractHash)
@@ -120,64 +132,81 @@ router.post('/:contractHash', async (req, res, next) => {
       ]
     })
     const contractUsers = contract.users
+
     const advertiserId = contract.users.filter(user => user.isAdvertiser)
     const developerId = contract.users.filter(user => !user.isAdvertiser)
+    console.log('developerId', developerId)
     //console.log('developerId', developerId[0].webdevBlockAddress)
     // console.log('advertiser id', advertiserId[0].id)
     //console.log('contract users', contractUsers)
-    if (contract.clickCount === 1 || contract.clickCount > 1) {
-      console.log('in if block')
-      //withdraw funds from contract
-      let accounts = await web3.eth.getAccounts(console.log)
-      const blocks = await factory.methods.getDeployedBlocks().call()
-      console.log('blocks', blocks)
-      const indexOf = blocks.indexOf(contractHash)
-      const currentContract = fundsTransfer(blocks[indexOf])
-      //for methods
-      // console.log('currentContract', currentContract)
-      currentContract.options.address = `${contractHash}`
+    // if (contract.clickCount === 0) {
+    console.log('in if block')
+    //withdraw funds from contract
+    let accounts = await web3.eth.getAccounts(console.log)
+    const blocks = await factory.methods.getDeployedBlocks().call()
+    console.log('blocks', blocks)
+    const indexOf = blocks.indexOf(contractHash)
+    const currentContract = fundsTransfer(blocks[indexOf])
+    console.log('current contract', currentContract)
+    //for methods
+    // console.log('currentContract', currentContract)
+    currentContract.options.address = `${contractHash}`
 
-      const webdevAddress = developerId[0].webdevBlockAddress
+    const webdevAddress = developerId[0].webdevBlockAddress
+    const balance = await currentContract.methods.getBalance().call()
+    console.log('webdev', webdevAddress)
+    console.log('hello! right before withdraw!')
+    console.log('current', await currentContract.methods.getBalance().call())
+    await currentContract.methods
+      .withdraw(accounts[1], accounts[4])
+      .send({
+        gas: 5000000,
+        from: accounts[0]
+      })
+      .then(response => console.log(response))
 
-      console.log('hello! right before withdraw!')
-      console.log('current', await currentContract.methods.getBalance().call())
-      await currentContract.methods
-        .withdraw(accounts[1], accounts[4])
-        .send({
-          gas: 5000000,
-          from: accounts[0]
-        })
-        .then(response => console.log(response))
+    console.log('hello! afterwithdraw!')
+    console.log('dev', developerId[0].email)
 
-      console.log('hello! afterwithdraw!')
-      // const createBlock = await factory.methods.createBlock().send({
-      //   gas: 500000,
-      //   from: accounts[4]
-      // })
+    sendEmail(developerId[0].firstName, developerId[0].email, {
+      from: 'Grace',
+      to: 'tricia.lobo@gmail.com',
+      //to: developerId.email,
+      subject: 'Grace has sent a payment to your Etherium wallet',
+      html: DeveloperEmail(
+        developerId[0].firstName,
+        contractHash,
+        balance * 0.75
+      )
+    })
+    // const createBlock = await factory.methods.createBlock().send({
+    //   gas: 500000,
+    //   from: accounts[4]
+    // })
 
-      // const createContract = () => {
-      //   axios({
-      //     method: 'POST',
-      //     url: 'http://localhost:8080/api/contracts',
-      //     data: {
-      //       campaignId: contract.campaignId,
-      //       bundleId: contract.bundleId,
-      //       contractHash: blocks[blocks.length - 1],
-      //       balance: contract.balance,
-      //       advertiserId: advertiserId[0].id,
-      //       devId: developerId[0].id
-      //     }
-      //   }).then(response => {
-      //     // console.log('response', response)
-      //   })
-      // }
-      // createContract()
+    // const createContract = () => {
+    //   axios({
+    //     method: 'POST',
+    //     url: 'http://localhost:8080/api/contracts',
+    //     data: {
+    //       campaignId: contract.campaignId,
+    //       bundleId: contract.bundleId,
+    //       contractHash: blocks[blocks.length - 1],
+    //       balance: contract.balance,
+    //       advertiserId: advertiserId[0].id,
+    //       devId: developerId[0].id
+    //     }
+    //   }).then(response => {
+    //     // console.log('response', response)
+    //   })
+    // }
+    // createContract()
 
-      //hook up to other contract route?
-      //make new contract here
-    } else {
-      contract.increment('clickCount', { by: 1 })
-    }
+    //hook up to other contract route?
+    //make new contract here
+    // } else {
+    //   contract.increment('clickCount', { by: 1 })
+    // }
   } catch (error) {
     console.error(error)
   }
