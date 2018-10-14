@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import GridList from '@material-ui/core/GridList'
@@ -11,8 +11,7 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import Remove from '@material-ui/icons/Remove'
-import {removeAdFromCamp} from '../../store'
-
+import { removeAdFromCamp } from '../../store'
 
 const StyledTileBar = withStyles({
   titleWrap: {
@@ -38,17 +37,21 @@ const styles = theme => ({
   },
   tileBar: {
     marginLeft: 0,
+    marginTop: 10,
     color: '#000',
     background: '#fff'
+  },
+  button: {
+    marginBottom: 15
   }
 })
 
 class AdsGridList extends Component {
-  constructor () {
+  constructor() {
     super()
     this.removeClick = this.removeClick.bind(this)
   }
-  
+
   async removeClick(campId, adId) {
     await this.props.removeAd(campId, adId)
   }
@@ -62,13 +65,18 @@ class AdsGridList extends Component {
           {ads.map(ad => (
             <GridListTile className={classes.adTile} key={ad.id}>
               <img src={ad.image} alt={ad.name} />
-              <StyledTileBar className={classes.tileBar} title={ad.name}
-                 actionIcon={
+              <StyledTileBar
+                className={classes.tileBar}
+                title={ad.name}
+                actionIcon={
                   <IconButton
-                  onClick = {() =>this.removeClick(this.props.campaign.id, ad.id)} 
+                    className={classes.button}
+                    onClick={() =>
+                      this.removeClick(this.props.campaign.id, ad.id)
+                    }
                     className={classes.icon}
                   >
-                    <Remove/>
+                    <Remove />
                   </IconButton>
                 }
               />
