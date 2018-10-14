@@ -106,11 +106,11 @@ export function getAllCampaigns() {
   }
 }
 
-export const fetchAllUserCampaigns = userId => {
+export const fetchAllUserCampaigns = () => {
   return async dispatch => {
     try {
       dispatch(setCampaignLoadingStatus(true))
-      const { data: campaigns } = await axios.get(`/api/campaigns/${userId}`)
+      const { data: campaigns } = await axios.get('/api/campaigns/user')
       dispatch(setAllUserCampaigns(campaigns))
       dispatch(setCampaignLoadingStatus(false))
     } catch (error) {

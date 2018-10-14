@@ -9,6 +9,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import AdsGridList from '../ads/AdsGridList'
+import AdsGalleryGridList from '../ads/AdsGalleryGridList'
 
 const styles = theme => ({
   root: {
@@ -20,7 +21,7 @@ const styles = theme => ({
     minWidth: '100%'
   },
   container: {
-    height: 500
+    height: 450
   },
   details: {
     minWidth: '100%'
@@ -68,7 +69,7 @@ const CheckoutCard = props => {
             </Grid>
             {advertisements && advertisements.length ? (
               <Grid item xs={10}>
-                <AdsGridList ads={advertisements} />
+                <AdsGalleryGridList ads={advertisements} />
               </Grid>
             ) : (
               <Grid item container justify="center">

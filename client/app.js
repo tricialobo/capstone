@@ -32,6 +32,18 @@ const theme = createMuiTheme({
       fontWeight: 500,
       fontSize: 16
     },
+    display3: {
+      color: '#000',
+      fontWeight: 700
+    },
+    display2: {
+      color: '#000',
+      fontWeight: 700
+    },
+    display1: {
+      color: '#000',
+      fontWeight: 700
+    },
     button: {
       fontWeight: 700,
       textTransform: 'unset'

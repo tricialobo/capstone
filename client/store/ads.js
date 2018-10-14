@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getCampaignsInBundle } from './bundles';
+import { getCampaignsInBundle } from './bundles'
 
 // ACTION TYPES
 const SET_ALL_ADS = 'SET_ALL_ADS'
@@ -93,21 +93,21 @@ export const fetchAllAds = () => {
   }
 }
 
-export const fetchUserAds = userId => {
-  console.log('FETCH ADS FROM USER', userId)
-  return async dispatch => {
-    try {
-      dispatch(setAdLoadingStatus(true))
-      const { data: ads } = await axios.get(`/api/ads/user/${userId}`)
-      dispatch(setUserAds(ads))
-      dispatch(setAdLoadingStatus(false))
-    } catch (error) {
-      dispatch(setAdLoadingStatus(false))
-      console.error(error)
-      dispatch(setAdErrorStatus(true))
-    }
-  }
-}
+// export const fetchUserAds = userId => {
+//   console.log('FETCH ADS FROM USER', userId)
+//   return async dispatch => {
+//     try {
+//       dispatch(setAdLoadingStatus(true))
+//       const { data: ads } = await axios.get(`/api/ads/user/${userId}`)
+//       dispatch(setUserAds(ads))
+//       dispatch(setAdLoadingStatus(false))
+//     } catch (error) {
+//       dispatch(setAdLoadingStatus(false))
+//       console.error(error)
+//       dispatch(setAdErrorStatus(true))
+//     }
+//   }
+// }
 
 export const fetchSelectedAd = adId => {
   return async dispatch => {
@@ -164,13 +164,18 @@ const initialState = {
   isLoading: true,
   allAds: [],
   selectedAd: {},
-  isError: {},
+  isError: {}
 }
 
 // REDUCER
 export default function(state = initialState, action) {
   switch (action.type) {
-    case SET_USER_ADS:
+    // case SET_USER_ADS:
+    //   return {
+    //     ...state,
+    //     allAds: action.ads
+    //   }
+    case SET_ALL_ADS:
       return {
         ...state,
         allAds: action.ads

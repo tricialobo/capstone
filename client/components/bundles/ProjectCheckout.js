@@ -11,17 +11,15 @@ class ProjectCheckout extends Component {
     console.log('PROPS IN PROJ CHECL', this.props)
 
     return (
-      <Grid container direction="column" alignContent="center">
+      <Grid container direction="column" alignItems="center">
         <Grid>
           <CampaignsAccordion campaigns={campaigns} bundle={currentBundle} />
         </Grid>
         <Grid>
-          {!currentBundle.deployed ? (
+          {!currentBundle.deployed && (
             <Button type="submit" onClick={handleClick}>
               Deploy project
             </Button>
-          ) : (
-            ''
           )}
         </Grid>
       </Grid>

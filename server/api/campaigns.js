@@ -32,11 +32,11 @@ router.get('/campaign/:campaignId', async (req, res, next) => {
 })
 
 // get all campaigns belonging to a user
-router.get('/:userId', async (req, res, next) => {
+router.get('/user', async (req, res, next) => {
   try {
     const campaigns = await Campaign.findAll({
       where: {
-        advertiserId: req.params.userId
+        advertiserId: req.session.passport.user
       },
       include: [{ model: Advertisement }, { model: Demographic }]
     })
@@ -86,38 +86,40 @@ router.put('/campaign/:campaignId', (req, res, next) => {
 router.put('/add/:campaignId/:adId', async (req, res, next) => {
   const campaignId = req.params.campaignId
   const adId = req.params.adId
-  try{
-  const campaign = await Campaign.findById(campaignId)
-  await campaign.addAdvertisement(adId)
-  await campaign.save()
-  const updatedCampaign = await Campaign.findAll({
-    where: {
-      id: campaignId
-    }, include: [{model: Advertisement}]
-  })
-  res.json((updatedCampaign))
-  }catch (err) {
+  try {
+    const campaign = await Campaign.findById(campaignId)
+    await campaign.addAdvertisement(adId)
+    await campaign.save()
+    const updatedCampaign = await Campaign.findAll({
+      where: {
+        id: campaignId
+      },
+      include: [{ model: Advertisement }]
+    })
+    res.json(updatedCampaign)
+  } catch (err) {
     next(err)
   }
-}) 
+})
 
 router.put('/remove/:campaignId/:adId', async (req, res, next) => {
   const campaignId = req.params.campaignId
   const adId = req.params.adId
-  try{
-  const campaign = await Campaign.findById(campaignId)
-  await campaign.removeAdvertisement(adId)
-  await campaign.save()
-  const updatedCampaign = await Campaign.findAll({
-    where: {
-      id: campaignId
-    }, include: [{model: Advertisement}]
-  })
-  res.json((updatedCampaign))
-  }catch (err) {
+  try {
+    const campaign = await Campaign.findById(campaignId)
+    await campaign.removeAdvertisement(adId)
+    await campaign.save()
+    const updatedCampaign = await Campaign.findAll({
+      where: {
+        id: campaignId
+      },
+      include: [{ model: Advertisement }]
+    })
+    res.json(updatedCampaign)
+  } catch (err) {
     next(err)
   }
-}) 
+})
 
 router.delete('/:campaignId', (req, res, next) => {
   Campaign.findById(req.params.campaignId)

@@ -14,7 +14,6 @@ import {
   CardMedia
 } from '@material-ui/core/'
 import { connect } from 'react-redux'
-import { fetchAllAds, fetchAllUserCampaigns } from '../store'
 
 const styles = theme => ({
   container: {
@@ -41,12 +40,7 @@ const styles = theme => ({
   }
 })
 
-class Home extends Component {
-  async componentDidMount() {
-    await this.props.fetchAllAds()
-    await this.props.fetchAllUserCampaigns()
-  }
-
+class About extends Component {
   render() {
     const { classes } = this.props
     console.log('I"m home')
@@ -55,7 +49,12 @@ class Home extends Component {
         <Grid container direction="row">
           <Grid item xs={12}>
             <Typography variant="display3" align="center">
-              grace
+              about us
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="subheading" align="center">
+              Grace was made with love by Tricia, Stacy, and Jan. ♡
             </Typography>
           </Grid>
           <Grid item xs={7}>
@@ -112,14 +111,4 @@ class Home extends Component {
   }
 }
 
-const mapState = state => ({
-  allAds: state.ads.allAds,
-  allUserCampaigns: state.allUserCampaigns
-})
-
-const mapDispatch = dispatch => ({
-  fetchAllAds: () => dispatch(fetchAllAds()),
-  fetchAllUserCampaigns: () => dispatch(fetchAllUserCampaigns())
-})
-
-export default withStyles(styles)(connect(mapState, mapDispatch)(Home))
+export default withStyles(styles)(About)
