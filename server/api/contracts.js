@@ -139,74 +139,74 @@ router.post('/:contractHash', async (req, res, next) => {
     //console.log('developerId', developerId[0].webdevBlockAddress)
     // console.log('advertiser id', advertiserId[0].id)
     //console.log('contract users', contractUsers)
-    if (contract.clickCount === 0) {
-      console.log('in if block')
-      //withdraw funds from contract
-      let accounts = await web3.eth.getAccounts(console.log)
-      const blocks = await factory.methods.getDeployedBlocks().call()
-      console.log('blocks', blocks)
-      const indexOf = blocks.indexOf(contractHash)
-      const currentContract = fundsTransfer(blocks[indexOf])
-      console.log('current contract', currentContract)
-      //for methods
-      // console.log('currentContract', currentContract)
-      currentContract.options.address = `${contractHash}`
+    // if (contract.clickCount === 0) {
+    console.log('in if block')
+    //withdraw funds from contract
+    let accounts = await web3.eth.getAccounts(console.log)
+    const blocks = await factory.methods.getDeployedBlocks().call()
+    console.log('blocks', blocks)
+    const indexOf = blocks.indexOf(contractHash)
+    const currentContract = fundsTransfer(blocks[indexOf])
+    console.log('current contract', currentContract)
+    //for methods
+    // console.log('currentContract', currentContract)
+    currentContract.options.address = `${contractHash}`
 
-      const webdevAddress = developerId[0].webdevBlockAddress
-      const balance = await currentContract.methods.getBalance().call()
-      console.log('webdev', webdevAddress)
-      console.log('hello! right before withdraw!')
-      console.log('current', await currentContract.methods.getBalance().call())
-      await currentContract.methods
-        .withdraw(accounts[1], accounts[4])
-        .send({
-          gas: 5000000,
-          from: accounts[0]
-        })
-        .then(response => console.log(response))
-
-      console.log('hello! afterwithdraw!')
-      console.log('dev', developerId[0].email)
-
-      sendEmail(developerId[0].firstName, developerId[0].email, {
-        from: 'Grace',
-        to: 'tricia.lobo@gmail.com',
-        //to: developerId.email,
-        subject: 'Grace has sent a payment to your Etherium wallet',
-        html: DeveloperEmail(
-          developerId[0].firstName,
-          contractHash,
-          balance * 0.75
-        )
+    const webdevAddress = developerId[0].webdevBlockAddress
+    const balance = await currentContract.methods.getBalance().call()
+    console.log('webdev', webdevAddress)
+    console.log('hello! right before withdraw!')
+    console.log('current', await currentContract.methods.getBalance().call())
+    await currentContract.methods
+      .withdraw(accounts[1], accounts[4])
+      .send({
+        gas: 5000000,
+        from: accounts[0]
       })
-      // const createBlock = await factory.methods.createBlock().send({
-      //   gas: 500000,
-      //   from: accounts[4]
-      // })
+      .then(response => console.log(response))
 
-      // const createContract = () => {
-      //   axios({
-      //     method: 'POST',
-      //     url: 'http://localhost:8080/api/contracts',
-      //     data: {
-      //       campaignId: contract.campaignId,
-      //       bundleId: contract.bundleId,
-      //       contractHash: blocks[blocks.length - 1],
-      //       balance: contract.balance,
-      //       advertiserId: advertiserId[0].id,
-      //       devId: developerId[0].id
-      //     }
-      //   }).then(response => {
-      //     // console.log('response', response)
-      //   })
-      // }
-      // createContract()
+    console.log('hello! afterwithdraw!')
+    console.log('dev', developerId[0].email)
 
-      //hook up to other contract route?
-      //make new contract here
-    } else {
-      contract.increment('clickCount', { by: 1 })
-    }
+    sendEmail(developerId[0].firstName, developerId[0].email, {
+      from: 'Grace',
+      to: 'tricia.lobo@gmail.com',
+      //to: developerId.email,
+      subject: 'Grace has sent a payment to your Etherium wallet',
+      html: DeveloperEmail(
+        developerId[0].firstName,
+        contractHash,
+        balance * 0.75
+      )
+    })
+    // const createBlock = await factory.methods.createBlock().send({
+    //   gas: 500000,
+    //   from: accounts[4]
+    // })
+
+    // const createContract = () => {
+    //   axios({
+    //     method: 'POST',
+    //     url: 'http://localhost:8080/api/contracts',
+    //     data: {
+    //       campaignId: contract.campaignId,
+    //       bundleId: contract.bundleId,
+    //       contractHash: blocks[blocks.length - 1],
+    //       balance: contract.balance,
+    //       advertiserId: advertiserId[0].id,
+    //       devId: developerId[0].id
+    //     }
+    //   }).then(response => {
+    //     // console.log('response', response)
+    //   })
+    // }
+    // createContract()
+
+    //hook up to other contract route?
+    //make new contract here
+    // } else {
+    //   contract.increment('clickCount', { by: 1 })
+    // }
   } catch (error) {
     console.error(error)
   }
