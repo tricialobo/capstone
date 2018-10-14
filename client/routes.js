@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import {
   Login,
   SignUp,
-  UserHome,
   Home,
   AdvertiserDashboard,
   AllAds,
@@ -16,7 +15,6 @@ import {
   CampaignClicksChart,
   SingleCampaignProgress,
   AllCampaigns,
-  AllBundles,
   AccountMenu,
   LoadingScreen,
   AdvertiserCampaigns,
@@ -24,16 +22,16 @@ import {
   EditCampaign,
   PreviousProjects,
   AdForm,
-  Receipt
+  Receipt,
+  About,
+  LandingPage
 } from './components'
 import Ethereum from './components'
 import {
   me,
-  getPreviousProjects,
   getAllCampaigns,
   fetchAllDemographics,
-  fetchUserAds,
-  fetchSingleCampaign,
+  fetchAllAds,
   fetchAllUserCampaigns
 } from './store'
 
@@ -43,12 +41,8 @@ import {
 class Routes extends Component {
   async componentDidMount() {
     await this.props.loadInitialData()
-    console.log('CURRENT USER', this.props.currentUser)
-    if (this.props.isLoggedIn && this.props.currentUser.isAdvertiser) {
-      await this.props.loadAllUserCampaigns(this.props.currentUser.id)
-      this.props.loadAllAds(this.props.currentUser.id)
-    }
     await this.props.loadAllDemographics()
+    await this.props.fetchAllAds()
   }
 
   render() {
@@ -57,12 +51,15 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route path="/about" component={About} />
+        <Route path="/home" component={LandingPage} />
         <Route exact path="/ethereum" component={Ethereum} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
         <Route path="/checkout" component={BundleCheckout} />
         <Route path="/scriptTag" component={ScriptTag} />
         <Route path="/allcampaigns" component={AllCampaigns} />
+
         <Route path="/charts/advertiserCharts" component={AdvertiserChart} />
         <Route
           path="/charts/developer/clicksPerCampaign"
@@ -73,9 +70,10 @@ class Routes extends Component {
           component={SingleCampaignProgress}
         />
         {/* <Route path="/allbundles" component={AllBundles} /> */}
+
+
         <Route path="/payment/:contractId" component={SingleContractPayment} />
         <Route path="/confirmpayment" component={Receipt} />
-        {/* <Route exact path="/payment" component={Payment} /> */}
         <Route path="/previousprojects" component={PreviousProjects} />
         {isLoggedIn && (
           <Switch>
@@ -117,12 +115,10 @@ class Routes extends Component {
             {/* DEVELOPER ROUTES */}
             <Route path="/scriptTag" component={ScriptTag} />
             <Route path="/allcampaigns" component={AllCampaigns} />
-            {/* <Route path="/allbundles" component={AllBundles} /> */}
             <Route
               path="/payment/:contractId"
               component={SingleContractPayment}
             />
-            {/* <Route exact path="/payment" component={Payment} /> */}
             <Route path="/previousprojects" component={PreviousProjects} />
           </Switch>
         )}
@@ -150,7 +146,8 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
-    loadAllAds: userId => dispatch(fetchUserAds(userId)),
+    fetchAllAds: () => dispatch(fetchAllAds()),
+    // loadAllAds: userId => dispatch(fetchUserAds(userId)),
     loadAllCampaigns: dispatch(getAllCampaigns()),
     loadAllUserCampaigns: userId => dispatch(fetchAllUserCampaigns(userId)),
     loadAllDemographics: () => dispatch(fetchAllDemographics())

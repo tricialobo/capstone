@@ -5,7 +5,12 @@ module.exports = router
 // get all ads
 router.get('/', async (req, res, next) => {
   try {
-    const ads = await Advertisement.findAll()
+    const ads = await Advertisement.findAll({
+      where: {
+        advertiserId: req.session.passport.user
+      }
+    })
+    console.log(ads)
     res.json(ads)
   } catch (err) {
     next(err)

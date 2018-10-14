@@ -10,11 +10,11 @@ import {
   Typography,
   Card,
   CardContent,
+  Button,
   Divider,
   CardMedia
 } from '@material-ui/core/'
 import { connect } from 'react-redux'
-import { fetchAllAds, fetchAllUserCampaigns } from '../store'
 
 const styles = theme => ({
   container: {
@@ -41,12 +41,7 @@ const styles = theme => ({
   }
 })
 
-class Home extends Component {
-  async componentDidMount() {
-    await this.props.fetchAllAds()
-    await this.props.fetchAllUserCampaigns()
-  }
-
+class LandingPage extends Component {
   render() {
     const { classes } = this.props
     console.log('I"m home')
@@ -72,6 +67,10 @@ class Home extends Component {
             <Typography variant="display2">
               Advertising is hard.<br />
               We make finding your audiences easy.
+              <br />
+              <Button component={Link} to="/signup">
+                Get started
+              </Button>
             </Typography>
           </Grid>
         </Grid>
@@ -112,14 +111,4 @@ class Home extends Component {
   }
 }
 
-const mapState = state => ({
-  allAds: state.ads.allAds,
-  allUserCampaigns: state.allUserCampaigns
-})
-
-const mapDispatch = dispatch => ({
-  fetchAllAds: () => dispatch(fetchAllAds()),
-  fetchAllUserCampaigns: () => dispatch(fetchAllUserCampaigns())
-})
-
-export default withStyles(styles)(connect(mapState, mapDispatch)(Home))
+export default withStyles(styles)(LandingPage)

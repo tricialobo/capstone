@@ -20,7 +20,7 @@ import {
 import Add from '@material-ui/icons/Add'
 import CampaignCard from './CampaignCard'
 import AddAdvert from './AddAdvert'
-import { fetchUserAds } from '../../store'
+import { fetchAllAds } from '../../store'
 
 const StyledTileBar = withStyles({
   titleWrap: {
@@ -75,7 +75,7 @@ class SingleCampaign extends Component {
   }
 
   async componentDidMount() {
-    await fetchUserAds(this.props.currentUser.id)
+    await fetchAllAds()
   }
 
   handleOpen = () => {
@@ -114,7 +114,7 @@ class SingleCampaign extends Component {
                     Choose from your existing advertisements to add to this
                     campaign or create a new advertisement.
                   </DialogContentText>
-                  <AddAdvert ads={filtAds} campId={selectedCampaign.id}/>
+                  <AddAdvert ads={filtAds} campId={selectedCampaign.id} />
                 </DialogContent>
                 <Grid className={classes.grid}>
                   <Button className={classes.button} onClick={this.handleClose}>
@@ -138,12 +138,10 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    fetchAllAds: userId => dispatch(fetchUserAds(userId))
-  }
-}
+// const mapDispatch = dispatch => {
+//   return {
+//     fetchAllAds: userId => dispatch(fetchUserAds(userId))
+//   }
+// }
 
-export default withStyles(styles)(
-  connect(mapState, mapDispatch)(SingleCampaign)
-)
+export default withStyles(styles)(connect(mapState)(SingleCampaign))

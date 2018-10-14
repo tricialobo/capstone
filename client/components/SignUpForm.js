@@ -159,7 +159,7 @@ class SignUpForm extends Component {
               <Grid item xs={6}>
                 <FormControl>
                   <InputLabel>Email</InputLabel>
-                  <Input name="email" type="password" />
+                  <Input name="email" type="text" />
                 </FormControl>
               </Grid>
               <Grid item xs={6}>

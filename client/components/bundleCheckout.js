@@ -135,16 +135,9 @@ class BundleCheckout extends Component {
     console.log('props', props)
     const { campaigns, bundle, classes } = this.props
     return (
-      <Grid container className={classes.contain} justifyContent="center">
+      <Grid container alignItems="center">
         {campaigns && campaigns.length ? (
           <Grid>
-            <Typography variant="title">{bundle.projectName}</Typography>
-            {bundle.deployed && (
-              <Typography variant="body1" color="primary">
-                <b>Deployed</b>
-              </Typography>
-            )}
-            <Divider className={classes.divider} />
             <ProjectCheckout
               bundle={bundle}
               campaigns={campaigns}
@@ -182,8 +175,7 @@ const mapState = state => {
 const styles = {
   contain: {
     width: '75%',
-    flexGrow: 1,
-    margin: 'auto'
+    flexGrow: 1
   },
   divider: {
     marginTop: 10

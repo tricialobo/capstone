@@ -12,6 +12,9 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 
 const TableHeaderCell = withStyles(theme => ({
+  root: {
+    padding: '30px'
+  },
   head: {
     borderBottom: '2px solid black'
   },
@@ -23,7 +26,8 @@ const TableHeaderCell = withStyles(theme => ({
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing.unit * 3,
+    padding: '0 30px 0 30px'
   },
   table: {
     minWidth: '100%'

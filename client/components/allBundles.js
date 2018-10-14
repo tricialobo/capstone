@@ -11,7 +11,13 @@ import {
 } from '../store'
 import NewBundle from './newBundle'
 import { withStyles } from '@material-ui/core/styles'
-import { List, ListItem, ListItemText, ListSubheader } from '@material-ui/core'
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListSubheader,
+  Divider
+} from '@material-ui/core'
 import PropTypes from 'prop-types'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
@@ -19,6 +25,7 @@ import Collapse from '@material-ui/core/Collapse'
 
 const styles = theme => ({
   root: {
+    marginTop: 8,
     width: '100%',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper
@@ -64,11 +71,13 @@ class Bundles extends Component {
     return bundles ? (
       <div className={classes.root}>
         <List
+          className={classes.list}
           component="nav"
           subheader={
             <ListSubheader component="div">Active Projects</ListSubheader>
           }
         >
+          <Divider />
           {filtBuns.length ? (
             filtBuns.map(bundle => {
               const indexValue = index
@@ -103,7 +112,7 @@ class Bundles extends Component {
                               className={classes.nested}
                               key={campaign.id}
                             >
-                              <ListItemText inset primary={campaign.name} />
+                              <ListItemText primary={campaign.name} />
                               <ListItemText
                                 inset
                                 secondary="remove"
@@ -119,11 +128,7 @@ class Bundles extends Component {
                         })
                       ) : (
                         <ListItem>
-                          {' '}
-                          <ListItemText
-                            inset
-                            primary="No Campaigns In Project"
-                          />{' '}
+                          <ListItemText primary="No Campaigns In Project" />{' '}
                         </ListItem>
                       )}
                       <NavLink
@@ -133,7 +138,9 @@ class Bundles extends Component {
                         }}
                       >
                         <ListItem className={classes.nested} button>
-                          <ListItemText inset primary="See Full Details" />
+                          <ListItemText primary="See Full Details">
+                            <Divider />
+                          </ListItemText>
                         </ListItem>
                       </NavLink>
                     </List>
