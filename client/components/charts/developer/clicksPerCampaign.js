@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import pattern from 'patternomaly'
-//hard coding this for advertiser 1
 
-class AdvertiserChart extends Component {
-  constructor() {
-    super()
-  }
+class CampaignClicksChart extends Component {
   render() {
     const currentUser = this.props.userId
     let allContracts = currentUser => {
@@ -22,6 +17,7 @@ class AdvertiserChart extends Component {
             .map(contract => contract.campaign)
           console.log('resdata', resdata)
           const campaignObj = {}
+
           for (let i = 0; i < resdata.length; ++i) {
             let currentContr = resdata[i]
             if (!campaignObj[currentContr.contract.campaign.name]) {
@@ -31,10 +27,7 @@ class AdvertiserChart extends Component {
               campaignObj[currentContr.contract.campaign.name] +=
                 currentContr.contract.clickCount
             }
-            console.log('current', campaignObj)
-            //this.setState({ contracts: resdata })
           }
-          var ctx = document.getElementById('myChart')
           var color = []
           var dynamicColors = function() {
             var r = Math.floor(Math.random() * 255)
@@ -45,30 +38,38 @@ class AdvertiserChart extends Component {
           for (var i in campaignObj) {
             color.push(dynamicColors())
           }
-          var myDoughnutChart = new Chart(ctx, {
-            type: 'doughnut',
+          console.log('color', color)
+          console.log('campaigns', campaignObj)
+          var ctx = document.getElementById('myChart')
+          console.log('labels', Object.values(campaignObj))
+          var myBarChart = new Chart(ctx, {
+            type: 'bar',
             data: {
               datasets: [
                 {
                   data: Object.values(campaignObj),
                   backgroundColor: color
-
-                  //   backgroundColor: [
-                  //Jan please fill in!
-                  //   ]
                 }
               ],
               labels: Object.keys(campaignObj)
             },
 
-            options: Chart.defaults.doughnut
+            options: {
+              title: {
+                display: true,
+                text: 'Clicks per Campaign'
+              },
+              legend: {
+                display: false
+              }
+            }
           })
+          return myBarChart
         })
         .then(console.log)
     }
-    allContracts(1)
-    // console.log('state', this.state)
-    return ''
+
+    return allContracts(currentUser)
   }
 }
 
@@ -78,4 +79,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(AdvertiserChart)
+export default connect(mapState)(CampaignClicksChart)

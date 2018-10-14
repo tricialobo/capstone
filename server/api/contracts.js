@@ -8,7 +8,7 @@ const {
 } = require('../db/models')
 const { getUser, sendEmail } = require('./helpers')
 const factory = require('../../ethereum/factory')
-const { getDeployedBlocks } = require('../../client/components/controller')
+//const { getDeployedBlocks } = require('../../client/components/controller')
 const fundsTransfer = require('../../ethereum/fundsTransfer')
 const web3 = require('../../ethereum/web3')
 const axios = require('axios')
@@ -76,19 +76,19 @@ router.get('/:userid/user', async (req, res, next) => {
   }
 })
 
-router.get('/', async (req, res, next) => {
-  try {
-    const contracts = await Contract.findAll({
-      include: [{ model: User, through: 'partiesToContract' }]
-    })
-    // comment this back in eventually res.json(contracts)
-    const blocks = await getDeployedBlocks()
-    console.log('blocks', blocks)
-    res.json(contracts)
-  } catch (err) {
-    next(err)
-  }
-})
+// router.get('/', async (req, res, next) => {
+//   try {
+//     const contracts = await Contract.findAll({
+//       include: [{ model: User, through: 'partiesToContract' }]
+//     })
+//     // comment this back in eventually res.json(contracts)
+//     const blocks = await getDeployedBlocks()
+//     console.log('blocks', blocks)
+//     res.json(contracts)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 // get contract by id
 router.get('/:contractId', async (req, res, next) => {
@@ -102,7 +102,6 @@ router.get('/:contractId', async (req, res, next) => {
 })
 
 router.get('/user/:userid', async (req, res, next) => {
-  console.log('in cool new user route')
   try {
     const contracts = await PartiesToContract.findAll({
       where: {

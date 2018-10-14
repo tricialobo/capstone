@@ -13,6 +13,8 @@ import {
   ScriptTag,
   SingleContractPayment,
   AdvertiserChart,
+  CampaignClicksChart,
+  SingleCampaignProgress,
   AllCampaigns,
   AllBundles,
   AccountMenu,
@@ -61,7 +63,15 @@ class Routes extends Component {
         <Route path="/checkout" component={BundleCheckout} />
         <Route path="/scriptTag" component={ScriptTag} />
         <Route path="/allcampaigns" component={AllCampaigns} />
-        <Route path="/advertisercharts" component={AdvertiserChart} />
+        <Route path="/charts/advertiserCharts" component={AdvertiserChart} />
+        <Route
+          path="/charts/developer/clicksPerCampaign"
+          component={CampaignClicksChart}
+        />
+        <Route
+          path="/charts/developer/singleCampaignProgress"
+          component={SingleCampaignProgress}
+        />
         {/* <Route path="/allbundles" component={AllBundles} /> */}
         <Route path="/payment/:contractId" component={SingleContractPayment} />
         <Route path="/confirmpayment" component={Receipt} />

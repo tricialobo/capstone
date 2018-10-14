@@ -27,5 +27,10 @@ export { default as SingleContractPayment } from './singleContractPayment'
 export { default as PreviousProjects } from './previousProjects'
 export { default as AdForm } from './ads/AdForm'
 export { default as Receipt } from './receipt'
-export { default as AdvertiserChart } from './advertisercharts'
-// export { default as Payment } from './payment'
+export { default as AdvertiserChart } from './charts/advertiserCharts'
+export {
+  default as CampaignClicksChart
+} from './charts/developer/clicksPerCampaign'
+export {
+  default as SingleCampaignProgress
+} from './charts/developer/singleCampaignProgress'
