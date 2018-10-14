@@ -19,8 +19,7 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: 'white',
-    boxShadow: 'none',
-    marginBottom: 60
+    boxShadow: 'none'
   },
   grow: {
     flexGrow: 1
@@ -83,17 +82,17 @@ class Navbar extends Component {
                 </div>
               ) : (
                 <div>
-                <Button className="hvr-underline-from-center" color="inherit">
-                  <Link className={classes.navLinks} to="/allcampaigns">
-                    Campaigns
-                  </Link>
-                </Button>
-                 <Button className="hvr-underline-from-center" color="inherit">
-                 <Link className={classes.navLinks} to="/previousprojects">
-                   Projects
-                 </Link>
-               </Button>
-               </div>
+                  <Button className="hvr-underline-from-center" color="inherit">
+                    <Link className={classes.navLinks} to="/allcampaigns">
+                      Campaigns
+                    </Link>
+                  </Button>
+                  <Button className="hvr-underline-from-center" color="inherit">
+                    <Link className={classes.navLinks} to="/previousprojects">
+                      Projects
+                    </Link>
+                  </Button>
+                </div>
               )}
               <Button
                 className={classes.buttonBorder}
@@ -128,6 +127,11 @@ class Navbar extends Component {
               alignItems="center"
             >
               {/* The navbar will show these links before you log in */}
+              <Button className="hvr-underline-from-center" color="inherit">
+                <Link className={classes.navLinks} to="/about">
+                  About
+                </Link>
+              </Button>
               <Button className="hvr-underline-from-center" color="inherit">
                 <Link className={classes.navLinks} to="/signup">
                   Sign Up

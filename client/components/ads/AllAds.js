@@ -16,7 +16,7 @@ import {
   Button
 } from '@material-ui/core'
 import AdsGridList from './AdsGridList'
-import { postAd, fetchUserAds } from '../../store'
+import { postAd, fetchAllAds } from '../../store'
 import AdForm from './AdForm'
 
 const styles = theme => ({
@@ -49,7 +49,7 @@ class AllAds extends Component {
   }
 
   async componentDidMount() {
-    await fetchUserAds(this.props.currentUser.id)
+    await this.props.fetchAllAds()
   }
 
   handleOpen = () => {
@@ -141,7 +141,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     createAd: newAd => dispatch(postAd(newAd)),
-    fetchUserAds: userId => dispatch(fetchUserAds(userId))
+    fetchAllAds: () => dispatch(fetchAllAds())
   }
 }
 
