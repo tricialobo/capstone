@@ -19,7 +19,8 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: 'white',
-    boxShadow: 'none'
+    boxShadow: 'none',
+    marginBottom: 20
   },
   grow: {
     flexGrow: 1
