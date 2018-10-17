@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Navbar } from './components'
 import Routes from './routes'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import { withRouter } from 'react-router-dom'
 
 const theme = createMuiTheme({
   typography: {

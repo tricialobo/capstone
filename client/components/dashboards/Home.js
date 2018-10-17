@@ -14,7 +14,7 @@ import {
   CardMedia
 } from '@material-ui/core/'
 import { connect } from 'react-redux'
-import { fetchAllAds, fetchAllUserCampaigns } from '../store'
+import { fetchAllAds, fetchAllUserCampaigns } from '../../store'
 
 const styles = theme => ({
   container: {

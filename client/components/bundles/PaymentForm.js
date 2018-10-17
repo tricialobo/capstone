@@ -1,21 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { withRouter, Link } from 'react-router-dom'
-import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import {
-  Select,
-  FormControl,
-  Grid,
-  Button,
-  Typography,
-  TextField,
-  MenuItem,
-  InputLabel,
-  Divider
-} from '@material-ui/core'
+import { Grid, Button, Typography, TextField, Divider } from '@material-ui/core'
 import CheckoutCard from './CheckoutCard'
-import receipt from '../receipt'
 
 const styles = theme => ({
   container: {

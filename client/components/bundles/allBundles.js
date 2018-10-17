@@ -8,7 +8,7 @@ import {
   getCampaignsInBundle,
   removeCampaignFromBundle,
   addNew
-} from '../store'
+} from '../../store'
 import NewBundle from './newBundle'
 import { withStyles } from '@material-ui/core/styles'
 import {

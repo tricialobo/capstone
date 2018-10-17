@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Typography, Button } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 
 export default class Receipt extends Component {
   render() {

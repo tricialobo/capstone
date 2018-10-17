@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { signUpUser } from '../store/user'
-import history from '../history'
+import { signUpUser } from '../../store/user'
+import history from '../../history'
 import {
   withStyles,
-  FormLabel,
   Typography,
   Button,
   FormControl,
@@ -17,7 +16,6 @@ import {
   Radio,
   RadioGroup,
   MenuItem,
-  FormHelperText,
   Divider,
   Select,
   Grid

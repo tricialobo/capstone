@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { logInUser } from '../store/user'
+import { logInUser } from '../../store/user'
 import { withStyles } from '@material-ui/core/styles'
 import {
   Button,

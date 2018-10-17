@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { TextField, Typography, Grid } from '@material-ui/core/'
 import { withStyles } from '@material-ui/core/styles'
-import axios from 'axios'
 class ScriptTag extends Component {
   constructor(props) {
     super(props)

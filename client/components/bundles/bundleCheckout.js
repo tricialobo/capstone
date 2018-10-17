@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import factory from '../../ethereum/factory'
-import fundsTransfer from '../../ethereum/fundsTransfer'
-import web3 from '../../ethereum/web3'
+import factory from '../../../ethereum/factory'
+import fundsTransfer from '../../../ethereum/fundsTransfer'
+import web3 from '../../../ethereum/web3'
 import axios from 'axios'
 import { withStyles } from '@material-ui/core/styles'
 import {
@@ -10,13 +10,12 @@ import {
   getAdvertisements,
   getAdScript,
   updateBundle
-} from '../store/bundles'
-import Typography from '@material-ui/core/Typography'
+} from '../../store/bundles'
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
-import ProjectCheckout from './bundles/ProjectCheckout'
-import CheckoutEmail from './bundles/CheckoutEmail'
-import ScriptTag from './scriptTag'
+import ProjectCheckout from './ProjectCheckout'
+import CheckoutEmail from './CheckoutEmail'
+import ScriptTag from '../payment/scriptTag'
 
 class BundleCheckout extends Component {
   constructor(props) {

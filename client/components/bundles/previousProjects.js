@@ -4,12 +4,10 @@ import {
   getPreviousBundles,
   getCampaignsInBundle,
   getAllBundles
-} from '../store/bundles'
-import { Link } from 'react-router-dom'
+} from '../../store/bundles'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
-import ProjectsTable from './bundles/ProjectsTable'
+import ProjectsTable from './ProjectsTable'
 
 class PreviousProjects extends Component {
   async componentDidMount() {

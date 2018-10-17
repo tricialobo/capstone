@@ -4,24 +4,22 @@ import {
   addToBundle,
   getAllBundles,
   setBundle
-} from '../store'
+} from '../../store'
 import { withStyles } from '@material-ui/core/styles'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import AllBundles from './allBundles'
-import AdsGalleryGridList from './ads/AdsGalleryGridList'
+import AllBundles from '../bundles/allBundles'
+import AdsGalleryGridList from '../ads/AdsGalleryGridList'
 import {
   ListItem,
   List,
   Grid,
   Typography,
   Button,
-  IconButton,
   Divider
 } from '@material-ui/core'
 import Add from '@material-ui/icons/Add'
-import CloseIcon from '@material-ui/icons/Close'
-import NotificationBar from './NotifcationBar'
+import NotificationBar from '../bundles/NotifcationBar'
 
 const StyledButton = withStyles({
   border: 'none'

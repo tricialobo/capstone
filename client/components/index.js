@@ -4,29 +4,31 @@
  * having to figure out which file they belong to!
  */
 export { default as Navbar } from './navbar'
-export { default as UserHome } from './user-home'
-export { default as Login } from './auth-form'
-export { default as SignUp } from './SignUpForm'
-export { default as Home } from './Home'
-export { default as LoadingScreen } from './LoadingScreen'
+export { default as UserHome } from './dashboards/user-home'
+export { default as Login } from './account/auth-form'
+export { default as SignUp } from './account/SignUpForm'
+export { default as Home } from './dashboards/Home'
+export { default as LoadingScreen } from './dashboards/LoadingScreen'
 export { default as Ethereum } from './ethereum'
 export {
   default as AdvertiserDashboard
 } from './dashboards/AdvertiserDashboard'
 export { default as AllAds } from './ads/AllAds'
-export { default as BundleCheckout } from './bundleCheckout'
-export { default as ScriptTag } from './scriptTag'
-export { default as AllCampaigns } from './allCampaigns'
-export { default as AllBundles } from './allBundles'
+export { default as BundleCheckout } from './bundles/bundleCheckout'
+export { default as ScriptTag } from './payment/scriptTag'
+export { default as AllCampaigns } from './campaigns/allCampaigns'
+export { default as AllBundles } from './bundles/allBundles'
 export { default as AccountMenu } from './account/AccountMenu'
 export { default as AccountDetails } from './account/AccountDetails'
 export { default as AdvertiserCampaigns } from './campaigns/AdvertiserCampaigns'
 export { default as SingleCampaign } from './campaigns/SingleCampaign'
 export { default as EditCampaign } from './campaigns/EditCampaign'
-export { default as SingleContractPayment } from './singleContractPayment'
-export { default as PreviousProjects } from './previousProjects'
+export {
+  default as SingleContractPayment
+} from './payment/singleContractPayment'
+export { default as PreviousProjects } from './bundles/previousProjects'
 export { default as AdForm } from './ads/AdForm'
-export { default as Receipt } from './receipt'
+export { default as Receipt } from './payment/receipt'
 
 export { default as AdvertiserChart } from './charts/advertiserCharts'
 export {
@@ -36,7 +38,5 @@ export {
   default as SingleCampaignProgress
 } from './charts/developer/singleCampaignProgress'
 
-export { default as LandingPage } from './LandingPage'
-export { default as About } from './About'
-// export { default as Payment } from './payment'
-
+export { default as LandingPage } from './dashboards/LandingPage'
+export { default as About } from './dashboards/About'

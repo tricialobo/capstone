@@ -1,14 +1,13 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
-import { addBundle, addNew } from '../store'
+import { addBundle, addNew } from '../../store'
 import {
   FormGroup,
   FormControl,
   Input,
   InputLabel,
-  Button,
-  Typography
+  Button
 } from '@material-ui/core'
 
 class AddBundle extends Component {

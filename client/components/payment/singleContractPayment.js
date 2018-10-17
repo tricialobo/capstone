@@ -3,15 +3,14 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import factory from '../../ethereum/factory'
-import fundsTransfer from '../../ethereum/fundsTransfer'
-import web3 from '../../ethereum/web3'
+import factory from '../../../ethereum/factory'
+import fundsTransfer from '../../../ethereum/fundsTransfer'
+import web3 from '../../../ethereum/web3'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
-import { Grid } from '@material-ui/core'
-import PaymentForm from './bundles/PaymentForm'
+import PaymentForm from '../bundles/PaymentForm'
 
-import { fetchUserByContract, getContractInfo } from '../store/contracts'
+import { fetchUserByContract, getContractInfo } from '../../store/contracts'
 class SingleContractPayment extends Component {
   constructor() {
     super()
@@ -727,11 +726,8 @@ class SingleContractPayment extends Component {
   }
   render() {
     const contractHash = this.props.match.params.contractId
-    const campaign = this.props.allCampaigns.filter(
-      camp => camp.id === this.props.contract.data.campaignId
-    )
+    const campaign = this.props.allCampaigns.filter(camp => camp.id === 1)
     return (
-      this.props.contract.data.campaignId &&
       campaign.length && (
         <PaymentForm
           campaign={campaign[0]}
