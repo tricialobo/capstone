@@ -5,15 +5,6 @@ const { Bundle, Campaign, Advertisement, Contract } = require('../db/models')
 router.get('/:bundleId.js', async (req, res, next) => {
   try {
     let ads = []
-    // const bundle = await Bundle.findById(req.params.bundleId, {
-    //   include: [
-    //     {
-    //       model: Campaign,
-    //       include: [{ model: Advertisement, include: [{ model: Contract }] }]
-    //     }
-    //   ]
-
-    // })
 
     const contracts = await Contract.findAll({
       where: {
@@ -33,19 +24,9 @@ router.get('/:bundleId.js', async (req, res, next) => {
         campaign.advertisements.map(ad => ads.push([ad, contract.contractHash]))
       })
     })
-    console.log('ads', ads)
-    //console.log('ads', ads[0][1])
-    // await bundle.campaigns.map(campaign => {
-    //   campaign.advertisements.map(ad => {
-    //     ads.push(ad)
-    //   })
-    // })
-    // // console.log('ads', ads)
 
     const currentAd = ads[Math.floor(Math.random() * ads.length)]
-    console.log('currentAd', currentAd)
     const blockHash = currentAd[1]
-    console.log('blockhash', blockHash)
 
     res.send(
       `let targetEl = document.querySelector('#adtarget')
@@ -66,21 +47,8 @@ router.get('/:bundleId.js', async (req, res, next) => {
 })
 
 router.get('/:contractHash.js', async (req, res, next) => {
-  //   const bundleId = req.params.bundleId
-  //   try {
-  //
-
-  //     console.log('ads length', ads.length)
-  //     console.log('index', Math.floor(Math.random() * ads.length))
-  //     const currentAd = ads[Math.floor(Math.random() * ads.length)]
-  //     console.log('currentAd', currentAd.image)
   const contractHash = req.params.contractHash
   try {
-    // await contract.campaigns.map(campaign => {
-    //   campaign.advertisements.map(ad => {
-    //     ads.push(ad)
-    //   })
-    // })
     let ads = contract.campaign.advertisements
     console.log('campaign', contract.campaign.advertisements)
     console.log('currentAd', currentAd)
