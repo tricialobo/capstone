@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Navbar } from './components'
 import Routes from './routes'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import { withRouter } from 'react-router-dom'
 
 const theme = createMuiTheme({
   typography: {
@@ -32,6 +30,18 @@ const theme = createMuiTheme({
       fontWeight: 500,
       fontSize: 16
     },
+    display3: {
+      color: '#000',
+      fontWeight: 700
+    },
+    display2: {
+      color: '#000',
+      fontWeight: 700
+    },
+    display1: {
+      color: '#000',
+      fontWeight: 700
+    },
     button: {
       fontWeight: 700,
       textTransform: 'unset'
@@ -58,6 +68,25 @@ const theme = createMuiTheme({
         marginTop: 18
       }
     },
+    MuiPaper: {
+      root: {
+        MuiExpansionPanelSummary: {
+          root: {
+            expanded: {
+              content: {
+                margin: 0,
+                display: 'none'
+              }
+            }
+          }
+        }
+      }
+    },
+    MuiExpansionPanelDetails: {
+      root: {
+        paddingTop: 0
+      }
+    },
     MuiMenuItem: {
       root: {
         fontSize: 14,
@@ -65,9 +94,9 @@ const theme = createMuiTheme({
       }
     },
     MuiList: {
-      root: {
-        border: 'solid 2px #000'
-      }
+      // root: {
+      //   border: 'solid 2px #000'
+      // }
     },
     MuiIconButton: {
       root: {
@@ -90,9 +119,15 @@ const theme = createMuiTheme({
     },
     MuiListSubheader: {
       root: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 600,
         color: '#000'
+      }
+    },
+    MuiListItemText: {
+      primary: {
+        fontSize: 16,
+        fontWeight: 500
       }
     },
     MuiCardHeader: {
@@ -103,6 +138,29 @@ const theme = createMuiTheme({
     MuiFormControl: {
       root: {
         marginTop: 16
+      }
+    },
+    MuiNotchedOutline: {
+      disabled: {
+        border: 'solid 2px',
+        borderColor: 'black',
+        borderRadius: 0
+      }
+    },
+    MuiInputBase: {
+      disabled: {
+        fontFamily: 'monospace'
+      }
+    },
+    MuiListItem: {
+      selected: {
+        borderBottom: '2px solid',
+        backgroundColor: '#fff'
+      },
+      root: {
+        selected: {
+          backgroundColor: '#fff'
+        }
       }
     }
   }

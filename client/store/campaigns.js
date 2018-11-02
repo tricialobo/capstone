@@ -77,6 +77,20 @@ export const setCampaignErrorStatus = status => {
 
 //thunks
 
+export const addAd = (campId, adId) => {
+  return async dispatch => {
+    const { data } = await axios.put(`/api/campaigns/add/${campId}/${adId}`)
+    dispatch(setCampaign(data[0]))
+  }
+}
+
+export const removeAdFromCamp = (campId, adId) => {
+  return async dispatch => {
+    const { data } = await axios.put(`api/campaigns/remove/${campId}/${adId}`)
+    dispatch(setCampaign(data[0]))
+  }
+}
+
 export function getAllCampaigns() {
   return async dispatch => {
     try {
@@ -92,11 +106,11 @@ export function getAllCampaigns() {
   }
 }
 
-export const fetchAllUserCampaigns = userId => {
+export const fetchAllUserCampaigns = () => {
   return async dispatch => {
     try {
       dispatch(setCampaignLoadingStatus(true))
-      const { data: campaigns } = await axios.get(`/api/campaigns/${userId}`)
+      const { data: campaigns } = await axios.get('/api/campaigns/user')
       dispatch(setAllUserCampaigns(campaigns))
       dispatch(setCampaignLoadingStatus(false))
     } catch (error) {
@@ -129,6 +143,7 @@ export const postCampaign = campaign => {
     try {
       const { data: newCampaign } = await axios.post('/api/campaigns', campaign)
       dispatch(createCampaign(newCampaign))
+      dispatch(fetchAllUserCampaigns(newCampaign.advertiserId))
     } catch (error) {
       console.error(error)
     }
@@ -176,7 +191,7 @@ export default function(state = initialState, action) {
     case CREATE_CAMPAIGN:
       return {
         ...state,
-        allCampaigns: [...state.allCampaigns, action.campaign]
+        allUserCampaigns: [...state.allUserCampaigns, action.campaign]
       }
     case UPDATE_CAMPAIGN:
       return {

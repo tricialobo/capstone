@@ -6,36 +6,25 @@ import {
   Typography,
   Button,
   Grid,
-  GridList,
-  GridListTile
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Card
 } from '@material-ui/core'
-import AdsGridList from '../ads/AdsGridList'
-import CampaignsAccordion from '../ads/CampaignsAccordion'
-import LoadingScreen from '../LoadingScreen'
 import CampaignsList from './CampaignsList'
-import CreateCampaignDialog from '../ads/CreateCampaignDialog'
+import CampaignForm from './CampaignForm'
 import SingleCampaign from './SingleCampaign'
 import {
   fetchSingleCampaign,
   setCampaign,
-  fetchAllUserCampaigns
+  fetchAllUserCampaigns,
+  postCampaign,
+  editCampaign,
+  removeCampaign
 } from '../../store'
 import history from '../../history'
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10
-}
-
-function getModalStyle() {
-  const top = 50 + rand()
-  const left = 50 + rand()
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  }
-}
 
 const styles = theme => ({
   container: {
@@ -50,20 +39,32 @@ const styles = theme => ({
   heading: {
     padding: theme.spacing.unit * 2,
     textAlign: 'center'
+  },
+  dialog: {
+    height: 700
   }
 })
 
-class AdvertiserCampaignsModal extends Component {
+class AdvertiserCampaigns extends Component {
   constructor(props) {
     super(props)
     this.state = {
       open: false,
+      price: 0,
       selectedIndex: 0,
-      selectedCampaign: props.allCampaigns[0] || {}
+      selectedDemographics: [...props.selectedDemographics]
     }
     this.handleListItemClick = this.handleListItemClick.bind(this)
+    this.handleCreate = this.handleCreate.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+
+    console.log('ADCAMP STATE', this.state)
+  }
+
+  async componentDidMount() {
+    await this.props.me()
+    await this.props.loadAllUserCampaigns(this.props.currentUser.id)
   }
 
   handleOpen = () => {
@@ -71,19 +72,46 @@ class AdvertiserCampaignsModal extends Component {
   }
 
   handleClose = () => {
-    this.setState({ open: false })
+    console.log('currently selected', this.state.selectedDemographics)
+    console.log('props', this.props.selectedDemographics)
+    this.setState({
+      open: false,
+      selectedDemographics: this.props.selectedDemographics
+    })
+  }
+
+  handleCreate(evt) {
+    evt.preventDefault()
+    const name = evt.target.name.value
+    const advertiserId = this.props.currentUser.id
+    const price = this.state.price
+    const demographics = this.state.selectedDemographics.filter(
+      demographic => demographic.checked
+    )
+    const newCampaign = {
+      advertiserId: advertiserId,
+      name: name,
+      price: price,
+      demographics: demographics
+    }
+    console.log('HANDLE CREATE CAMPAIGN', newCampaign)
+    this.props.createCampaign(newCampaign, this.props.currentUser.id)
+    this.handleClose()
+  }
+
+  async componentDidMount() {
+    await this.props.fetchCampaign(this.props.allCampaigns[0])
+    await this.props.loadAllUserCampaigns(this.props.currentUser.id)
   }
 
   handleListItemClick = (event, index, campaign) => {
+    this.props.selectCampaign(campaign)
     this.setState({ selectedIndex: index })
-    this.props.loadSingleCampaign(campaign.id)
-    history.push(`/campaigns/campaign/${campaign.id}`)
   }
 
   render() {
-    const { classes, allCampaigns, allAds, loadSingleCampaign } = this.props
-    const selectedCampaign = this.state.selectedCampaign
-    console.log(this.state.selectedCampaign)
+    const { classes, allCampaigns, currentUser, selectedCampaign } = this.props
+    const { selectedDemographics, price } = this.state
     return (
       <div className="container">
         {allCampaigns &&
@@ -93,38 +121,77 @@ class AdvertiserCampaignsModal extends Component {
                 <Grid item xs={3}>
                   <CampaignsList
                     campaigns={allCampaigns}
-                    loadSingleCampaign={loadSingleCampaign}
                     handleListItemClick={this.handleListItemClick}
                     selectedIndex={this.state.selectedIndex}
+                    handleOpen={this.handleOpen}
                   />
                 </Grid>
                 <Grid item xs={9}>
-                  <h1>selected campaign placeholder</h1>
+                  {selectedCampaign && (
+                    <SingleCampaign selectedCampaign={selectedCampaign} />
+                  )}
                 </Grid>
               </Grid>
-              <Button onClick={this.handleOpen}>Create a campaign</Button>
-              <CreateCampaignDialog
+              <Dialog
+                fullScreen={true}
                 open={this.state.open}
                 onClose={this.handleClose}
-                campaigns={allCampaigns}
-              />
+              >
+                <Grid container direction="column" alignItems="center">
+                  <DialogTitle>New campaign</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Name your new ad campaign, its price, and which categories
+                      it can be associated with.
+                    </DialogContentText>
+                    <CampaignForm
+                      price={price}
+                      open={open}
+                      handleClose={this.handleClose}
+                      selectedDemographics={selectedDemographics}
+                      formAction={this.handleCreate}
+                    />
+                  </DialogContent>
+                </Grid>
+              </Dialog>
             </div>
           )}
+        <div>
+          <Route
+            path="/campaigns/campaign/:campaignId"
+            render={() => (
+              <SingleCampaign selectedCampaign={selectedCampaign} />
+            )}
+          />
+        </div>
       </div>
     )
   }
 }
 
 const mapState = state => {
+  const demographics = state.demographics.allDemographics
+  let demographicsArray = []
+  for (let i = 0; i < demographics.length; i++) {
+    demographicsArray.push({
+      id: demographics[i].id,
+      name: demographics[i].name,
+      checked: false
+    })
+  }
   return {
-    allAds: state.ads.allAds,
     allCampaigns: state.campaigns.allUserCampaigns,
-    selectedCampaign: state.campaigns.allUserCampaigns[0]
+    selectedCampaign: state.campaigns.singleCampaign,
+    selectedDemographics: demographicsArray,
+    currentUser: state.user.currentUser
   }
 }
 
 const mapDispatch = dispatch => {
   return {
+    selectCampaign: campaign => {
+      dispatch(setCampaign(campaign))
+    },
     loadAllUserCampaigns: userId => {
       dispatch(fetchAllUserCampaigns(userId))
     },
@@ -133,10 +200,15 @@ const mapDispatch = dispatch => {
     },
     fetchCampaign: campaign => {
       dispatch(setCampaign(campaign))
-    }
+    },
+    createCampaign: campaign => {
+      dispatch(postCampaign(campaign))
+    },
+    editCampaign: campaignId => dispatch(editCampaign(campaignId)),
+    deleteCampaign: campaignId => dispatch(removeCampaign(campaignId))
   }
 }
-const AdvertiserCampaigns = withStyles(styles)(AdvertiserCampaignsModal)
+
 export default withStyles(styles)(
   connect(mapState, mapDispatch)(AdvertiserCampaigns)
 )

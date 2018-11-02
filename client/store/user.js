@@ -72,7 +72,10 @@ export const logInUser = (email, password) => async dispatch => {
   try {
     const user = res.data
     dispatch(getUser(user))
-    history.push('/home')
+    console.log(user)
+    user.isAdvertiser
+      ? history.push('/campaigns')
+      : history.push('/allcampaigns')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }

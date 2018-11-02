@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getCampaignsInBundle } from './bundles'
 
 // ACTION TYPES
 const SET_ALL_ADS = 'SET_ALL_ADS'
@@ -9,6 +10,7 @@ const UPDATE_AD = 'UPDATE_AD'
 const DELETE_AD = 'DELETE_AD'
 const SET_AD_LOADING_STATUS = 'SET_AD_LOADING_STATUS'
 const SET_AD_ERROR_STATUS = 'SET_AD_ERROR_STATUS'
+const ADDED_AD_TO_CAMPAIGN = 'ADDED_AD_TO_CAMPAIGN'
 
 // ACTION CREATORS
 export const setAllAds = ads => {
@@ -67,7 +69,15 @@ export const setAdErrorStatus = status => {
   }
 }
 
+export const addedAd = ad => {
+  return {
+    type: ADDED_AD_TO_CAMPAIGN,
+    ad
+  }
+}
+
 // THUNK CREATORS
+
 export const fetchAllAds = () => {
   return async dispatch => {
     try {
@@ -83,21 +93,21 @@ export const fetchAllAds = () => {
   }
 }
 
-export const fetchUserAds = userId => {
-  console.log('FETCH ADS FROM USER', userId)
-  return async dispatch => {
-    try {
-      dispatch(setAdLoadingStatus(true))
-      const { data: ads } = await axios.get(`/api/ads/user/${userId}`)
-      dispatch(setUserAds(ads))
-      dispatch(setAdLoadingStatus(false))
-    } catch (error) {
-      dispatch(setAdLoadingStatus(false))
-      console.error(error)
-      dispatch(setAdErrorStatus(true))
-    }
-  }
-}
+// export const fetchUserAds = userId => {
+//   console.log('FETCH ADS FROM USER', userId)
+//   return async dispatch => {
+//     try {
+//       dispatch(setAdLoadingStatus(true))
+//       const { data: ads } = await axios.get(`/api/ads/user/${userId}`)
+//       dispatch(setUserAds(ads))
+//       dispatch(setAdLoadingStatus(false))
+//     } catch (error) {
+//       dispatch(setAdLoadingStatus(false))
+//       console.error(error)
+//       dispatch(setAdErrorStatus(true))
+//     }
+//   }
+// }
 
 export const fetchSelectedAd = adId => {
   return async dispatch => {
@@ -160,7 +170,12 @@ const initialState = {
 // REDUCER
 export default function(state = initialState, action) {
   switch (action.type) {
-    case SET_USER_ADS:
+    // case SET_USER_ADS:
+    //   return {
+    //     ...state,
+    //     allAds: action.ads
+    //   }
+    case SET_ALL_ADS:
       return {
         ...state,
         allAds: action.ads
@@ -205,6 +220,8 @@ export default function(state = initialState, action) {
         ...state,
         isError: action.status
       }
+    // case ADDED_AD_TO_CAMPAIGN:
+    //   return {...state, adsInCampaign: [...action.}
     default:
       return state
   }

@@ -20,7 +20,7 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: 'white',
     boxShadow: 'none',
-    marginBottom: 60
+    marginBottom: 30
   },
   grow: {
     flexGrow: 1
@@ -71,28 +71,29 @@ class Navbar extends Component {
               {this.props.isAdvertiser ? (
                 <div>
                   <Button className="hvr-underline-from-center" color="inherit">
-                    <Link
-                      className={classes.navLinks}
-                      to={`/campaigns/user/${this.props.currentUser.id}`}
-                    >
+                    <Link className={classes.navLinks} to="/campaigns">
                       Campaigns
                     </Link>
                   </Button>
                   <Button className="hvr-underline-from-center" color="inherit">
-                    <Link
-                      className={classes.navLinks}
-                      to={`/ads/user/${this.props.currentUser}`}
-                    >
+                    <Link className={classes.navLinks} to="/ads">
                       Advertisements
                     </Link>
                   </Button>
                 </div>
               ) : (
-                <Button className="hvr-underline-from-center" color="inherit">
-                  <Link className={classes.navLinks} to="#">
-                    Projects
-                  </Link>
-                </Button>
+                <div>
+                  <Button className="hvr-underline-from-center" color="inherit">
+                    <Link className={classes.navLinks} to="/allcampaigns">
+                      Campaigns
+                    </Link>
+                  </Button>
+                  <Button className="hvr-underline-from-center" color="inherit">
+                    <Link className={classes.navLinks} to="/previousprojects">
+                      Projects
+                    </Link>
+                  </Button>
+                </div>
               )}
               <Button
                 className={classes.buttonBorder}
@@ -127,6 +128,11 @@ class Navbar extends Component {
               alignItems="center"
             >
               {/* The navbar will show these links before you log in */}
+              <Button className="hvr-underline-from-center" color="inherit">
+                <Link className={classes.navLinks} to="/about">
+                  About
+                </Link>
+              </Button>
               <Button className="hvr-underline-from-center" color="inherit">
                 <Link className={classes.navLinks} to="/signup">
                   Sign Up

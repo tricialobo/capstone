@@ -25,7 +25,7 @@ const sendEmail = (name, email, mail) => {
     }
   }).then(response => {
     if (response.data.msg === 'success') {
-      console.log('Message Sent')
+      console.log('success!!!!')
     } else if (response.data.msg === 'fail') {
       console.log('email response', response)
       console.log('Message failed to send.')

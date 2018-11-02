@@ -4,35 +4,21 @@ import PropTypes from 'prop-types'
 import history from '../../history'
 import {
   withStyles,
-  FormLabel,
   Typography,
   Button,
   FormControl,
-  FormControlLabel,
   FormGroup,
   Input,
   InputLabel,
   Card,
-  Radio,
-  RadioGroup,
-  MenuItem,
-  FormHelperText,
-  Select,
+  Divider,
   Grid
 } from '@material-ui/core'
 import { postAd } from '../../store/ads'
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: 'white',
-    boxShadow: 'none',
-    marginBottom: 60
-  },
-  grow: {
-    flexGrow: 1
-  },
   card: {
+    marginTop: 20,
     position: 'fixed',
     top: '50%',
     left: '50%',
@@ -43,84 +29,79 @@ const styles = theme => ({
     padding: '30px',
     boxShadow: '0px'
   },
-  formControl: {
-    marginTop: 16
+  imageContainer: {
+    width: '100%',
+    height: 280
   },
-  group: {
-    margin: '0px',
-    flexDirection: 'row'
-  },
-  title: {
-    fontWeight: '600px',
-    paddingBottom: '10px'
+  image: {
+    maxHeight: '100%',
+    maxWidth: '100%'
   }
 })
 
 class AdForm extends Component {
   constructor(props) {
     super()
-    this.state = props.currentUser
-    console.log(this.state)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-  }
-
-  handleSubmit(evt) {
-    evt.preventDefault()
-    const name = evt.target.name.value
-    const advertiserId = this.props.currentUser.id
-    const image = evt.target.image.value
-    const url = evt.target.url.value
-    const newAd = {
-      advertiserId: advertiserId,
-      name: name,
-      image: image,
-      url: url
+    this.state = {
+      image: ''
     }
-    console.log(newAd)
-    this.props.createAd(newAd)
+    this.handleChange = this.handleChange.bind(this)
+    console.log(this.state)
   }
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value })
+    this.setState({ image: event.target.value })
   }
 
   render() {
     console.log(this.props.currentUser)
-    const { error, classes } = this.props
+    const { error, classes, formAction, handleClose } = this.props
 
     return (
       <Card className={classes.card} style={{ width: '40%' }}>
-        <div className={classes.formHeader}>
-          <Typography className={classes.title} variant="title" color="inherit">
-            New advertisement
-          </Typography>
-        </div>
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup style={{ marginTop: '30px' }}>
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <FormControl>
-                  <InputLabel>Advertisement name</InputLabel>
-                  <Input name="name" type="text" />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl>
-                  <InputLabel>Image url</InputLabel>
-                  <Input name="image" type="text" />
-                </FormControl>
-              </Grid>
-            </Grid>
-            <FormControl>
-              <InputLabel>Click-through URL</InputLabel>
-              <Input name="url" type="text" />
-            </FormControl>
+        <Grid container direction="column" alignItems="center">
+          <Grid>
+            <Typography variant="subheading">Advertisement Preview</Typography>
             <br />
-            <Button type="submit">Create advertisement</Button>
-            {error && error.response && <div> {error.response.data} </div>}
-          </FormGroup>
-        </form>
+            <div className={classes.imageContainer}>
+              <img src={this.state.image} className={classes.image} />
+            </div>
+            <Divider />
+          </Grid>
+          <Grid>
+            <form onSubmit={formAction}>
+              <FormGroup style={{ marginTop: '20px' }}>
+                <Grid container direction="row" spacing={40}>
+                  <Grid item xs={6}>
+                    <FormControl>
+                      <InputLabel>Advertisement name</InputLabel>
+                      <Input name="name" type="text" />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl>
+                      <InputLabel>Image url</InputLabel>
+                      <Input
+                        name="image"
+                        type="text"
+                        onChange={this.handleChange}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+                <FormControl>
+                  <InputLabel>Click-through URL</InputLabel>
+                  <Input name="url" type="text" />
+                </FormControl>
+                <br />
+                <Button type="submit">Create advertisement</Button>
+                <Button onClick={handleClose}>Cancel</Button>
+
+                {error && error.response && <div> {error.response.data} </div>}
+              </FormGroup>
+            </form>
+          </Grid>
+        </Grid>
       </Card>
     )
   }

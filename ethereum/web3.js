@@ -1,8 +1,8 @@
 const Web3 = require('web3')
 const HDWalletProvider = require('truffle-hdwallet-provider')
 const provider = new HDWalletProvider(
-  'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat',
-  'HTTP://127.0.0.1:9545',
+  'punch soon over smooth convince improve stock spoon very deposit device endless',
+  'HTTP://127.0.0.1:7545',
   0,
   10
 )
