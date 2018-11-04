@@ -45,14 +45,11 @@ class SingleContractPayment extends Component {
     const currentContract = fundsTransfer(blocks[indexOf])
     console.log('currentContract', currentContract)
     currentContract.options.address = `${contractHash}`
-    //let address = document.getElementById('address').value
-    //let address = document.getElementById(this.state.address).value
     let address = this.state.address
     console.log('address', address)
     const depositFunds = await currentContract.methods.deposit().send({
       gas: 6000000,
       value: this.props.contract.data.balance * 1000000000000000000,
-      //this needs to change to actual value... we need to talk about this value being lower!
       from: address
     })
 

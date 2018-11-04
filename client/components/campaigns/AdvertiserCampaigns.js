@@ -58,8 +58,6 @@ class AdvertiserCampaigns extends Component {
     this.handleCreate = this.handleCreate.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
-
-    console.log('ADCAMP STATE', this.state)
   }
 
   async componentDidMount() {
@@ -72,8 +70,6 @@ class AdvertiserCampaigns extends Component {
   }
 
   handleClose = () => {
-    console.log('currently selected', this.state.selectedDemographics)
-    console.log('props', this.props.selectedDemographics)
     this.setState({
       open: false,
       selectedDemographics: this.props.selectedDemographics
@@ -94,7 +90,6 @@ class AdvertiserCampaigns extends Component {
       price: price,
       demographics: demographics
     }
-    console.log('HANDLE CREATE CAMPAIGN', newCampaign)
     this.props.createCampaign(newCampaign, this.props.currentUser.id)
     this.handleClose()
   }

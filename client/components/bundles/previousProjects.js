@@ -13,18 +13,10 @@ class PreviousProjects extends Component {
   async componentDidMount() {
     await this.props.getPreviousBundles(this.props.currentUser.id)
     await this.props.getAllBundles(this.props.userId)
-    //await this.props.getCampaignsInBundle()
-    //const bundles = this.props.previousBundles.data
-    // const campaigns = bundles.map(bundle =>
-    //   this.props.getCampaignsInBundle(bundle.id)
-
-    //console.log('campaigns', campaigns)
   }
 
   render() {
-    console.log('userid', this.props.currentUser.id)
     const prevProjects = this.props.previousBundles
-    console.log('THIS.PROPS.ALLBUNS', this.props.allBundles)
     const activeProjects = this.props.allBundles.filter(
       bundle => bundle.deployed === false
     )
@@ -64,31 +56,6 @@ class PreviousProjects extends Component {
         </Grid>
       </div>
     )
-
-    //   console.log('props', this.props)
-    //   //const campaigns = this.props.getCampaignsInBundle(bundle.id)
-    //   if (this.props.previousBundles && this.props.allBundles) {
-    //   const bundles = this.props.previousBundles.data
-
-    //   const bundlesMap = bundles.map(bundle => (
-    //     <ul>
-    //       <li>{bundle.projectName} </li>
-    //       <li>
-    //         {bundle.campaigns.map(campaign => (
-    //           <ul key = {campaign.id}>
-    //             <li>{campaign.name}</li>
-    //             <li>{campaign.price}</li>
-    //           </ul>
-    //         ))}
-    //       </li>
-    //       <li>{bundle.scriptTag}</li>
-    //     </ul>
-    //   ))
-
-    //   const filtBuns = this.props.allBundles.filter(bundle => bundle.deployed === false)
-    //   return bundles.length ?
-    //     bundlesMap : <h3>No Previous Projects</h3>
-    // } else return null
   }
 }
 

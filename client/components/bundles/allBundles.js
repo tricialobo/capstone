@@ -59,8 +59,6 @@ class Bundles extends Component {
 
   async componentDidMount() {
     await this.props.me()
-    //await this.props.getAllBundles(this.props.user.id)
-    //await this.props.setBundle(this.props.bundles[0])
     await this.props.getCampaignsInBundle(this.props.bundles[0].id)
   }
 

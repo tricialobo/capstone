@@ -83,7 +83,10 @@ const CampaignCard = props => {
             </Grid>
             {advertisements && advertisements.length ? (
               <Grid item xs={10}>
-                <AdsGridList ads={advertisements} selectedCampaign = {selectedCampaign}/>
+                <AdsGridList
+                  ads={advertisements}
+                  selectedCampaign={selectedCampaign}
+                />
               </Grid>
             ) : (
               <Grid item container justify="center">
@@ -95,12 +98,6 @@ const CampaignCard = props => {
           </Grid>
         </CardContent>
       </Card>
-      {/* <h1>JAN THIS IS JUST ALL ADS BEING RENDERED BELOW, WILL GO AWAY</h1>
-      <AddAdvert
-        ads={props.ads}
-        alreadychosen={advertisements}
-        campId={selectedCampaign.id}
-      /> */}
     </div>
   )
 }

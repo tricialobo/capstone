@@ -14,7 +14,7 @@ const source = fs.readFileSync(fundsTransferPath, 'utf8')
 const output = solc.compile(source, 1).contracts
 
 fs.ensureDirSync(buildPath)
-console.log(output)
+console.log('output', output)
 for (let contract in output) {
   fs.outputJsonSync(
     path.resolve(buildPath, contract.replace(':', '') + '.json'),

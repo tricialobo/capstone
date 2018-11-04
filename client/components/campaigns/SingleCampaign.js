@@ -138,10 +138,4 @@ const mapState = state => {
   }
 }
 
-// const mapDispatch = dispatch => {
-//   return {
-//     fetchAllAds: userId => dispatch(fetchUserAds(userId))
-//   }
-// }
-
 export default withStyles(styles)(connect(mapState)(SingleCampaign))

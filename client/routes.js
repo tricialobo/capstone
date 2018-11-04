@@ -11,9 +11,6 @@ import {
   BundleCheckout,
   ScriptTag,
   SingleContractPayment,
-  AdvertiserChart,
-  CampaignClicksChart,
-  SingleCampaignProgress,
   AllCampaigns,
   AccountMenu,
   LoadingScreen,
@@ -26,7 +23,6 @@ import {
   About,
   LandingPage
 } from './components'
-import Ethereum from './components'
 import {
   me,
   getAllCampaigns,
@@ -53,24 +49,13 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/about" component={About} />
         <Route path="/home" component={LandingPage} />
-        <Route exact path="/ethereum" component={Ethereum} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
         <Route path="/checkout" component={BundleCheckout} />
         <Route path="/scriptTag" component={ScriptTag} />
         <Route path="/allcampaigns" component={AllCampaigns} />
 
-        <Route path="/charts/advertiserCharts" component={AdvertiserChart} />
-        <Route
-          path="/charts/developer/clicksPerCampaign"
-          component={CampaignClicksChart}
-        />
-        <Route
-          path="/charts/developer/singleCampaignProgress"
-          component={SingleCampaignProgress}
-        />
         {/* <Route path="/allbundles" component={AllBundles} /> */}
-
 
         <Route path="/payment/:contractId" component={SingleContractPayment} />
         <Route path="/confirmpayment" component={Receipt} />
@@ -122,7 +107,6 @@ class Routes extends Component {
             <Route path="/previousprojects" component={PreviousProjects} />
           </Switch>
         )}
-        {/* Displays our Login component as a fallback */}
         <Route component={LoadingScreen} />
       </Switch>
     )
