@@ -21,7 +21,8 @@ class DemographicsList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      demographics: props.demographics
+      demographics: props.selectedDemographics,
+      selected: []
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -32,10 +33,10 @@ class DemographicsList extends Component {
     for (let i = 0; i < options.length; i++) {
       if (options[i].name === event.target.value) {
         options[i].checked = !options[i].checked
-        console.log(options[i])
       }
     }
     this.setState({ demographics: options })
+    console.log('demo list', this.state.demographics)
   }
 
   render() {
@@ -46,7 +47,9 @@ class DemographicsList extends Component {
     return (
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">Target Demographics</FormLabel>
+          <FormLabel component="label">
+            <b>Target Demographics</b>
+          </FormLabel>
           <FormGroup>
             {demographics.map(demographic => (
               <FormControlLabel

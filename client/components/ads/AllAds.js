@@ -8,12 +8,16 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Divider,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
   Button
 } from '@material-ui/core'
 import AdsGridList from './AdsGridList'
-import CampaignsAccordion from './CampaignsAccordion'
-import LoadingScreen from '../LoadingScreen'
-import { postAd } from '../../store'
+import { postAd, fetchAllAds } from '../../store'
+import AdForm from './AdForm'
 
 const styles = theme => ({
   container: {
@@ -34,7 +38,33 @@ const styles = theme => ({
 })
 
 class AllAds extends Component {
-  handleSubmit(evt) {
+  constructor(props) {
+    super(props)
+    this.state = {
+      open: false
+    }
+    this.handleCreate = this.handleCreate.bind(this)
+    this.handleOpen = this.handleOpen.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+  }
+
+  async componentDidMount() {
+    await this.props.fetchAllAds()
+  }
+
+  handleOpen = () => {
+    this.setState({ open: true })
+  }
+
+  handleClose = () => {
+    console.log('currently selected', this.state.selectedDemographics)
+    console.log('props', this.props.selectedDemographics)
+    this.setState({
+      open: false
+    })
+  }
+
+  handleCreate(evt) {
     evt.preventDefault()
     const name = evt.target.name.value
     const advertiserId = this.props.currentUser.id
@@ -47,9 +77,11 @@ class AllAds extends Component {
       url: url
     }
     this.props.createAd(newAd)
+    this.handleClose()
   }
+
   render() {
-    const { classes, ads, handleSubmit } = this.props
+    const { classes, ads, handleCreate } = this.props
     return (
       <div className="container">
         {ads &&
@@ -59,19 +91,13 @@ class AllAds extends Component {
                 <Card className={classes.card}>
                   <CardHeader
                     action={
-                      <Button>
-                        <Link
-                          to={{
-                            pathname: '/ads/new',
-                            handleSubmit: handleSubmit
-                          }}
-                        >
-                          New Advertisement
-                        </Link>
+                      <Button onClick={this.handleOpen}>
+                        New Advertisement
                       </Button>
                     }
                     title="Advertisements"
                   />
+                  <Divider />
                   <CardContent className={classes.content}>
                     <AdsGridList ads={ads} />
                   </CardContent>
@@ -79,6 +105,26 @@ class AllAds extends Component {
               </Grid>
             </Grid>
           )}
+        <Dialog
+          fullScreen={true}
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+          <Grid container direction="column" alignItems="center">
+            <DialogTitle>New advertisement</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Name your new ad, upload its corresponding image, and set the
+                click-through link.
+              </DialogContentText>
+              <AdForm
+                open={open}
+                handleClose={this.handleClose}
+                formAction={this.handleCreate}
+              />
+            </DialogContent>
+          </Grid>
+        </Dialog>
       </div>
     )
   }
@@ -87,13 +133,15 @@ class AllAds extends Component {
 const mapState = state => {
   return {
     ads: state.ads.allAds,
-    allCampaigns: state.campaigns.allCampaigns
+    allCampaigns: state.campaigns.allCampaigns,
+    currentUser: state.user.currentUser
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    createAd: newAd => dispatch(postAd(newAd))
+    createAd: newAd => dispatch(postAd(newAd)),
+    fetchAllAds: () => dispatch(fetchAllAds())
   }
 }
 

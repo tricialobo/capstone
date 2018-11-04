@@ -29,11 +29,13 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     position: 'fixed',
-    width: '950px',
+    width: 500,
     border: '2px #000000 solid'
   },
   appBar: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    width: '100%',
+    alignItems: 'center'
   }
 })
 
@@ -57,7 +59,7 @@ class AccountMenu extends Component {
             <Tabs value={value} onChange={this.handleChange}>
               <Tab label="Account" />
               <Tab label="Billing" />
-              <Tab label="Plan" />
+              <Tab label="Settings" />
             </Tabs>
           </AppBar>
           {value === 0 && (

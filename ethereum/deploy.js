@@ -3,14 +3,12 @@ const Web3 = require('web3')
 const compiledFactory = require('./build/BlockFactory.json')
 
 const provider = new HDWalletProvider(
-  'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat',
-  'HTTP://127.0.0.1:9545',
+  'punch soon over smooth convince improve stock spoon very deposit device endless',
+  'HTTP://127.0.0.1:7545',
   1,
   10
-  // 'https://ropsten.infura.io/v3/02427097878a4f188252300ea34a1be9'
 )
 
-//const web3 = new Web3(new Web3(provider))
 const web3 = new Web3(provider)
 const deploy = async () => {
   const accounts = await web3.eth.getAccounts(console.log)

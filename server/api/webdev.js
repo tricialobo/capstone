@@ -1,24 +1,8 @@
 const router = require('express').Router()
 const { Bundle, Campaign, Advertisement } = require('../db/models')
 
-const createScript = require('./helpers')
-
-
 module.exports = router
 
-//get all campaigns
-
-//create a new bundle w/ appropriate userId - send bundleId back so we can set state w it
-// router.post('/bundle', async (req, res, next) => {
-//     const userId = req.body.userId
-//     try {
-//         const newBundle =
-//     }catch (err){
-//         next(err)
-//     }
-// })
-
-//creating the script tag
 router.get('/bundle/:bundleId/adscript', async (req, res, next) => {
   const bundleId = req.params.bundleId
   try {
@@ -30,19 +14,6 @@ router.get('/bundle/:bundleId/adscript', async (req, res, next) => {
         </pre>
       </div>`
     res.json(DevTag)
-    // let ads = []
-    // const bundle = await Bundle.findById(bundleId, {
-    //   include: [{ model: Campaign, include: [{ model: Advertisement }] }]
-    // })
-    // await bundle.campaigns.map(campaign => {
-    //   campaign.advertisements.map(ad => {
-    //     console.log('ad', ad)
-
-    //     ads.push(ad)
-    //     // res.json(createScript(ad))
-    //     res.json(createScript(ad, bundleId))
-    //   })
-    // })
   } catch (err) {
     next(err)
   }
@@ -76,19 +47,3 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
-
-//used to increment the number of clicks for a specific campaign - will ultimately
-//include a function at the end to check # of clicks and perhaps trigger contract to close
-//and payment to be sent to webdev
-// router.post('/campaignId', async (req, res, next) => {
-//     const campaignId = req.params.campaignId
-//     try{
-//         let campaign = await Campaign.findById(campaignId)
-//         let clicks = campaign.clicks +1
-//         campaign.clicks = clicks
-//         campaign = await campaign.save()
-//         res.json(campaign.clicks)
-//     }catch (err) {
-//         next(err)
-//     }
-// })

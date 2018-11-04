@@ -12,6 +12,8 @@ import { fetchSingleCampaign } from '../../store'
 
 const styles = theme => ({
   root: {
+    marginTop: 9,
+    borders: 'none',
     width: '100%',
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper
@@ -19,10 +21,6 @@ const styles = theme => ({
 })
 
 class CampaignsList extends Component {
-  async componentDidMount() {
-    await this.props.loadSingleCampaign(this.props.campaigns[0].id)
-  }
-
   render() {
     const {
       classes,
@@ -31,9 +29,9 @@ class CampaignsList extends Component {
       handleListItemClick
     } = this.props
     let panelIndex = 0
+
     return (
       <div className={classes.root}>
-        <Divider />
         <List
           component="nav"
           subheader={<ListSubheader component="div">Campaigns</ListSubheader>}
@@ -54,6 +52,9 @@ class CampaignsList extends Component {
                 </ListItem>
               )
             })}
+          <ListItem button onClick={this.props.handleOpen}>
+            <ListItemText primary="Create a campaign" />
+          </ListItem>
         </List>
       </div>
     )

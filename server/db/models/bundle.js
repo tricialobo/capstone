@@ -6,6 +6,9 @@ const Bundle = db.define('bundle', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  scriptTag: {
+    type: Sequelize.TEXT
+  },
   deployed: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
