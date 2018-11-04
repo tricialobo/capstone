@@ -1,8 +1,6 @@
 const router = require('express').Router()
 const { Bundle, Campaign, Advertisement } = require('../db/models')
 
-const createScript = require('./helpers')
-
 module.exports = router
 
 router.get('/bundle/:bundleId/adscript', async (req, res, next) => {

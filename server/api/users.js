@@ -3,14 +3,6 @@ const { User } = require('../db/models')
 
 module.exports = router
 
-router.get('/payment/:blockHash', async (req, res, next) => {
-  try {
-    const allContracts = await factory.methods.getDeployedBlocks().call()
-  } catch (error) {
-    console.error(error)
-  }
-})
-
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({

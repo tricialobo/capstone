@@ -4,7 +4,6 @@ const {
   Bundle,
   User,
   Campaign,
-  Contract,
   Advertisement,
   Demographic
 } = require('../db/models')

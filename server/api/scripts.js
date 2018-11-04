@@ -17,7 +17,6 @@ router.get('/:bundleId.js', async (req, res, next) => {
         }
       ]
     })
-    console.log('contract', contracts[0])
 
     await contracts.forEach(contract => {
       contract.bundle.campaigns.map(campaign => {
@@ -41,17 +40,6 @@ router.get('/:bundleId.js', async (req, res, next) => {
     });
     targetEl.appendChild(adImg)`
     )
-  } catch (error) {
-    console.error(error)
-  }
-})
-
-router.get('/:contractHash.js', async (req, res, next) => {
-  const contractHash = req.params.contractHash
-  try {
-    let ads = contract.campaign.advertisements
-    console.log('campaign', contract.campaign.advertisements)
-    console.log('currentAd', currentAd)
   } catch (error) {
     console.error(error)
   }
