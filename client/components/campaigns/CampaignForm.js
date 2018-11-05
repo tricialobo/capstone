@@ -150,12 +150,5 @@ const mapDispatch = dispatch => {
     deleteCampaign: campaignId => dispatch(removeCampaign(campaignId))
   }
 }
-/**
- * PROP TYPES
- */
-// AdForm.propTypes = {
-//   handleSubmit: PropTypes.func.isRequired,
-//   error: PropTypes.object
-// }
 
 export default withStyles(styles)(connect(mapState, mapDispatch)(CampaignForm))

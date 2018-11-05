@@ -36,7 +36,6 @@ const getContract = contract => {
 }
 
 export function getContractInfo(contractHash) {
-  console.log('hello out there, in getcontractinfo')
   return async dispatch => {
     const { data: contract } = await axios.get(`/api/contracts/${contractHash}`)
     const action = gotContractInfo(contract)
@@ -78,7 +77,6 @@ export default function(state = initialState, action) {
     case FETCH_USER_BY_CONTRACT:
       return { ...state, currentUser: action.user }
     case GET_CONTRACT_FOR_USER:
-      console.log('action', action)
       return { ...state, currentUserContract: action.contract }
 
     default:

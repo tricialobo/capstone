@@ -21,20 +21,13 @@ class BundleCheckout extends Component {
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
-    //this.sendEmail = this.sendEmail.bind(this)
     this.state = {
       showScriptTag: false
     }
   }
   async componentDidMount() {
-    // // await this.props.getCampaigns(1)
-    // await this.props.getAdvertisements(1)
-    // await this.props.getCampaignsInBundle(1)
-
     await this.props.getAdvertisements(this.props.bundle.id)
     await this.props.getCampaignsInBundle(this.props.bundle.id)
-
-    //this.handleSubmit = this.handleSubmit.bind(this)
   }
   sendEmail = (name, email, mail) => {
     axios({
@@ -62,7 +55,6 @@ class BundleCheckout extends Component {
 
     campaigns.forEach(async campaign => {
       const newBlock = await factory.methods.createBlock().send({
-        // const newBlock = await factory.methods.createBlock(campaign.price).send({
         gas: 3000000,
         from: accounts[0]
       })
@@ -99,10 +91,9 @@ class BundleCheckout extends Component {
             {
               forceEmbeddedImages: true,
               from: campaign.advertiser.firstName,
-              //to: campaign.advertiser.email,
-              to: 'tricia.lobo@gmail.com',
+              to: campaign.advertiser.email,
+
               subject: 'Grace - please deposit payment for new contract',
-              //text: `Please sign in at http://localhost:8080/payment/${contractHash} to complete payment`,
               html: CheckoutEmail(contractHash)
             }
           )
@@ -114,11 +105,6 @@ class BundleCheckout extends Component {
         )
         .then(
           () =>
-            // this.props.history.push({
-            //   pathname: '/scriptTag',
-            //   bundleId: 1
-            // })
-            // this.props.updateBundle(this.props.bundleId)
             this.props.bundle && this.props.updateBundle(this.props.bundle.id)
         )
     })
@@ -126,12 +112,7 @@ class BundleCheckout extends Component {
   }
 
   render() {
-    console.log('bundle', this.props.bundle)
-    console.log('bundleid', this.props.bundleId)
-    //const campaigns = this.state.campaigns
-    console.log('state', this.state)
     const props = this.props
-    console.log('props', props)
     const { campaigns, bundle, classes } = this.props
     return (
       <Grid container alignItems="center">
@@ -165,8 +146,6 @@ const mapState = state => {
 
     devId: state.user.currentUser.id,
 
-    // bundleId: state.bundles.bundle.id,
-
     bundle: state.bundles.bundle
   }
 }
@@ -186,7 +165,6 @@ const styles = {
 
 const mapDispatch = dispatch => {
   return {
-    // getCampaigns: bundleId => dispatch(getCampaigns(bundleId)),
     getAdvertisements: id => dispatch(getAdvertisements(id)),
     getAdScript: id => dispatch(getAdScript(id)),
     getCampaignsInBundle: bundleId => dispatch(getCampaignsInBundle(bundleId)),

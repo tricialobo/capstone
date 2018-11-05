@@ -7,8 +7,7 @@ const {
   Category,
   Demographic,
   Campaign,
-  Advertisement,
-  Contract
+  Advertisement
 } = require('../server/db/models')
 
 async function seed() {

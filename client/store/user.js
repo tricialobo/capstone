@@ -83,7 +83,6 @@ export const logInUser = (email, password) => async dispatch => {
 
 export const signUpUser = user => async dispatch => {
   let res
-  console.log('is advertiser???', user.isAdvertiser)
   try {
     res = await axios.post('/auth/signup', user)
     console.log('user created in reducer', res)
@@ -94,7 +93,6 @@ export const signUpUser = user => async dispatch => {
 
   try {
     dispatch(getUser(res.data))
-    // history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
